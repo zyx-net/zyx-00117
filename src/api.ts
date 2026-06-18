@@ -5,9 +5,11 @@ import type {
   AuditEntry,
   ApiResponse,
   RegisterSampleInput,
+  ExportConfig,
+  CsvImportError,
 } from './types';
 
-export type { RegisterSampleInput };
+export type { RegisterSampleInput, ExportConfig, CsvImportError };
 
 const API_BASE = '/api';
 
@@ -145,14 +147,37 @@ export const api = {
     return request<{ audits: AuditEntry[] }>(`/admin/audits${qs}`);
   },
 
-  buildExportUrl: (type: 'batches' | 'samples', filters?: Record<string, string | number | undefined>) => {
-    const qs = filters
-      ? '?' +
-        Object.entries(filters)
-          .filter(([, v]) => v !== undefined && v !== '')
-          .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`)
-          .join('&')
+  buildExportUrl: (type: 'batches' | 'samples', filters?: Record<string, string | number | boolean | undefined>, configId?: string, options?: { includeSignoffHistory?: boolean; includeTempAlerts?: boolean; includeFailureAudit?: boolean }) => {
+    const allFilters: Record<string, string> = {};
+    if (filters) {
+      Object.entries(filters)
+        .filter(([, v]) => v !== undefined && v !== '')
+        .forEach(([k, v]) => { allFilters[k] = String(v); });
+    }
+    if (configId) allFilters.configId = configId;
+    if (options?.includeSignoffHistory !== undefined) allFilters.includeSignoffHistory = String(options.includeSignoffHistory);
+    if (options?.includeTempAlerts !== undefined) allFilters.includeTempAlerts = String(options.includeTempAlerts);
+    if (options?.includeFailureAudit !== undefined) allFilters.includeFailureAudit = String(options.includeFailureAudit);
+    const qs = Object.keys(allFilters).length > 0
+      ? '?' + Object.entries(allFilters).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
       : '';
     return `${API_BASE}/admin/export/${type}${qs}`;
   },
+
+  importCsv: (csvContent: string) =>
+    request<{ batch: Batch; samples: Sample[]; importedCount: number }>('/labs/samples/import-csv', 'POST', { csvContent }),
+
+  listExportConfigs: (type?: 'batches' | 'samples') => {
+    const qs = type ? `?type=${encodeURIComponent(type)}` : '';
+    return request<{ configs: ExportConfig[] }>(`/labs/export-configs${qs}`);
+  },
+
+  createExportConfig: (config: Omit<ExportConfig, 'id' | 'createdBy' | 'creatorName' | 'createdAt' | 'updatedAt'>) =>
+    request<{ config: ExportConfig }>('/labs/export-configs', 'POST', config),
+
+  updateExportConfig: (id: string, updates: Partial<Omit<ExportConfig, 'id' | 'createdBy' | 'creatorName' | 'createdAt'>>) =>
+    request<{ config: ExportConfig }>(`/labs/export-configs/${id}`, 'PUT', updates),
+
+  deleteExportConfig: (id: string) =>
+    request(`/labs/export-configs/${id}`, 'DELETE'),
 };

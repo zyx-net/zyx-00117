@@ -16,6 +16,11 @@ import {
   resolveAlert,
   listReceivers,
   listUsers,
+  importCsvSamples,
+  createExportConfig,
+  updateExportConfig,
+  deleteExportConfig,
+  listExportConfigs,
 } from '../services.js';
 import type { Role } from '../types.js';
 
@@ -235,6 +240,91 @@ router.get('/users', requireAuth, (_req: AuthenticatedRequest, res: Response) =>
     res.json({ success: true, data: listUsers() });
   } catch (e) {
     res.status(500).json({ success: false, error: '查询用户列表失败' });
+  }
+});
+
+router.post('/samples/import-csv', requireAuth, requireRole('SAMPLER' as Role, 'ADMIN' as Role), (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { csvContent } = req.body;
+    if (!csvContent || typeof csvContent !== 'string') {
+      return res.status(400).json({ success: false, error: '必须提供 CSV 内容' });
+    }
+    const ip = getClientIp(req);
+    const result = importCsvSamples(req.user!, csvContent, ip);
+    if (!result.success) {
+      return res.status(400).json({
+        success: false,
+        error: result.error,
+        errors: result.errors,
+      });
+    }
+    res.status(201).json({
+      success: true,
+      data: {
+        batch: result.batch,
+        samples: result.samples,
+        importedCount: result.importedCount,
+      },
+    });
+  } catch (e) {
+    res.status(500).json({ success: false, error: 'CSV 导入失败' });
+  }
+});
+
+router.get('/export-configs', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const type = req.query.type as 'batches' | 'samples' | undefined;
+    const configs = listExportConfigs(type);
+    res.json({ success: true, data: { configs } });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '查询导出配置失败' });
+  }
+});
+
+router.post('/export-configs', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { name, type, includeSignoffHistory, includeTempAlerts, includeFailureAudit, filters } = req.body;
+    if (!name || !type) {
+      return res.status(400).json({ success: false, error: '配置名称和类型必填' });
+    }
+    const ip = getClientIp(req);
+    const config = createExportConfig(req.user!, {
+      name,
+      type,
+      includeSignoffHistory: !!includeSignoffHistory,
+      includeTempAlerts: !!includeTempAlerts,
+      includeFailureAudit: !!includeFailureAudit,
+      filters: filters || {},
+    }, ip);
+    res.status(201).json({ success: true, data: { config } });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '创建导出配置失败' });
+  }
+});
+
+router.put('/export-configs/:id', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const ip = getClientIp(req);
+    const result = updateExportConfig(req.user!, req.params.id, req.body, ip);
+    if (!result.success) {
+      return res.status(400).json({ success: false, error: result.error });
+    }
+    res.json({ success: true, data: { config: result.config } });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '更新导出配置失败' });
+  }
+});
+
+router.delete('/export-configs/:id', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const ip = getClientIp(req);
+    const result = deleteExportConfig(req.user!, req.params.id, ip);
+    if (!result.success) {
+      return res.status(400).json({ success: false, error: result.error });
+    }
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '删除导出配置失败' });
   }
 });
 

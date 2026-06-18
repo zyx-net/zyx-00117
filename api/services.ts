@@ -7,6 +7,8 @@ import type {
   SampleStatus,
   TemperatureRecord,
   HandoverChainLink,
+  ExportConfig,
+  CsvImportError,
 } from './types.js';
 
 const STATUS_FLOW: Record<SampleStatus, SampleStatus[]> = {
@@ -950,4 +952,388 @@ export function listUsers(): User[] {
 
 export function listReceivers(): User[] {
   return listUsers().filter((u) => u.role === 'RECEIVER' || u.role === 'ADMIN');
+}
+
+interface CsvSampleRow {
+  sampleCode: string;
+  type: string;
+  description: string;
+  sourceLocation: string;
+  minTemp: number;
+  maxTemp: number;
+  initialTemperature: number;
+  tempLocation: string;
+  intendedReceiverUsername?: string;
+}
+
+function parseCsvLine(line: string): string[] {
+  const result: string[] = [];
+  let current = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (inQuotes) {
+      if (ch === '"') {
+        if (i + 1 < line.length && line[i + 1] === '"') {
+          current += '"';
+          i++;
+        } else {
+          inQuotes = false;
+        }
+      } else {
+        current += ch;
+      }
+    } else {
+      if (ch === '"') {
+        inQuotes = true;
+      } else if (ch === ',') {
+        result.push(current.trim());
+        current = '';
+      } else {
+        current += ch;
+      }
+    }
+  }
+  result.push(current.trim());
+  return result;
+}
+
+const CSV_REQUIRED_HEADERS = [
+  'sampleCode', 'type', 'description', 'sourceLocation',
+  'minTemp', 'maxTemp', 'initialTemperature', 'tempLocation',
+];
+
+export function importCsvSamples(
+  operator: User,
+  csvContent: string,
+  ip?: string,
+): {
+  success: boolean;
+  error?: string;
+  errors?: CsvImportError[];
+  batch?: Batch;
+  samples?: Sample[];
+  importedCount?: number;
+} {
+  if (operator.role !== 'SAMPLER' && operator.role !== 'ADMIN') {
+    createAudit(operator, 'CSV_IMPORT', 'BATCH', 'N/A', false, {
+      failureReason: '只有采样员或管理员可以导入样本',
+      ipAddress: ip,
+    });
+    return { success: false, error: '只有采样员或管理员可以导入样本' };
+  }
+
+  const lines = csvContent.split(/\r?\n/).filter((l) => l.trim() && !l.trim().startsWith('#'));
+  if (lines.length < 2) {
+    return { success: false, error: 'CSV 文件为空或缺少数据行' };
+  }
+
+  const headerLine = lines[0];
+  const headers = parseCsvLine(headerLine);
+  const headerMap = new Map<string, number>();
+  headers.forEach((h, i) => headerMap.set(h.trim().toLowerCase(), i));
+
+  for (const req of CSV_REQUIRED_HEADERS) {
+    if (!headerMap.has(req.toLowerCase())) {
+      return { success: false, error: `CSV 缺少必需列: ${req}` };
+    }
+  }
+
+  const hasReceiverCol = headerMap.has('intendedreceiverusername');
+
+  const rows: CsvSampleRow[] = [];
+  const parseErrors: CsvImportError[] = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    const cols = parseCsvLine(lines[i]);
+    const row = i + 1;
+
+    const sampleCode = cols[headerMap.get('samplecode')!] || '';
+    const type = cols[headerMap.get('type')!] || '';
+    const description = cols[headerMap.get('description')!] || '';
+    const sourceLocation = cols[headerMap.get('sourcelocation')!] || '';
+    const minTempStr = cols[headerMap.get('mintemp')!] || '';
+    const maxTempStr = cols[headerMap.get('maxtemp')!] || '';
+    const initialTempStr = cols[headerMap.get('initialtemperature')!] || '';
+    const tempLocation = cols[headerMap.get('templocation')!] || '';
+    const intendedReceiverUsername = hasReceiverCol ? (cols[headerMap.get('intendedreceiverusername')!] || '') : '';
+
+    if (!sampleCode.trim()) {
+      parseErrors.push({ row, sampleCode: '', field: 'sampleCode', reason: '样本编号不能为空' });
+      continue;
+    }
+    if (!type.trim()) {
+      parseErrors.push({ row, sampleCode, field: 'type', reason: '样本类型不能为空' });
+      continue;
+    }
+    if (!sourceLocation.trim()) {
+      parseErrors.push({ row, sampleCode, field: 'sourceLocation', reason: '来源地点不能为空' });
+      continue;
+    }
+
+    const minTemp = Number(minTempStr);
+    const maxTemp = Number(maxTempStr);
+    const initialTemperature = Number(initialTempStr);
+
+    if (isNaN(minTemp)) {
+      parseErrors.push({ row, sampleCode, field: 'minTemp', reason: '最低温度值无效' });
+      continue;
+    }
+    if (isNaN(maxTemp)) {
+      parseErrors.push({ row, sampleCode, field: 'maxTemp', reason: '最高温度值无效' });
+      continue;
+    }
+    if (isNaN(initialTemperature)) {
+      parseErrors.push({ row, sampleCode, field: 'initialTemperature', reason: '初始温度值无效' });
+      continue;
+    }
+    if (minTemp >= maxTemp) {
+      parseErrors.push({ row, sampleCode, field: 'minTemp', reason: '最低温度必须小于最高温度' });
+      continue;
+    }
+
+    if (intendedReceiverUsername) {
+      const db = loadDb();
+      const receiver = db.users.find((u) => u.username === intendedReceiverUsername.toLowerCase());
+      if (!receiver) {
+        parseErrors.push({ row, sampleCode, field: 'intendedReceiverUsername', reason: `接收人用户名 ${intendedReceiverUsername} 不存在` });
+        continue;
+      }
+      if (receiver.role !== 'RECEIVER' && receiver.role !== 'ADMIN') {
+        parseErrors.push({ row, sampleCode, field: 'intendedReceiverUsername', reason: `用户 ${intendedReceiverUsername} 不是接收员角色` });
+        continue;
+      }
+    }
+
+    rows.push({
+      sampleCode,
+      type,
+      description,
+      sourceLocation,
+      minTemp,
+      maxTemp,
+      initialTemperature,
+      tempLocation,
+      intendedReceiverUsername,
+    });
+  }
+
+  const db = loadDb();
+
+  const duplicateErrors: CsvImportError[] = [];
+  for (const row of rows) {
+    if (db.samples.some((s) => s.sampleCode === row.sampleCode)) {
+      duplicateErrors.push({
+        row: 0,
+        sampleCode: row.sampleCode,
+        field: 'sampleCode',
+        reason: `样本编号 ${row.sampleCode} 已存在`,
+      });
+    }
+  }
+
+  const seenCodes = new Set<string>();
+  const internalDupErrors: CsvImportError[] = [];
+  for (const row of rows) {
+    if (seenCodes.has(row.sampleCode)) {
+      internalDupErrors.push({
+        row: 0,
+        sampleCode: row.sampleCode,
+        field: 'sampleCode',
+        reason: `CSV 内样本编号 ${row.sampleCode} 重复`,
+      });
+    }
+    seenCodes.add(row.sampleCode);
+  }
+
+  const allErrors = [...parseErrors, ...duplicateErrors, ...internalDupErrors];
+
+  if (allErrors.length > 0) {
+    let rowCounter = 1;
+    const indexedErrors: CsvImportError[] = [];
+    for (const row of rows) {
+      rowCounter++;
+      const dupeErr = duplicateErrors.find((e) => e.sampleCode === row.sampleCode);
+      if (dupeErr) {
+        indexedErrors.push({ ...dupeErr, row: rowCounter });
+      }
+      const intErr = internalDupErrors.filter((e) => e.sampleCode === row.sampleCode);
+      for (const e of intErr) {
+        indexedErrors.push({ ...e, row: rowCounter });
+      }
+    }
+    const finalErrors = [...parseErrors, ...indexedErrors];
+
+    createAudit(operator, 'CSV_IMPORT', 'BATCH', 'N/A', false, {
+      failureReason: `导入校验失败: ${finalErrors.length} 个错误`,
+      afterState: { errors: finalErrors },
+      ipAddress: ip,
+    });
+
+    return { success: false, error: '导入校验失败，请修正后重新导入', errors: finalErrors };
+  }
+
+  if (rows.length === 0) {
+    return { success: false, error: '没有有效的样本数据可导入' };
+  }
+
+  const now = Date.now();
+  const batchId = generateId('batch');
+  const batchCode = `BATCH-${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, '0')}${String(new Date().getDate()).padStart(2, '0')}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
+
+  const newSamples: Sample[] = [];
+
+  for (const input of rows) {
+    const sampleId = generateId('sample');
+    const tempRecord: TemperatureRecord = {
+      id: generateId('temp'),
+      sampleId,
+      timestamp: now,
+      temperature: input.initialTemperature,
+      recordedBy: operator.id,
+      location: input.tempLocation || input.sourceLocation,
+      note: 'CSV导入初始温度记录',
+    };
+
+    const sample: Sample = {
+      id: sampleId,
+      sampleCode: input.sampleCode,
+      batchId,
+      type: input.type,
+      description: input.description,
+      collectedAt: now,
+      collectedBy: operator.id,
+      collectorName: operator.name,
+      sourceLocation: input.sourceLocation,
+      currentHolderId: operator.id,
+      currentHolderName: operator.name,
+      status: 'REGISTERED',
+      minTemp: input.minTemp,
+      maxTemp: input.maxTemp,
+      temperatureRecords: [tempRecord],
+      temperatureAlerts: [],
+      handoverChain: [],
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    checkAndGenerateTempAlerts(sample, tempRecord);
+
+    addChainLink(sample, {
+      fromUserId: 'SYSTEM',
+      fromUserName: '系统',
+      toUserId: operator.id,
+      toUserName: operator.name,
+      action: 'REGISTER',
+      temperatureChecks: [tempRecord.id],
+    });
+
+    newSamples.push(sample);
+  }
+
+  const batch: Batch = {
+    id: batchId,
+    batchCode,
+    createdAt: now,
+    createdBy: operator.id,
+    creatorName: operator.name,
+    sampleIds: newSamples.map((s) => s.id),
+    status: 'DRAFT',
+  };
+
+  db.samples.push(...newSamples);
+  db.batches.unshift(batch);
+  saveDb(db);
+
+  createAudit(operator, 'CSV_IMPORT', 'BATCH', batchId, true, {
+    afterState: {
+      batchCode,
+      importedCount: newSamples.length,
+      samples: newSamples.map((s) => ({ id: s.id, sampleCode: s.sampleCode, status: s.status })),
+    },
+    ipAddress: ip,
+  });
+
+  return { success: true, batch, samples: newSamples, importedCount: newSamples.length };
+}
+
+export function createExportConfig(
+  operator: User,
+  config: Omit<ExportConfig, 'id' | 'createdBy' | 'creatorName' | 'createdAt' | 'updatedAt'>,
+  ip?: string,
+): ExportConfig {
+  const db = loadDb();
+  const now = Date.now();
+  const newConfig: ExportConfig = {
+    ...config,
+    id: generateId('expconf'),
+    createdBy: operator.id,
+    creatorName: operator.name,
+    createdAt: now,
+    updatedAt: now,
+  };
+  db.exportConfigs.push(newConfig);
+  saveDb(db);
+
+  createAudit(operator, 'CREATE_EXPORT_CONFIG', 'SYSTEM', newConfig.id, true, {
+    afterState: { name: newConfig.name, type: newConfig.type, filters: newConfig.filters },
+    ipAddress: ip,
+  });
+
+  return newConfig;
+}
+
+export function updateExportConfig(
+  operator: User,
+  configId: string,
+  updates: Partial<Omit<ExportConfig, 'id' | 'createdBy' | 'creatorName' | 'createdAt'>>,
+  ip?: string,
+): { success: boolean; config?: ExportConfig; error?: string } {
+  const db = loadDb();
+  const idx = db.exportConfigs.findIndex((c) => c.id === configId);
+  if (idx === -1) return { success: false, error: '导出配置不存在' };
+
+  const before = { ...db.exportConfigs[idx] };
+  Object.assign(db.exportConfigs[idx], updates, { updatedAt: Date.now() });
+  saveDb(db);
+
+  createAudit(operator, 'UPDATE_EXPORT_CONFIG', 'SYSTEM', configId, true, {
+    beforeState: { ...before },
+    afterState: { ...db.exportConfigs[idx] },
+    ipAddress: ip,
+  });
+
+  return { success: true, config: db.exportConfigs[idx] };
+}
+
+export function deleteExportConfig(
+  operator: User,
+  configId: string,
+  ip?: string,
+): { success: boolean; error?: string } {
+  const db = loadDb();
+  const idx = db.exportConfigs.findIndex((c) => c.id === configId);
+  if (idx === -1) return { success: false, error: '导出配置不存在' };
+
+  const removed = db.exportConfigs.splice(idx, 1)[0];
+  saveDb(db);
+
+  createAudit(operator, 'DELETE_EXPORT_CONFIG', 'SYSTEM', configId, true, {
+    beforeState: { name: removed.name, type: removed.type },
+    ipAddress: ip,
+  });
+
+  return { success: true };
+}
+
+export function listExportConfigs(type?: 'batches' | 'samples'): ExportConfig[] {
+  const db = loadDb();
+  let configs = [...db.exportConfigs];
+  if (type) configs = configs.filter((c) => c.type === type);
+  return configs.sort((a, b) => b.updatedAt - a.updatedAt);
+}
+
+export function getExportConfig(configId: string): ExportConfig | undefined {
+  const db = loadDb();
+  return db.exportConfigs.find((c) => c.id === configId);
 }

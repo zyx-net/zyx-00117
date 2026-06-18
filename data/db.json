@@ -999,9 +999,375 @@
       ],
       "createdAt": 1781747735570,
       "updatedAt": 1781747735597
+    },
+    {
+      "id": "sample-1781750121129-z7xo2p",
+      "sampleCode": "CSV-001",
+      "batchId": "batch-1781750121129-mnqpuu",
+      "type": "blood",
+      "description": "import test 1",
+      "collectedAt": 1781750121129,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building A",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "REGISTERED",
+      "minTemp": 2,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781750121129-58ghvb",
+          "sampleId": "sample-1781750121129-z7xo2p",
+          "timestamp": 1781750121129,
+          "temperature": 4.5,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer A",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [],
+      "handoverChain": [
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781750121129-58ghvb"
+          ],
+          "id": "chain-1781750121129-xaiijj",
+          "timestamp": 1781750121129
+        }
+      ],
+      "createdAt": 1781750121129,
+      "updatedAt": 1781750121129
+    },
+    {
+      "id": "sample-1781750121129-pn1rch",
+      "sampleCode": "CSV-002",
+      "batchId": "batch-1781750121129-mnqpuu",
+      "type": "urine",
+      "description": "import test 2",
+      "collectedAt": 1781750121129,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building B",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "REGISTERED",
+      "minTemp": 2,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781750121129-a8636e",
+          "sampleId": "sample-1781750121129-pn1rch",
+          "timestamp": 1781750121129,
+          "temperature": 3.8,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer B",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [],
+      "handoverChain": [
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781750121129-a8636e"
+          ],
+          "id": "chain-1781750121129-ao450h",
+          "timestamp": 1781750121129
+        }
+      ],
+      "createdAt": 1781750121129,
+      "updatedAt": 1781750121129
+    },
+    {
+      "id": "sample-1781750399664-gisncu",
+      "sampleCode": "CSV-mqiw6n1w-001",
+      "batchId": "batch-1781750399664-08ihgt",
+      "type": "blood",
+      "description": "import test 1",
+      "collectedAt": 1781750399664,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building A",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "REGISTERED",
+      "minTemp": 2,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781750399664-7k9gw3",
+          "sampleId": "sample-1781750399664-gisncu",
+          "timestamp": 1781750399664,
+          "temperature": 4.5,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer A",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [],
+      "handoverChain": [
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781750399664-7k9gw3"
+          ],
+          "id": "chain-1781750399664-psuf42",
+          "timestamp": 1781750399664
+        }
+      ],
+      "createdAt": 1781750399664,
+      "updatedAt": 1781750399664
+    },
+    {
+      "id": "sample-1781750399664-pncvxu",
+      "sampleCode": "CSV-mqiw6n1w-002",
+      "batchId": "batch-1781750399664-08ihgt",
+      "type": "urine",
+      "description": "import test 2",
+      "collectedAt": 1781750399664,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building B",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "REGISTERED",
+      "minTemp": 2,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781750399664-celwou",
+          "sampleId": "sample-1781750399664-pncvxu",
+          "timestamp": 1781750399664,
+          "temperature": 3.8,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer B",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [],
+      "handoverChain": [
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781750399664-celwou"
+          ],
+          "id": "chain-1781750399664-okkhg7",
+          "timestamp": 1781750399664
+        }
+      ],
+      "createdAt": 1781750399664,
+      "updatedAt": 1781750399664
+    },
+    {
+      "id": "sample-1781750760513-n2xigt",
+      "sampleCode": "CSV-mqiwedhr-001",
+      "batchId": "batch-1781750760512-mqi82q",
+      "type": "blood",
+      "description": "import test 1",
+      "collectedAt": 1781750760512,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building A",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "REGISTERED",
+      "minTemp": 2,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781750760513-h8srxv",
+          "sampleId": "sample-1781750760513-n2xigt",
+          "timestamp": 1781750760512,
+          "temperature": 4.5,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer A",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [],
+      "handoverChain": [
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781750760513-h8srxv"
+          ],
+          "id": "chain-1781750760513-20dzz4",
+          "timestamp": 1781750760513
+        }
+      ],
+      "createdAt": 1781750760512,
+      "updatedAt": 1781750760512
+    },
+    {
+      "id": "sample-1781750760513-mhj0ak",
+      "sampleCode": "CSV-mqiwedhr-002",
+      "batchId": "batch-1781750760512-mqi82q",
+      "type": "urine",
+      "description": "import test 2",
+      "collectedAt": 1781750760512,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building B",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "REGISTERED",
+      "minTemp": 2,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781750760513-o5hiec",
+          "sampleId": "sample-1781750760513-mhj0ak",
+          "timestamp": 1781750760512,
+          "temperature": 3.8,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer B",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [],
+      "handoverChain": [
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781750760513-o5hiec"
+          ],
+          "id": "chain-1781750760513-4zz2ah",
+          "timestamp": 1781750760513
+        }
+      ],
+      "createdAt": 1781750760512,
+      "updatedAt": 1781750760512
+    },
+    {
+      "id": "sample-1781750913003-p3mrb8",
+      "sampleCode": "CSV-mqiwhn56-HOT",
+      "batchId": "batch-1781750913003-s4iloj",
+      "type": "blood",
+      "description": "abnormal import",
+      "collectedAt": 1781750913003,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building A",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "REGISTERED",
+      "minTemp": 2,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781750913003-x485c2",
+          "sampleId": "sample-1781750913003-p3mrb8",
+          "timestamp": 1781750913003,
+          "temperature": 12.5,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer A",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [
+        {
+          "id": "alert-1781750913003-q38uap",
+          "sampleId": "sample-1781750913003-p3mrb8",
+          "recordId": "temp-1781750913003-x485c2",
+          "type": "TOO_HIGH",
+          "threshold": 8,
+          "actualValue": 12.5,
+          "timestamp": 1781750913003,
+          "resolved": false
+        }
+      ],
+      "handoverChain": [
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781750913003-x485c2"
+          ],
+          "id": "chain-1781750913003-dhn6af",
+          "timestamp": 1781750913003
+        }
+      ],
+      "createdAt": 1781750913003,
+      "updatedAt": 1781750913003
     }
   ],
   "batches": [
+    {
+      "id": "batch-1781750913003-s4iloj",
+      "batchCode": "BATCH-20260618-9XWU",
+      "createdAt": 1781750913003,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781750913003-p3mrb8"
+      ],
+      "status": "DRAFT"
+    },
+    {
+      "id": "batch-1781750760512-mqi82q",
+      "batchCode": "BATCH-20260618-D93K",
+      "createdAt": 1781750760512,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781750760513-n2xigt",
+        "sample-1781750760513-mhj0ak"
+      ],
+      "status": "DRAFT"
+    },
+    {
+      "id": "batch-1781750399664-08ihgt",
+      "batchCode": "BATCH-20260618-U6N2",
+      "createdAt": 1781750399664,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781750399664-gisncu",
+        "sample-1781750399664-pncvxu"
+      ],
+      "status": "DRAFT"
+    },
+    {
+      "id": "batch-1781750121129-mnqpuu",
+      "batchCode": "BATCH-20260618-59B5",
+      "createdAt": 1781750121129,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781750121129-z7xo2p",
+        "sample-1781750121129-pn1rch"
+      ],
+      "status": "DRAFT"
+    },
     {
       "id": "batch-1781747735570-aq0fsi",
       "batchCode": "BATCH-20260618-RYFX",
@@ -1132,6 +1498,1213 @@
     }
   ],
   "audits": [
+    {
+      "id": "audit-1781750913069-0s5baj",
+      "action": "EXPORT_SAMPLES",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "SYSTEM",
+      "targetId": "export",
+      "timestamp": 1781750913069,
+      "success": true,
+      "afterState": {
+        "filters": {
+          "keyword": "CSV-mqiwhn56-HOT"
+        },
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": false,
+        "sampleCount": 1
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750913031-4hijo7",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "N/A",
+      "timestamp": 1781750913031,
+      "success": false,
+      "afterState": {
+        "errors": [
+          {
+            "row": 2,
+            "sampleCode": "CSV-mqiwhn56-HOT",
+            "field": "sampleCode",
+            "reason": "样本编号 CSV-mqiwhn56-HOT 已存在"
+          }
+        ]
+      },
+      "failureReason": "导入校验失败: 1 个错误",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750913006-nk128n",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781750913003-s4iloj",
+      "timestamp": 1781750913006,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-9XWU",
+        "importedCount": 1,
+        "samples": [
+          {
+            "id": "sample-1781750913003-p3mrb8",
+            "sampleCode": "CSV-mqiwhn56-HOT",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750912985-xif1zk",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781750912985,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750912976-fjxxka",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781750912976,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750912957-5us9ou",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781750912957,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750798841-4oslfs",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781750798841,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750760628-xdfftd",
+      "action": "DELETE_EXPORT_CONFIG",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "expconf-1781750760574-8rahfd",
+      "timestamp": 1781750760628,
+      "success": true,
+      "beforeState": {
+        "name": "Updated batch export",
+        "type": "batches"
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750760610-9shwrs",
+      "action": "EXPORT_BATCHES",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "export",
+      "timestamp": 1781750760610,
+      "success": true,
+      "afterState": {
+        "filters": {
+          "createdBy": "user-sampler-001"
+        },
+        "configName": "Updated batch export",
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": true,
+        "batchCount": 11
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750760588-x8kb1d",
+      "action": "UPDATE_EXPORT_CONFIG",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "expconf-1781750760574-8rahfd",
+      "timestamp": 1781750760588,
+      "success": true,
+      "beforeState": {
+        "name": "Test batch export",
+        "type": "batches",
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": false,
+        "filters": {},
+        "id": "expconf-1781750760574-8rahfd",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781750760574,
+        "updatedAt": 1781750760574
+      },
+      "afterState": {
+        "name": "Updated batch export",
+        "type": "batches",
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": true,
+        "filters": {},
+        "id": "expconf-1781750760574-8rahfd",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781750760574,
+        "updatedAt": 1781750760586
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750760575-8lreqc",
+      "action": "CREATE_EXPORT_CONFIG",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "expconf-1781750760574-8rahfd",
+      "timestamp": 1781750760575,
+      "success": true,
+      "afterState": {
+        "name": "Test batch export",
+        "type": "batches",
+        "filters": {}
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750760566-qamcu6",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "N/A",
+      "timestamp": 1781750760566,
+      "success": false,
+      "afterState": {
+        "errors": [
+          {
+            "row": 2,
+            "sampleCode": "CSV-mqiwedhr-RECV",
+            "field": "intendedReceiverUsername",
+            "reason": "接收人用户名 nonexistentuser 不存在"
+          }
+        ]
+      },
+      "failureReason": "导入校验失败: 1 个错误",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750760558-aq007j",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "N/A",
+      "timestamp": 1781750760558,
+      "success": false,
+      "afterState": {
+        "errors": [
+          {
+            "row": 2,
+            "sampleCode": "",
+            "field": "sampleCode",
+            "reason": "样本编号不能为空"
+          },
+          {
+            "row": 3,
+            "sampleCode": "CSV-mqiwedhr-BAD",
+            "field": "type",
+            "reason": "样本类型不能为空"
+          },
+          {
+            "row": 4,
+            "sampleCode": "CSV-mqiwedhr-TEMP",
+            "field": "minTemp",
+            "reason": "最低温度值无效"
+          },
+          {
+            "row": 5,
+            "sampleCode": "CSV-mqiwedhr-RANGE",
+            "field": "minTemp",
+            "reason": "最低温度必须小于最高温度"
+          }
+        ]
+      },
+      "failureReason": "导入校验失败: 4 个错误",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750760545-cwmlh1",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "N/A",
+      "timestamp": 1781750760545,
+      "success": false,
+      "afterState": {
+        "errors": [
+          {
+            "row": 2,
+            "sampleCode": "CSV-mqiwedhr-DUP",
+            "field": "sampleCode",
+            "reason": "CSV 内样本编号 CSV-mqiwedhr-DUP 重复"
+          },
+          {
+            "row": 3,
+            "sampleCode": "CSV-mqiwedhr-DUP",
+            "field": "sampleCode",
+            "reason": "CSV 内样本编号 CSV-mqiwedhr-DUP 重复"
+          }
+        ]
+      },
+      "failureReason": "导入校验失败: 2 个错误",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750760538-zwbj7b",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "N/A",
+      "timestamp": 1781750760538,
+      "success": false,
+      "afterState": {
+        "errors": [
+          {
+            "row": 2,
+            "sampleCode": "CSV-mqiwedhr-001",
+            "field": "sampleCode",
+            "reason": "样本编号 CSV-mqiwedhr-001 已存在"
+          }
+        ]
+      },
+      "failureReason": "导入校验失败: 1 个错误",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750760514-7l79w8",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781750760512-mqi82q",
+      "timestamp": 1781750760514,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-D93K",
+        "importedCount": 2,
+        "samples": [
+          {
+            "id": "sample-1781750760513-n2xigt",
+            "sampleCode": "CSV-mqiwedhr-001",
+            "status": "REGISTERED"
+          },
+          {
+            "id": "sample-1781750760513-mhj0ak",
+            "sampleCode": "CSV-mqiwedhr-002",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750760501-w9idxx",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781750760501,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750760493-g5v6k7",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781750760493,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750760477-78i3yl",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781750760477,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750748592-egfsoe",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781750748592,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750514467-lr3yhx",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781750514467,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750399816-rnx945",
+      "action": "DELETE_EXPORT_CONFIG",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "expconf-1781750399735-yu7uu8",
+      "timestamp": 1781750399816,
+      "success": true,
+      "beforeState": {
+        "name": "Updated batch export",
+        "type": "batches"
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750399790-mqkxx8",
+      "action": "EXPORT_BATCHES",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "export",
+      "timestamp": 1781750399790,
+      "success": true,
+      "afterState": {
+        "filters": {
+          "createdBy": "user-sampler-001"
+        },
+        "configName": "Updated batch export",
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": true,
+        "batchCount": 10
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750399761-vdi2kb",
+      "action": "UPDATE_EXPORT_CONFIG",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "expconf-1781750399735-yu7uu8",
+      "timestamp": 1781750399761,
+      "success": true,
+      "beforeState": {
+        "name": "Test batch export",
+        "type": "batches",
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": false,
+        "filters": {},
+        "id": "expconf-1781750399735-yu7uu8",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781750399735,
+        "updatedAt": 1781750399735
+      },
+      "afterState": {
+        "name": "Updated batch export",
+        "type": "batches",
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": true,
+        "filters": {},
+        "id": "expconf-1781750399735-yu7uu8",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781750399735,
+        "updatedAt": 1781750399759
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750399737-lnz07s",
+      "action": "CREATE_EXPORT_CONFIG",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "expconf-1781750399735-yu7uu8",
+      "timestamp": 1781750399737,
+      "success": true,
+      "afterState": {
+        "name": "Test batch export",
+        "type": "batches",
+        "filters": {}
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750399726-whbdef",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "N/A",
+      "timestamp": 1781750399726,
+      "success": false,
+      "afterState": {
+        "errors": [
+          {
+            "row": 2,
+            "sampleCode": "CSV-mqiw6n1w-RECV",
+            "field": "intendedReceiverUsername",
+            "reason": "接收人用户名 nonexistentuser 不存在"
+          }
+        ]
+      },
+      "failureReason": "导入校验失败: 1 个错误",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750399716-i2h3u8",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "N/A",
+      "timestamp": 1781750399716,
+      "success": false,
+      "afterState": {
+        "errors": [
+          {
+            "row": 2,
+            "sampleCode": "",
+            "field": "sampleCode",
+            "reason": "样本编号不能为空"
+          },
+          {
+            "row": 3,
+            "sampleCode": "CSV-mqiw6n1w-BAD",
+            "field": "type",
+            "reason": "样本类型不能为空"
+          },
+          {
+            "row": 4,
+            "sampleCode": "CSV-mqiw6n1w-TEMP",
+            "field": "minTemp",
+            "reason": "最低温度值无效"
+          },
+          {
+            "row": 5,
+            "sampleCode": "CSV-mqiw6n1w-RANGE",
+            "field": "minTemp",
+            "reason": "最低温度必须小于最高温度"
+          }
+        ]
+      },
+      "failureReason": "导入校验失败: 4 个错误",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750399702-iafkbl",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "N/A",
+      "timestamp": 1781750399702,
+      "success": false,
+      "afterState": {
+        "errors": [
+          {
+            "row": 2,
+            "sampleCode": "CSV-mqiw6n1w-DUP",
+            "field": "sampleCode",
+            "reason": "CSV 内样本编号 CSV-mqiw6n1w-DUP 重复"
+          },
+          {
+            "row": 3,
+            "sampleCode": "CSV-mqiw6n1w-DUP",
+            "field": "sampleCode",
+            "reason": "CSV 内样本编号 CSV-mqiw6n1w-DUP 重复"
+          }
+        ]
+      },
+      "failureReason": "导入校验失败: 2 个错误",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750399691-3nfnes",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "N/A",
+      "timestamp": 1781750399691,
+      "success": false,
+      "afterState": {
+        "errors": [
+          {
+            "row": 2,
+            "sampleCode": "CSV-mqiw6n1w-001",
+            "field": "sampleCode",
+            "reason": "样本编号 CSV-mqiw6n1w-001 已存在"
+          }
+        ]
+      },
+      "failureReason": "导入校验失败: 1 个错误",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750399666-rviki7",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781750399664-08ihgt",
+      "timestamp": 1781750399666,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-U6N2",
+        "importedCount": 2,
+        "samples": [
+          {
+            "id": "sample-1781750399664-gisncu",
+            "sampleCode": "CSV-mqiw6n1w-001",
+            "status": "REGISTERED"
+          },
+          {
+            "id": "sample-1781750399664-pncvxu",
+            "sampleCode": "CSV-mqiw6n1w-002",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750399654-xei62f",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781750399654,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750399646-xuxds8",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781750399646,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750399628-pdwu98",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781750399628,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750316087-gb52cl",
+      "action": "DELETE_EXPORT_CONFIG",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "expconf-1781750316023-d4h1g1",
+      "timestamp": 1781750316087,
+      "success": true,
+      "beforeState": {
+        "name": "Updated batch export",
+        "type": "batches"
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750316065-2u2aw0",
+      "action": "EXPORT_BATCHES",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "export",
+      "timestamp": 1781750316065,
+      "success": true,
+      "afterState": {
+        "filters": {
+          "createdBy": "user-sampler-001"
+        },
+        "configName": "Updated batch export",
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": true,
+        "batchCount": 9
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750316039-x4ke92",
+      "action": "UPDATE_EXPORT_CONFIG",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "expconf-1781750316023-d4h1g1",
+      "timestamp": 1781750316039,
+      "success": true,
+      "beforeState": {
+        "name": "Test batch export",
+        "type": "batches",
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": false,
+        "filters": {},
+        "id": "expconf-1781750316023-d4h1g1",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781750316023,
+        "updatedAt": 1781750316023
+      },
+      "afterState": {
+        "name": "Updated batch export",
+        "type": "batches",
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": true,
+        "filters": {},
+        "id": "expconf-1781750316023-d4h1g1",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781750316023,
+        "updatedAt": 1781750316038
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750316024-i6euod",
+      "action": "CREATE_EXPORT_CONFIG",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "expconf-1781750316023-d4h1g1",
+      "timestamp": 1781750316024,
+      "success": true,
+      "afterState": {
+        "name": "Test batch export",
+        "type": "batches",
+        "filters": {}
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750316014-cery6n",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "N/A",
+      "timestamp": 1781750316014,
+      "success": false,
+      "afterState": {
+        "errors": [
+          {
+            "row": 2,
+            "sampleCode": "CSV-RECV",
+            "field": "intendedReceiverUsername",
+            "reason": "接收人用户名 nonexistentuser 不存在"
+          }
+        ]
+      },
+      "failureReason": "导入校验失败: 1 个错误",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750316005-2r5ajk",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "N/A",
+      "timestamp": 1781750316005,
+      "success": false,
+      "afterState": {
+        "errors": [
+          {
+            "row": 2,
+            "sampleCode": "",
+            "field": "sampleCode",
+            "reason": "样本编号不能为空"
+          },
+          {
+            "row": 3,
+            "sampleCode": "CSV-BAD",
+            "field": "type",
+            "reason": "样本类型不能为空"
+          },
+          {
+            "row": 4,
+            "sampleCode": "CSV-TEMP",
+            "field": "minTemp",
+            "reason": "最低温度值无效"
+          },
+          {
+            "row": 5,
+            "sampleCode": "CSV-RANGE",
+            "field": "minTemp",
+            "reason": "最低温度必须小于最高温度"
+          }
+        ]
+      },
+      "failureReason": "导入校验失败: 4 个错误",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750315990-tr9vba",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "N/A",
+      "timestamp": 1781750315990,
+      "success": false,
+      "afterState": {
+        "errors": [
+          {
+            "row": 2,
+            "sampleCode": "CSV-DUP",
+            "field": "sampleCode",
+            "reason": "CSV 内样本编号 CSV-DUP 重复"
+          },
+          {
+            "row": 3,
+            "sampleCode": "CSV-DUP",
+            "field": "sampleCode",
+            "reason": "CSV 内样本编号 CSV-DUP 重复"
+          }
+        ]
+      },
+      "failureReason": "导入校验失败: 2 个错误",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750315980-u4nei4",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "N/A",
+      "timestamp": 1781750315980,
+      "success": false,
+      "afterState": {
+        "errors": [
+          {
+            "row": 2,
+            "sampleCode": "CSV-001",
+            "field": "sampleCode",
+            "reason": "样本编号 CSV-001 已存在"
+          }
+        ]
+      },
+      "failureReason": "导入校验失败: 1 个错误",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750315949-0kco62",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "N/A",
+      "timestamp": 1781750315949,
+      "success": false,
+      "afterState": {
+        "errors": [
+          {
+            "row": 2,
+            "sampleCode": "CSV-001",
+            "field": "sampleCode",
+            "reason": "样本编号 CSV-001 已存在"
+          },
+          {
+            "row": 3,
+            "sampleCode": "CSV-002",
+            "field": "sampleCode",
+            "reason": "样本编号 CSV-002 已存在"
+          }
+        ]
+      },
+      "failureReason": "导入校验失败: 2 个错误",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750315935-vmlzd3",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781750315935,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750315928-zgmajf",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781750315928,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750315906-0b0a5d",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781750315906,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750178976-nbve30",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781750178976,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750121188-48993v",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "N/A",
+      "timestamp": 1781750121188,
+      "success": false,
+      "afterState": {
+        "errors": [
+          {
+            "row": 2,
+            "sampleCode": "CSV-RECV",
+            "field": "intendedReceiverUsername",
+            "reason": "接收人用户名 nonexistentuser 不存在"
+          }
+        ]
+      },
+      "failureReason": "导入校验失败: 1 个错误",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750121178-montjo",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "N/A",
+      "timestamp": 1781750121178,
+      "success": false,
+      "afterState": {
+        "errors": [
+          {
+            "row": 2,
+            "sampleCode": "",
+            "field": "sampleCode",
+            "reason": "样本编号不能为空"
+          },
+          {
+            "row": 3,
+            "sampleCode": "CSV-BAD",
+            "field": "type",
+            "reason": "样本类型不能为空"
+          },
+          {
+            "row": 4,
+            "sampleCode": "CSV-TEMP",
+            "field": "minTemp",
+            "reason": "最低温度值无效"
+          },
+          {
+            "row": 5,
+            "sampleCode": "CSV-RANGE",
+            "field": "minTemp",
+            "reason": "最低温度必须小于最高温度"
+          }
+        ]
+      },
+      "failureReason": "导入校验失败: 4 个错误",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750121164-08uh1l",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "N/A",
+      "timestamp": 1781750121164,
+      "success": false,
+      "afterState": {
+        "errors": [
+          {
+            "row": 2,
+            "sampleCode": "CSV-DUP",
+            "field": "sampleCode",
+            "reason": "CSV 内样本编号 CSV-DUP 重复"
+          },
+          {
+            "row": 3,
+            "sampleCode": "CSV-DUP",
+            "field": "sampleCode",
+            "reason": "CSV 内样本编号 CSV-DUP 重复"
+          }
+        ]
+      },
+      "failureReason": "导入校验失败: 2 个错误",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750121155-o5ikrm",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "N/A",
+      "timestamp": 1781750121155,
+      "success": false,
+      "afterState": {
+        "errors": [
+          {
+            "row": 2,
+            "sampleCode": "CSV-001",
+            "field": "sampleCode",
+            "reason": "样本编号 CSV-001 已存在"
+          }
+        ]
+      },
+      "failureReason": "导入校验失败: 1 个错误",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750121130-8995cl",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781750121129-mnqpuu",
+      "timestamp": 1781750121130,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-59B5",
+        "importedCount": 2,
+        "samples": [
+          {
+            "id": "sample-1781750121129-z7xo2p",
+            "sampleCode": "CSV-001",
+            "status": "REGISTERED"
+          },
+          {
+            "id": "sample-1781750121129-pn1rch",
+            "sampleCode": "CSV-002",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750121118-q1umpy",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781750121118,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750121111-abecla",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781750121111,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750121087-r3r593",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781750121087,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781750031390-0k140f",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781750031390,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781749943534-2cj4eq",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781749943534,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781749943526-q5wlee",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781749943526,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781749943511-lbebda",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781749943511,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781749845082-vbszyi",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781749845082,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781749845076-hv6dh7",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781749845076,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781749845061-ov5ud9",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781749845061,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781749746567-f8un96",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781749746568,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781749746562-prhogt",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781749746562,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781749746548-6t5tjk",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781749746548,
+      "success": true,
+      "ipAddress": "::1"
+    },
     {
       "id": "audit-1781747738511-13aprc",
       "action": "LOGIN",
@@ -2261,5 +3834,6 @@
       "ipAddress": "::1"
     }
   ],
-  "initialized": true
+  "initialized": true,
+  "exportConfigs": []
 }

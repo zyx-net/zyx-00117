@@ -112,11 +112,32 @@ export interface Batch {
   note?: string;
 }
 
+export interface ExportConfig {
+  id: string;
+  name: string;
+  createdBy: string;
+  creatorName: string;
+  createdAt: number;
+  updatedAt: number;
+  type: 'batches' | 'samples';
+  includeSignoffHistory: boolean;
+  includeTempAlerts: boolean;
+  includeFailureAudit: boolean;
+  filters: Record<string, string | number | boolean>;
+}
+
 export interface LabsRequest extends ExpressRequest {
   session: {
     userId?: string;
     [key: string]: unknown;
   } | null;
+}
+
+export interface CsvImportError {
+  row: number;
+  sampleCode: string;
+  field: string;
+  reason: string;
 }
 
 export interface ApiResponse<T = unknown> {

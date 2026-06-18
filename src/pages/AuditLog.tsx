@@ -17,6 +17,8 @@ const ACTIONS = [
   'REGISTER_SAMPLES', 'INITIATE_HANDOVER', 'RECEIVE_BATCH',
   'RETURN_BATCH', 'RE_HANDOVER', 'VOID_BATCH',
   'ADD_TEMPERATURE', 'RESOLVE_ALERT',
+  'CSV_IMPORT', 'CREATE_EXPORT_CONFIG', 'UPDATE_EXPORT_CONFIG',
+  'DELETE_EXPORT_CONFIG', 'EXPORT_BATCHES', 'EXPORT_SAMPLES',
 ] as const;
 
 const TARGET_TYPES = ['', 'SAMPLE', 'BATCH', 'USER', 'SYSTEM'] as const;
@@ -33,6 +35,12 @@ const ACTION_LABELS: Record<string, string> = {
   VOID_BATCH: '作废批次',
   ADD_TEMPERATURE: '添加温控',
   RESOLVE_ALERT: '处理告警',
+  CSV_IMPORT: 'CSV导入',
+  CREATE_EXPORT_CONFIG: '创建导出配置',
+  UPDATE_EXPORT_CONFIG: '修改导出配置',
+  DELETE_EXPORT_CONFIG: '删除导出配置',
+  EXPORT_BATCHES: '导出批次',
+  EXPORT_SAMPLES: '导出样本',
 };
 
 export default function AuditLog() {

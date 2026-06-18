@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '@/api';
 import { useAppStore } from '@/store';
-import type { Sample, SampleStatus } from '@/types';
+import type { Sample, SampleStatus, ExportConfig } from '@/types';
 import {
   STATUS_LABELS,
   STATUS_COLORS,
@@ -16,6 +16,9 @@ import {
   X,
   AlertTriangle,
   CheckCircle2,
+  Settings2,
+  Trash2,
+  Save,
 } from 'lucide-react';
 
 const STATUS_OPTIONS: (SampleStatus | '')[] = [
@@ -31,6 +34,13 @@ export default function SampleList() {
   const [onlyAlert, setOnlyAlert] = useState(false);
   const showToast = useAppStore((s) => s.showToast);
   const [applied, setApplied] = useState({ keyword: '', status: '', holderId: '', onlyAlert: false });
+  const [showExportConfig, setShowExportConfig] = useState(false);
+  const [exportConfigs, setExportConfigs] = useState<ExportConfig[]>([]);
+  const [selectedConfigId, setSelectedConfigId] = useState<string>('');
+  const [newConfigName, setNewConfigName] = useState('');
+  const [newConfigSignoff, setNewConfigSignoff] = useState(true);
+  const [newConfigTempAlerts, setNewConfigTempAlerts] = useState(true);
+  const [newConfigFailureAudit, setNewConfigFailureAudit] = useState(false);
 
   useEffect(() => {
     load();
@@ -66,9 +76,52 @@ export default function SampleList() {
     if (applied.status) filters.status = applied.status;
     if (applied.holderId) filters.holderId = applied.holderId;
     if (applied.onlyAlert) filters.hasAlert = 'true';
-    const url = api.buildExportUrl('samples', filters);
+    const url = api.buildExportUrl('samples', filters, selectedConfigId || undefined);
     window.open(url, '_blank');
     showToast('已开始导出', 'success');
+  }
+
+  async function loadExportConfigs() {
+    const r = await api.listExportConfigs('samples');
+    if (r.success && r.data) setExportConfigs(r.data.configs);
+  }
+
+  async function saveExportConfig() {
+    if (!newConfigName.trim()) {
+      showToast('请输入配置名称', 'error');
+      return;
+    }
+    const filters: Record<string, string | number | boolean> = {};
+    if (applied.keyword) filters.keyword = applied.keyword;
+    if (applied.status) filters.status = applied.status;
+    if (applied.holderId) filters.holderId = applied.holderId;
+    if (applied.onlyAlert) filters.hasAlert = true;
+    const r = await api.createExportConfig({
+      name: newConfigName.trim(),
+      type: 'samples',
+      includeSignoffHistory: newConfigSignoff,
+      includeTempAlerts: newConfigTempAlerts,
+      includeFailureAudit: newConfigFailureAudit,
+      filters,
+    });
+    if (r.success) {
+      showToast('导出配置已保存', 'success');
+      setNewConfigName('');
+      await loadExportConfigs();
+    } else {
+      showToast(r.error || '保存失败', 'error');
+    }
+  }
+
+  async function deleteConfig(id: string) {
+    const r = await api.deleteExportConfig(id);
+    if (r.success) {
+      showToast('配置已删除', 'success');
+      if (selectedConfigId === id) setSelectedConfigId('');
+      await loadExportConfigs();
+    } else {
+      showToast(r.error || '删除失败', 'error');
+    }
   }
 
   const stats = useMemo(() => {
@@ -152,6 +205,12 @@ export default function SampleList() {
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-600 text-white text-sm hover:bg-emerald-700 transition">
               <Download className="w-4 h-4" /> 导出
             </button>
+            <button
+              onClick={() => { setShowExportConfig(!showExportConfig); loadExportConfigs(); }}
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-200 text-slate-600 text-sm hover:bg-slate-50 transition"
+            >
+              <Settings2 className="w-4 h-4" />
+            </button>
           </div>
         </div>
 
@@ -169,6 +228,73 @@ export default function SampleList() {
           ))}
         </div>
       </div>
+
+      {showExportConfig && (
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="font-semibold text-slate-800">导出配置</h3>
+            <button onClick={() => setShowExportConfig(false)} className="text-slate-400 hover:text-slate-600">
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs text-slate-500 mb-1">使用已保存的配置</label>
+              <div className="flex gap-2">
+                <select
+                  value={selectedConfigId}
+                  onChange={(e) => setSelectedConfigId(e.target.value)}
+                  className="flex-1 px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-400 outline-none text-sm bg-white"
+                >
+                  <option value="">默认导出</option>
+                  {exportConfigs.map((c) => (
+                    <option key={c.id} value={c.id}>{c.name}</option>
+                  ))}
+                </select>
+                {selectedConfigId && (
+                  <button
+                    onClick={() => deleteConfig(selectedConfigId)}
+                    className="px-2 py-2 rounded-lg border border-red-200 text-red-600 text-sm hover:bg-red-50 transition"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+            </div>
+            <div>
+              <label className="block text-xs text-slate-500 mb-1">保存当前筛选为新配置</label>
+              <div className="flex gap-2">
+                <input
+                  value={newConfigName}
+                  onChange={(e) => setNewConfigName(e.target.value)}
+                  placeholder="配置名称"
+                  className="flex-1 px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-400 outline-none text-sm"
+                />
+                <button
+                  onClick={saveExportConfig}
+                  className="px-3 py-2 rounded-lg bg-blue-600 text-white text-sm hover:bg-blue-700 transition"
+                >
+                  <Save className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-4 text-sm">
+            <label className="inline-flex items-center gap-2">
+              <input type="checkbox" checked={newConfigSignoff} onChange={(e) => setNewConfigSignoff(e.target.checked)} className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-400" />
+              包含签收历史
+            </label>
+            <label className="inline-flex items-center gap-2">
+              <input type="checkbox" checked={newConfigTempAlerts} onChange={(e) => setNewConfigTempAlerts(e.target.checked)} className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-400" />
+              包含温控异常
+            </label>
+            <label className="inline-flex items-center gap-2">
+              <input type="checkbox" checked={newConfigFailureAudit} onChange={(e) => setNewConfigFailureAudit(e.target.checked)} className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-400" />
+              包含失败审计
+            </label>
+          </div>
+        </div>
+      )}
 
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
         {loading ? (

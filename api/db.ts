@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import type { User, Sample, Batch, AuditEntry } from './types.js';
+import type { User, Sample, Batch, AuditEntry, ExportConfig } from './types.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,6 +12,7 @@ export interface Database {
   samples: Sample[];
   batches: Batch[];
   audits: AuditEntry[];
+  exportConfigs: ExportConfig[];
   initialized: boolean;
 }
 
@@ -71,6 +72,7 @@ function createInitialDb(): Database {
     samples: [],
     batches: [],
     audits: [],
+    exportConfigs: [],
     initialized: true,
   };
 }
@@ -87,6 +89,9 @@ export function loadDb(): Database {
     const db = JSON.parse(raw) as Database;
     if (!db.initialized) {
       return createInitialDb();
+    }
+    if (!db.exportConfigs) {
+      db.exportConfigs = [];
     }
     return db;
   } catch (e) {
