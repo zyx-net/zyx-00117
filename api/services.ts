@@ -9,6 +9,11 @@ import type {
   HandoverChainLink,
   ExportConfig,
   CsvImportError,
+  SampleTemplate,
+  TemplateSnapshot,
+  ImportDraft,
+  ImportUndoRecord,
+  DraftConflictInfo,
 } from './types.js';
 
 const STATUS_FLOW: Record<SampleStatus, SampleStatus[]> = {
@@ -1245,7 +1250,7 @@ export function importCsvSamples(
   db.batches.unshift(batch);
   saveDb(db);
 
-  createAudit(operator, 'CSV_IMPORT', 'BATCH', batchId, true, {
+  const audit = createAudit(operator, 'CSV_IMPORT', 'BATCH', batchId, true, {
     afterState: {
       batchCode,
       importedCount: newSamples.length,
@@ -1253,6 +1258,15 @@ export function importCsvSamples(
     },
     ipAddress: ip,
   });
+
+  createImportUndoRecord(
+    batchId,
+    batchCode,
+    newSamples.map((s) => s.id),
+    audit.id,
+    operator.id,
+    operator.name,
+  );
 
   return { success: true, batch, samples: newSamples, importedCount: newSamples.length };
 }
@@ -1336,4 +1350,691 @@ export function listExportConfigs(type?: 'batches' | 'samples'): ExportConfig[] 
 export function getExportConfig(configId: string): ExportConfig | undefined {
   const db = loadDb();
   return db.exportConfigs.find((c) => c.id === configId);
+}
+
+// ==================== Sample Template Services ====================
+
+export function createSampleTemplate(
+  operator: User,
+  input: Omit<SampleTemplate, 'id' | 'createdBy' | 'creatorName' | 'createdAt' | 'updatedAt' | 'version' | 'isActive' | 'referencedCount' | 'intendedReceiverName'>,
+  ip?: string,
+): { success: boolean; template?: SampleTemplate; error?: string } {
+  if (operator.role !== 'SAMPLER' && operator.role !== 'ADMIN') {
+    return { success: false, error: '只有采样员或管理员可以创建模板' };
+  }
+  if (!input.name?.trim()) {
+    return { success: false, error: '模板名称不能为空' };
+  }
+  if (!input.intendedReceiverId) {
+    return { success: false, error: '必须指定接收人' };
+  }
+  if (input.defaultMinTemp >= input.defaultMaxTemp) {
+    return { success: false, error: '默认温度范围设置错误' };
+  }
+
+  const db = loadDb();
+  const receiver = db.users.find((u) => u.id === input.intendedReceiverId);
+  if (!receiver) {
+    return { success: false, error: '接收人不存在' };
+  }
+  if (receiver.role !== 'RECEIVER' && receiver.role !== 'ADMIN') {
+    return { success: false, error: '接收人必须是接收员角色' };
+  }
+
+  if (db.sampleTemplates.some((t) => t.name === input.name.trim() && t.isActive)) {
+    return { success: false, error: '已存在同名的启用模板' };
+  }
+
+  const now = Date.now();
+  const template: SampleTemplate = {
+    ...input,
+    name: input.name.trim(),
+    intendedReceiverId: receiver.id,
+    intendedReceiverName: receiver.name,
+    id: generateId('tpl'),
+    createdBy: operator.id,
+    creatorName: operator.name,
+    createdAt: now,
+    updatedAt: now,
+    version: 1,
+    isActive: true,
+    referencedCount: 0,
+  };
+
+  db.sampleTemplates.unshift(template);
+  saveDb(db);
+
+  createAudit(operator, 'CREATE_TEMPLATE', 'SYSTEM', template.id, true, {
+    afterState: { name: template.name, receiver: template.intendedReceiverName },
+    ipAddress: ip,
+  });
+
+  return { success: true, template };
+}
+
+export function updateSampleTemplate(
+  operator: User,
+  templateId: string,
+  updates: Partial<Omit<SampleTemplate, 'id' | 'createdBy' | 'creatorName' | 'createdAt' | 'version' | 'referencedCount'>>,
+  ip?: string,
+): { success: boolean; template?: SampleTemplate; error?: string } {
+  if (operator.role !== 'SAMPLER' && operator.role !== 'ADMIN') {
+    return { success: false, error: '只有采样员或管理员可以修改模板' };
+  }
+
+  const db = loadDb();
+  const idx = db.sampleTemplates.findIndex((t) => t.id === templateId);
+  if (idx === -1) {
+    return { success: false, error: '模板不存在' };
+  }
+
+  const template = db.sampleTemplates[idx];
+  if (template.createdBy !== operator.id && operator.role !== 'ADMIN') {
+    return { success: false, error: '只能修改自己创建的模板' };
+  }
+
+  const beforeState = { ...template };
+
+  if (updates.name?.trim()) {
+    if (db.sampleTemplates.some((t) => t.id !== templateId && t.name === updates.name!.trim() && t.isActive)) {
+      return { success: false, error: '已存在同名的启用模板' };
+    }
+    template.name = updates.name.trim();
+  }
+
+  if (updates.intendedReceiverId) {
+    const receiver = db.users.find((u) => u.id === updates.intendedReceiverId);
+    if (!receiver) {
+      return { success: false, error: '接收人不存在' };
+    }
+    if (receiver.role !== 'RECEIVER' && receiver.role !== 'ADMIN') {
+      return { success: false, error: '接收人必须是接收员角色' };
+    }
+    template.intendedReceiverId = receiver.id;
+    template.intendedReceiverName = receiver.name;
+  }
+
+  if (updates.defaultMinTemp !== undefined && updates.defaultMaxTemp !== undefined) {
+    if (updates.defaultMinTemp >= updates.defaultMaxTemp) {
+      return { success: false, error: '默认温度范围设置错误' };
+    }
+    template.defaultMinTemp = updates.defaultMinTemp;
+    template.defaultMaxTemp = updates.defaultMaxTemp;
+  } else if (updates.defaultMinTemp !== undefined) {
+    if (updates.defaultMinTemp >= template.defaultMaxTemp) {
+      return { success: false, error: '默认温度范围设置错误' };
+    }
+    template.defaultMinTemp = updates.defaultMinTemp;
+  } else if (updates.defaultMaxTemp !== undefined) {
+    if (template.defaultMinTemp >= updates.defaultMaxTemp) {
+      return { success: false, error: '默认温度范围设置错误' };
+    }
+    template.defaultMaxTemp = updates.defaultMaxTemp;
+  }
+
+  if (updates.description !== undefined) template.description = updates.description;
+  if (updates.storageConditions !== undefined) template.storageConditions = updates.storageConditions;
+  if (updates.shippingRequirements !== undefined) template.shippingRequirements = updates.shippingRequirements;
+  if (updates.note !== undefined) template.note = updates.note;
+  if (updates.isActive !== undefined) template.isActive = updates.isActive;
+
+  template.version += 1;
+  template.updatedAt = Date.now();
+
+  saveDb(db);
+
+  createAudit(operator, 'UPDATE_TEMPLATE', 'SYSTEM', templateId, true, {
+    beforeState,
+    afterState: { ...template },
+    ipAddress: ip,
+  });
+
+  return { success: true, template };
+}
+
+export function deactivateSampleTemplate(
+  operator: User,
+  templateId: string,
+  ip?: string,
+): { success: boolean; error?: string } {
+  if (operator.role !== 'SAMPLER' && operator.role !== 'ADMIN') {
+    return { success: false, error: '只有采样员或管理员可以停用模板' };
+  }
+
+  const db = loadDb();
+  const template = db.sampleTemplates.find((t) => t.id === templateId);
+  if (!template) {
+    return { success: false, error: '模板不存在' };
+  }
+
+  if (template.createdBy !== operator.id && operator.role !== 'ADMIN') {
+    return { success: false, error: '只能停用自己创建的模板' };
+  }
+
+  const beforeState = { isActive: template.isActive };
+  template.isActive = false;
+  template.updatedAt = Date.now();
+  template.version += 1;
+
+  saveDb(db);
+
+  createAudit(operator, 'DEACTIVATE_TEMPLATE', 'SYSTEM', templateId, true, {
+    beforeState,
+    afterState: { isActive: false },
+    ipAddress: ip,
+  });
+
+  return { success: true };
+}
+
+export function listSampleTemplates(includeInactive = false): SampleTemplate[] {
+  const db = loadDb();
+  let templates = [...db.sampleTemplates];
+  if (!includeInactive) {
+    templates = templates.filter((t) => t.isActive);
+  }
+  return templates.sort((a, b) => b.updatedAt - a.updatedAt);
+}
+
+export function getSampleTemplate(templateId: string): SampleTemplate | undefined {
+  const db = loadDb();
+  return db.sampleTemplates.find((t) => t.id === templateId);
+}
+
+export function createTemplateSnapshot(template: SampleTemplate): TemplateSnapshot {
+  return {
+    templateId: template.id,
+    templateVersion: template.version,
+    name: template.name,
+    intendedReceiverId: template.intendedReceiverId,
+    intendedReceiverName: template.intendedReceiverName,
+    storageConditions: template.storageConditions,
+    shippingRequirements: template.shippingRequirements,
+    defaultMinTemp: template.defaultMinTemp,
+    defaultMaxTemp: template.defaultMaxTemp,
+    note: template.note,
+    snapshotAt: Date.now(),
+  };
+}
+
+export function incrementTemplateReference(templateId: string): void {
+  const db = loadDb();
+  const template = db.sampleTemplates.find((t) => t.id === templateId);
+  if (template) {
+    template.referencedCount += 1;
+    saveDb(db);
+  }
+}
+
+// ==================== Import Draft Services ====================
+
+export function checkDraftConflict(
+  draftId: string,
+  clientVersion: number,
+): DraftConflictInfo {
+  const db = loadDb();
+  const draft = db.importDrafts.find((d) => d.id === draftId);
+  if (!draft) {
+    return {
+      hasConflict: false,
+      currentVersion: 0,
+      clientVersion,
+      lastEditedBy: '',
+      lastEditedByName: '',
+      lastEditedAt: 0,
+    };
+  }
+  return {
+    hasConflict: draft.version > clientVersion,
+    currentVersion: draft.version,
+    clientVersion,
+    lastEditedBy: draft.lastEditedBy,
+    lastEditedByName: draft.lastEditedByName,
+    lastEditedAt: draft.lastEditedAt,
+  };
+}
+
+export function saveImportDraft(
+  operator: User,
+  input: {
+    id?: string;
+    name: string;
+    csvContent: string;
+    templateId?: string;
+    parsedRows?: Array<Record<string, unknown>>;
+    errors?: CsvImportError[];
+    clientVersion?: number;
+  },
+  ip?: string,
+): { success: boolean; draft?: ImportDraft; error?: string; conflict?: DraftConflictInfo } {
+  if (operator.role !== 'SAMPLER' && operator.role !== 'ADMIN') {
+    return { success: false, error: '只有采样员或管理员可以保存草稿' };
+  }
+  if (!input.name?.trim()) {
+    return { success: false, error: '草稿名称不能为空' };
+  }
+  if (!input.csvContent?.trim()) {
+    return { success: false, error: 'CSV 内容不能为空' };
+  }
+
+  const db = loadDb();
+  const now = Date.now();
+
+  if (input.id) {
+    const idx = db.importDrafts.findIndex((d) => d.id === input.id);
+    if (idx === -1) {
+      return { success: false, error: '草稿不存在' };
+    }
+
+    const existing = db.importDrafts[idx];
+
+    if (input.clientVersion !== undefined && existing.version > input.clientVersion) {
+      const conflict = checkDraftConflict(input.id, input.clientVersion);
+      createAudit(operator, 'DRAFT_CONFLICT_BLOCKED', 'SYSTEM', input.id, false, {
+        failureReason: `并发冲突：当前版本 ${existing.version}，客户端版本 ${input.clientVersion}，最后编辑者 ${existing.lastEditedByName}`,
+        ipAddress: ip,
+      });
+      return { success: false, error: '草稿已被他人修改，请刷新后重新编辑', conflict };
+    }
+
+    if (existing.status !== 'DRAFT') {
+      return { success: false, error: '草稿已提交或已取消，无法修改' };
+    }
+
+    let templateSnapshot: TemplateSnapshot | undefined;
+    if (input.templateId) {
+      const template = db.sampleTemplates.find((t) => t.id === input.templateId);
+      if (!template) {
+        return { success: false, error: '所选模板不存在' };
+      }
+      if (!template.isActive) {
+        return { success: false, error: '所选模板已停用' };
+      }
+      templateSnapshot = createTemplateSnapshot(template);
+    }
+
+    const beforeState = { ...existing };
+
+    existing.name = input.name.trim();
+    existing.csvContent = input.csvContent;
+    existing.templateId = input.templateId;
+    existing.templateSnapshot = templateSnapshot;
+    existing.parsedRows = input.parsedRows;
+    existing.errors = input.errors;
+    existing.updatedAt = now;
+    existing.version += 1;
+    existing.lastEditedBy = operator.id;
+    existing.lastEditedByName = operator.name;
+    existing.lastEditedAt = now;
+
+    saveDb(db);
+
+    createAudit(operator, 'UPDATE_DRAFT', 'SYSTEM', existing.id, true, {
+      beforeState: { name: beforeState.name, version: beforeState.version },
+      afterState: { name: existing.name, version: existing.version, rowCount: input.parsedRows?.length || 0 },
+      ipAddress: ip,
+    });
+
+    return { success: true, draft: existing };
+  } else {
+    let templateSnapshot: TemplateSnapshot | undefined;
+    if (input.templateId) {
+      const template = db.sampleTemplates.find((t) => t.id === input.templateId);
+      if (!template) {
+        return { success: false, error: '所选模板不存在' };
+      }
+      if (!template.isActive) {
+        return { success: false, error: '所选模板已停用' };
+      }
+      templateSnapshot = createTemplateSnapshot(template);
+    }
+
+    const draft: ImportDraft = {
+      id: generateId('draft'),
+      name: input.name.trim(),
+      csvContent: input.csvContent,
+      templateId: input.templateId,
+      templateSnapshot,
+      parsedRows: input.parsedRows,
+      errors: input.errors,
+      status: 'DRAFT',
+      createdBy: operator.id,
+      creatorName: operator.name,
+      createdAt: now,
+      updatedAt: now,
+      version: 1,
+      lastEditedBy: operator.id,
+      lastEditedByName: operator.name,
+      lastEditedAt: now,
+    };
+
+    db.importDrafts.unshift(draft);
+    saveDb(db);
+
+    createAudit(operator, 'CREATE_DRAFT', 'SYSTEM', draft.id, true, {
+      afterState: { name: draft.name, rowCount: input.parsedRows?.length || 0 },
+      ipAddress: ip,
+    });
+
+    return { success: true, draft };
+  }
+}
+
+export function listImportDrafts(operator: User): ImportDraft[] {
+  const db = loadDb();
+  let drafts = [...db.importDrafts];
+  if (operator.role !== 'ADMIN') {
+    drafts = drafts.filter((d) => d.createdBy === operator.id);
+  }
+  return drafts.sort((a, b) => b.updatedAt - a.updatedAt);
+}
+
+export function getImportDraft(
+  operator: User,
+  draftId: string,
+): { success: boolean; draft?: ImportDraft; error?: string; conflict?: DraftConflictInfo } {
+  const db = loadDb();
+  const draft = db.importDrafts.find((d) => d.id === draftId);
+  if (!draft) {
+    return { success: false, error: '草稿不存在' };
+  }
+  if (draft.createdBy !== operator.id && operator.role !== 'ADMIN') {
+    return { success: false, error: '无权查看他人草稿' };
+  }
+  return { success: true, draft };
+}
+
+export function deleteImportDraft(
+  operator: User,
+  draftId: string,
+  ip?: string,
+): { success: boolean; error?: string } {
+  const db = loadDb();
+  const idx = db.importDrafts.findIndex((d) => d.id === draftId);
+  if (idx === -1) {
+    return { success: false, error: '草稿不存在' };
+  }
+  const draft = db.importDrafts[idx];
+  if (draft.createdBy !== operator.id && operator.role !== 'ADMIN') {
+    return { success: false, error: '无权删除他人草稿' };
+  }
+
+  db.importDrafts.splice(idx, 1);
+  saveDb(db);
+
+  createAudit(operator, 'DELETE_DRAFT', 'SYSTEM', draftId, true, {
+    beforeState: { name: draft.name, status: draft.status },
+    ipAddress: ip,
+  });
+
+  return { success: true };
+}
+
+export function importCsvFromDraft(
+  operator: User,
+  draftId: string,
+  clientVersion: number,
+  ip?: string,
+): {
+  success: boolean;
+  error?: string;
+  errors?: CsvImportError[];
+  batch?: Batch;
+  samples?: Sample[];
+  importedCount?: number;
+  conflict?: DraftConflictInfo;
+} {
+  const db = loadDb();
+  const draft = db.importDrafts.find((d) => d.id === draftId);
+  if (!draft) {
+    return { success: false, error: '草稿不存在' };
+  }
+  if (draft.createdBy !== operator.id && operator.role !== 'ADMIN') {
+    return { success: false, error: '无权提交他人草稿' };
+  }
+  if (draft.status !== 'DRAFT') {
+    return { success: false, error: '草稿已提交或已取消' };
+  }
+
+  if (draft.version > clientVersion) {
+    const conflict = checkDraftConflict(draftId, clientVersion);
+    createAudit(operator, 'DRAFT_CONFLICT_BLOCKED', 'SYSTEM', draftId, false, {
+      failureReason: `提交时并发冲突：当前版本 ${draft.version}，客户端版本 ${clientVersion}`,
+      ipAddress: ip,
+    });
+    return { success: false, error: '草稿已被他人修改，请刷新后重新提交', conflict };
+  }
+
+  const result = importCsvSamplesWithTemplate(
+    operator,
+    draft.csvContent,
+    draft.templateSnapshot,
+    draft.templateId,
+    ip,
+  );
+
+  if (result.success && result.batch) {
+    draft.status = 'IMPORTED';
+    draft.batchId = result.batch.id;
+    draft.updatedAt = Date.now();
+    draft.version += 1;
+    saveDb(db);
+
+    createAudit(operator, 'SUBMIT_DRAFT', 'SYSTEM', draftId, true, {
+      afterState: { batchId: result.batch.id, importedCount: result.importedCount },
+      ipAddress: ip,
+    });
+  }
+
+  return result;
+}
+
+export function importCsvSamplesWithTemplate(
+  operator: User,
+  csvContent: string,
+  templateSnapshot?: TemplateSnapshot,
+  templateId?: string,
+  ip?: string,
+): {
+  success: boolean;
+  error?: string;
+  errors?: CsvImportError[];
+  batch?: Batch;
+  samples?: Sample[];
+  importedCount?: number;
+} {
+  const baseResult = importCsvSamples(operator, csvContent, ip);
+  if (!baseResult.success || !baseResult.batch || !baseResult.samples) {
+    return baseResult;
+  }
+
+  if (templateSnapshot && templateId) {
+    const db = loadDb();
+    const batch = db.batches.find((b) => b.id === baseResult.batch!.id);
+    if (batch) {
+      batch.templateSnapshot = templateSnapshot;
+      batch.templateId = templateId;
+      batch.intendedReceiverId = templateSnapshot.intendedReceiverId;
+      batch.intendedReceiverName = templateSnapshot.intendedReceiverName;
+
+      for (const sample of baseResult.samples) {
+        const s = db.samples.find((s) => s.id === sample.id);
+        if (s) {
+          s.minTemp = templateSnapshot.defaultMinTemp;
+          s.maxTemp = templateSnapshot.defaultMaxTemp;
+        }
+      }
+
+      saveDb(db);
+      incrementTemplateReference(templateId);
+
+      createAudit(operator, 'APPLY_TEMPLATE', 'BATCH', batch.id, true, {
+        afterState: {
+          templateId,
+          templateName: templateSnapshot.name,
+          templateVersion: templateSnapshot.templateVersion,
+        },
+        ipAddress: ip,
+      });
+
+      const updatedBatch = { ...batch, templateSnapshot, templateId };
+      const updatedSamples = baseResult.samples.map((s) => ({
+        ...s,
+        minTemp: templateSnapshot.defaultMinTemp,
+        maxTemp: templateSnapshot.defaultMaxTemp,
+      }));
+
+      return {
+        success: true,
+        batch: updatedBatch,
+        samples: updatedSamples,
+        importedCount: baseResult.importedCount,
+      };
+    }
+  }
+
+  return baseResult;
+}
+
+// ==================== Import Undo Services ====================
+
+export function createImportUndoRecord(
+  batchId: string,
+  batchCode: string,
+  sampleIds: string[],
+  importAuditId: string,
+  createdBy: string,
+  creatorName: string,
+): ImportUndoRecord {
+  const db = loadDb();
+  const record: ImportUndoRecord = {
+    id: generateId('undo'),
+    batchId,
+    batchCode,
+    sampleIds,
+    importAuditId,
+    createdBy,
+    creatorName,
+    createdAt: Date.now(),
+    undone: false,
+  };
+  db.importUndoRecords.unshift(record);
+  saveDb(db);
+  return record;
+}
+
+export function getLastImportUndoRecord(
+  operator: User,
+): { success: boolean; record?: ImportUndoRecord; error?: string } {
+  const db = loadDb();
+  const records = db.importUndoRecords.filter((r) => !r.undone);
+  if (operator.role !== 'ADMIN') {
+    const userRecords = records.filter((r) => r.createdBy === operator.id);
+    if (userRecords.length === 0) {
+      return { success: false, error: '没有可撤销的导入记录' };
+    }
+    return { success: true, record: userRecords[0] };
+  }
+  if (records.length === 0) {
+    return { success: false, error: '没有可撤销的导入记录' };
+  }
+  return { success: true, record: records[0] };
+}
+
+export function undoLastImport(
+  operator: User,
+  ip?: string,
+): { success: boolean; error?: string; undoneData?: { batchCode: string; sampleCount: number } } {
+  const db = loadDb();
+
+  const recordResult = getLastImportUndoRecord(operator);
+  if (!recordResult.success || !recordResult.record) {
+    return { success: false, error: recordResult.error };
+  }
+
+  const recordId = recordResult.record.id;
+  const record = db.importUndoRecords.find((r) => r.id === recordId);
+  if (!record || record.undone) {
+    return { success: false, error: '记录不存在或已被撤销' };
+  }
+
+  if (record.createdBy !== operator.id && operator.role !== 'ADMIN') {
+    createAudit(operator, 'UNAUTHORIZED_UNDO_ATTEMPT', 'SYSTEM', record.id, false, {
+      failureReason: `用户 ${operator.name} 尝试撤销他人创建的导入记录`,
+      ipAddress: ip,
+    });
+    return { success: false, error: '只能撤销自己创建的导入记录' };
+  }
+
+  const batch = db.batches.find((b) => b.id === record.batchId);
+  if (!batch) {
+    return { success: false, error: '批次不存在，可能已被撤销' };
+  }
+
+  const samples = db.samples.filter((s) => record.sampleIds.includes(s.id));
+
+  const nonDraftSamples = samples.filter((s) => s.status !== 'REGISTERED');
+  if (nonDraftSamples.length > 0) {
+    const nonDraftCodes = nonDraftSamples.map((s) => s.sampleCode).join(', ');
+    createAudit(operator, 'UNDO_BLOCKED', 'BATCH', record.batchId, false, {
+      failureReason: `部分样本已流转：${nonDraftCodes}`,
+      ipAddress: ip,
+    });
+    return { success: false, error: `以下样本已开始流转，无法撤销：${nonDraftCodes}` };
+  }
+
+  const beforeState = {
+    batchCode: batch.batchCode,
+    sampleCount: samples.length,
+    batchStatus: batch.status,
+  };
+
+  for (const sample of samples) {
+    const sIdx = db.samples.findIndex((s) => s.id === sample.id);
+    if (sIdx !== -1) {
+      db.samples.splice(sIdx, 1);
+    }
+  }
+
+  const bIdx = db.batches.findIndex((b) => b.id === record.batchId);
+  if (bIdx !== -1) {
+    db.batches.splice(bIdx, 1);
+  }
+
+  record.undone = true;
+  record.undoneBy = operator.id;
+  record.undoneByName = operator.name;
+  record.undoneAt = Date.now();
+
+  if (batch.templateId) {
+    const template = db.sampleTemplates.find((t) => t.id === batch.templateId);
+    if (template && template.referencedCount > 0) {
+      template.referencedCount -= 1;
+    }
+  }
+
+  saveDb(db);
+
+  createAudit(operator, 'UNDO_IMPORT', 'BATCH', record.batchId, true, {
+    beforeState,
+    afterState: { undone: true },
+    ipAddress: ip,
+  });
+
+  return {
+    success: true,
+    undoneData: {
+      batchCode: record.batchCode,
+      sampleCount: record.sampleIds.length,
+    },
+  };
+}
+
+export function listImportUndoRecords(operator: User): ImportUndoRecord[] {
+  const db = loadDb();
+  let records = [...db.importUndoRecords];
+  if (operator.role !== 'ADMIN') {
+    records = records.filter((r) => r.createdBy === operator.id);
+  }
+  return records.sort((a, b) => b.createdAt - a.createdAt);
 }

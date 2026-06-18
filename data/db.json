@@ -1318,9 +1318,1114 @@
       ],
       "createdAt": 1781750913003,
       "updatedAt": 1781750913003
+    },
+    {
+      "id": "sample-1781752080699-qdjfq3",
+      "sampleCode": "TPL-mqix6o0n-001",
+      "batchId": "batch-1781752080699-umaqu1",
+      "type": "blood",
+      "description": "template import 1",
+      "collectedAt": 1781752080699,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building A",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "REGISTERED",
+      "minTemp": 1,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781752080699-5y39dt",
+          "sampleId": "sample-1781752080699-qdjfq3",
+          "timestamp": 1781752080699,
+          "temperature": 4.5,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer A",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [
+        {
+          "id": "alert-1781752080699-qnnplf",
+          "sampleId": "sample-1781752080699-qdjfq3",
+          "recordId": "temp-1781752080699-5y39dt",
+          "type": "TOO_LOW",
+          "threshold": 5,
+          "actualValue": 4.5,
+          "timestamp": 1781752080699,
+          "resolved": false
+        }
+      ],
+      "handoverChain": [
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781752080699-5y39dt"
+          ],
+          "id": "chain-1781752080699-agvggk",
+          "timestamp": 1781752080699
+        }
+      ],
+      "createdAt": 1781752080699,
+      "updatedAt": 1781752080699
+    },
+    {
+      "id": "sample-1781752080699-srsw3w",
+      "sampleCode": "TPL-mqix6o0n-002",
+      "batchId": "batch-1781752080699-umaqu1",
+      "type": "blood",
+      "description": "template import 2",
+      "collectedAt": 1781752080699,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building B",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "REGISTERED",
+      "minTemp": 1,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781752080699-fsarow",
+          "sampleId": "sample-1781752080699-srsw3w",
+          "timestamp": 1781752080699,
+          "temperature": 3.8,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer B",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [
+        {
+          "id": "alert-1781752080699-kn7rey",
+          "sampleId": "sample-1781752080699-srsw3w",
+          "recordId": "temp-1781752080699-fsarow",
+          "type": "TOO_LOW",
+          "threshold": 5,
+          "actualValue": 3.8,
+          "timestamp": 1781752080699,
+          "resolved": false
+        }
+      ],
+      "handoverChain": [
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781752080699-fsarow"
+          ],
+          "id": "chain-1781752080699-20l3hh",
+          "timestamp": 1781752080699
+        }
+      ],
+      "createdAt": 1781752080699,
+      "updatedAt": 1781752080699
+    },
+    {
+      "id": "sample-1781752080955-7s2uvx",
+      "sampleCode": "UNDOBLOCK-mqix6o0n-001",
+      "batchId": "batch-1781752080955-khzqih",
+      "type": "blood",
+      "description": "undo block test",
+      "collectedAt": 1781752080955,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building A",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "IN_TRANSIT",
+      "minTemp": 2,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781752080955-zo4y29",
+          "sampleId": "sample-1781752080955-7s2uvx",
+          "timestamp": 1781752080955,
+          "temperature": 4,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer A",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [],
+      "handoverChain": [
+        {
+          "fromUserId": "user-sampler-001",
+          "fromUserName": "张采样",
+          "toUserId": "user-receiver-001",
+          "toUserName": "王接收",
+          "action": "INITIATE_HANDOVER",
+          "note": "For undo block test",
+          "temperatureChecks": [
+            "temp-1781752080955-zo4y29"
+          ],
+          "id": "chain-1781752080984-sk07xe",
+          "timestamp": 1781752080984
+        },
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781752080955-zo4y29"
+          ],
+          "id": "chain-1781752080955-0kwsxe",
+          "timestamp": 1781752080955
+        }
+      ],
+      "createdAt": 1781752080955,
+      "updatedAt": 1781752080984
+    },
+    {
+      "id": "sample-1781752179966-akp4ha",
+      "sampleCode": "TPL-mqix8so6-001",
+      "batchId": "batch-1781752179966-9mokye",
+      "type": "blood",
+      "description": "template import 1",
+      "collectedAt": 1781752179966,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building A",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "REGISTERED",
+      "minTemp": 1,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781752179966-kedgf2",
+          "sampleId": "sample-1781752179966-akp4ha",
+          "timestamp": 1781752179966,
+          "temperature": 4.5,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer A",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [
+        {
+          "id": "alert-1781752179966-n2mg8t",
+          "sampleId": "sample-1781752179966-akp4ha",
+          "recordId": "temp-1781752179966-kedgf2",
+          "type": "TOO_LOW",
+          "threshold": 5,
+          "actualValue": 4.5,
+          "timestamp": 1781752179966,
+          "resolved": false
+        }
+      ],
+      "handoverChain": [
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781752179966-kedgf2"
+          ],
+          "id": "chain-1781752179966-zm50p2",
+          "timestamp": 1781752179966
+        }
+      ],
+      "createdAt": 1781752179966,
+      "updatedAt": 1781752179966
+    },
+    {
+      "id": "sample-1781752179966-buykb5",
+      "sampleCode": "TPL-mqix8so6-002",
+      "batchId": "batch-1781752179966-9mokye",
+      "type": "blood",
+      "description": "template import 2",
+      "collectedAt": 1781752179966,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building B",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "REGISTERED",
+      "minTemp": 1,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781752179966-vr4kzy",
+          "sampleId": "sample-1781752179966-buykb5",
+          "timestamp": 1781752179966,
+          "temperature": 3.8,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer B",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [
+        {
+          "id": "alert-1781752179966-p1f88p",
+          "sampleId": "sample-1781752179966-buykb5",
+          "recordId": "temp-1781752179966-vr4kzy",
+          "type": "TOO_LOW",
+          "threshold": 5,
+          "actualValue": 3.8,
+          "timestamp": 1781752179966,
+          "resolved": false
+        }
+      ],
+      "handoverChain": [
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781752179966-vr4kzy"
+          ],
+          "id": "chain-1781752179966-a5u2df",
+          "timestamp": 1781752179966
+        }
+      ],
+      "createdAt": 1781752179966,
+      "updatedAt": 1781752179966
+    },
+    {
+      "id": "sample-1781752180268-e21wng",
+      "sampleCode": "UNDOBLOCK-mqix8so6-001",
+      "batchId": "batch-1781752180268-j4cbz4",
+      "type": "blood",
+      "description": "undo block test",
+      "collectedAt": 1781752180268,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building A",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "IN_TRANSIT",
+      "minTemp": 2,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781752180268-obgsm2",
+          "sampleId": "sample-1781752180268-e21wng",
+          "timestamp": 1781752180268,
+          "temperature": 4,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer A",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [],
+      "handoverChain": [
+        {
+          "fromUserId": "user-sampler-001",
+          "fromUserName": "张采样",
+          "toUserId": "user-receiver-001",
+          "toUserName": "王接收",
+          "action": "INITIATE_HANDOVER",
+          "note": "For undo block test",
+          "temperatureChecks": [
+            "temp-1781752180268-obgsm2"
+          ],
+          "id": "chain-1781752180290-3o0qxj",
+          "timestamp": 1781752180290
+        },
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781752180268-obgsm2"
+          ],
+          "id": "chain-1781752180268-kjqws6",
+          "timestamp": 1781752180268
+        }
+      ],
+      "createdAt": 1781752180268,
+      "updatedAt": 1781752180290
+    },
+    {
+      "id": "sample-1781752297201-wmzig1",
+      "sampleCode": "TPL-mqixbb4w-001",
+      "batchId": "batch-1781752297201-7iv0cw",
+      "type": "blood",
+      "description": "template import 1",
+      "collectedAt": 1781752297201,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building A",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "REGISTERED",
+      "minTemp": 1,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781752297201-q1k6af",
+          "sampleId": "sample-1781752297201-wmzig1",
+          "timestamp": 1781752297201,
+          "temperature": 4.5,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer A",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [
+        {
+          "id": "alert-1781752297201-u6oaj1",
+          "sampleId": "sample-1781752297201-wmzig1",
+          "recordId": "temp-1781752297201-q1k6af",
+          "type": "TOO_LOW",
+          "threshold": 5,
+          "actualValue": 4.5,
+          "timestamp": 1781752297201,
+          "resolved": false
+        }
+      ],
+      "handoverChain": [
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781752297201-q1k6af"
+          ],
+          "id": "chain-1781752297201-su8gce",
+          "timestamp": 1781752297201
+        }
+      ],
+      "createdAt": 1781752297201,
+      "updatedAt": 1781752297201
+    },
+    {
+      "id": "sample-1781752297201-s4hcjn",
+      "sampleCode": "TPL-mqixbb4w-002",
+      "batchId": "batch-1781752297201-7iv0cw",
+      "type": "blood",
+      "description": "template import 2",
+      "collectedAt": 1781752297201,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building B",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "REGISTERED",
+      "minTemp": 1,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781752297201-buoccw",
+          "sampleId": "sample-1781752297201-s4hcjn",
+          "timestamp": 1781752297201,
+          "temperature": 3.8,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer B",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [
+        {
+          "id": "alert-1781752297201-zq2lkn",
+          "sampleId": "sample-1781752297201-s4hcjn",
+          "recordId": "temp-1781752297201-buoccw",
+          "type": "TOO_LOW",
+          "threshold": 5,
+          "actualValue": 3.8,
+          "timestamp": 1781752297201,
+          "resolved": false
+        }
+      ],
+      "handoverChain": [
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781752297201-buoccw"
+          ],
+          "id": "chain-1781752297201-8l43k4",
+          "timestamp": 1781752297201
+        }
+      ],
+      "createdAt": 1781752297201,
+      "updatedAt": 1781752297201
+    },
+    {
+      "id": "sample-1781752297473-0fomqw",
+      "sampleCode": "UNDOBLOCK-mqixbb4w-001",
+      "batchId": "batch-1781752297473-lshpzo",
+      "type": "blood",
+      "description": "undo block test",
+      "collectedAt": 1781752297473,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building A",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "IN_TRANSIT",
+      "minTemp": 2,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781752297473-dx625d",
+          "sampleId": "sample-1781752297473-0fomqw",
+          "timestamp": 1781752297473,
+          "temperature": 4,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer A",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [],
+      "handoverChain": [
+        {
+          "fromUserId": "user-sampler-001",
+          "fromUserName": "张采样",
+          "toUserId": "user-receiver-001",
+          "toUserName": "王接收",
+          "action": "INITIATE_HANDOVER",
+          "note": "For undo block test",
+          "temperatureChecks": [
+            "temp-1781752297473-dx625d"
+          ],
+          "id": "chain-1781752297505-wj9tja",
+          "timestamp": 1781752297505
+        },
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781752297473-dx625d"
+          ],
+          "id": "chain-1781752297473-20fnyu",
+          "timestamp": 1781752297473
+        }
+      ],
+      "createdAt": 1781752297473,
+      "updatedAt": 1781752297505
+    },
+    {
+      "id": "sample-1781752416650-mfer3h",
+      "sampleCode": "TPL-mqixdv9w-001",
+      "batchId": "batch-1781752416650-o0sn62",
+      "type": "blood",
+      "description": "template import 1",
+      "collectedAt": 1781752416650,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building A",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "REGISTERED",
+      "minTemp": 1,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781752416650-3fl780",
+          "sampleId": "sample-1781752416650-mfer3h",
+          "timestamp": 1781752416650,
+          "temperature": 4.5,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer A",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [
+        {
+          "id": "alert-1781752416650-8j5f48",
+          "sampleId": "sample-1781752416650-mfer3h",
+          "recordId": "temp-1781752416650-3fl780",
+          "type": "TOO_LOW",
+          "threshold": 5,
+          "actualValue": 4.5,
+          "timestamp": 1781752416650,
+          "resolved": false
+        }
+      ],
+      "handoverChain": [
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781752416650-3fl780"
+          ],
+          "id": "chain-1781752416650-ym69j6",
+          "timestamp": 1781752416650
+        }
+      ],
+      "createdAt": 1781752416650,
+      "updatedAt": 1781752416650
+    },
+    {
+      "id": "sample-1781752416650-yh83ds",
+      "sampleCode": "TPL-mqixdv9w-002",
+      "batchId": "batch-1781752416650-o0sn62",
+      "type": "blood",
+      "description": "template import 2",
+      "collectedAt": 1781752416650,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building B",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "REGISTERED",
+      "minTemp": 1,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781752416650-w3voka",
+          "sampleId": "sample-1781752416650-yh83ds",
+          "timestamp": 1781752416650,
+          "temperature": 3.8,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer B",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [
+        {
+          "id": "alert-1781752416650-p8yxsm",
+          "sampleId": "sample-1781752416650-yh83ds",
+          "recordId": "temp-1781752416650-w3voka",
+          "type": "TOO_LOW",
+          "threshold": 5,
+          "actualValue": 3.8,
+          "timestamp": 1781752416650,
+          "resolved": false
+        }
+      ],
+      "handoverChain": [
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781752416650-w3voka"
+          ],
+          "id": "chain-1781752416650-p0egq0",
+          "timestamp": 1781752416650
+        }
+      ],
+      "createdAt": 1781752416650,
+      "updatedAt": 1781752416650
+    },
+    {
+      "id": "sample-1781752416990-w8fr5i",
+      "sampleCode": "UNDOBLOCK-mqixdv9w-001",
+      "batchId": "batch-1781752416990-2sm3or",
+      "type": "blood",
+      "description": "undo block test",
+      "collectedAt": 1781752416990,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building A",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "IN_TRANSIT",
+      "minTemp": 2,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781752416990-2jz6r6",
+          "sampleId": "sample-1781752416990-w8fr5i",
+          "timestamp": 1781752416990,
+          "temperature": 4,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer A",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [],
+      "handoverChain": [
+        {
+          "fromUserId": "user-sampler-001",
+          "fromUserName": "张采样",
+          "toUserId": "user-receiver-001",
+          "toUserName": "王接收",
+          "action": "INITIATE_HANDOVER",
+          "note": "For undo block test",
+          "temperatureChecks": [
+            "temp-1781752416990-2jz6r6"
+          ],
+          "id": "chain-1781752417030-c1wqb0",
+          "timestamp": 1781752417030
+        },
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781752416990-2jz6r6"
+          ],
+          "id": "chain-1781752416990-dvw9fg",
+          "timestamp": 1781752416990
+        }
+      ],
+      "createdAt": 1781752416990,
+      "updatedAt": 1781752417029
+    },
+    {
+      "id": "sample-1781753087894-050jdw",
+      "sampleCode": "TPL-mqixs96s-001",
+      "batchId": "batch-1781753087894-ncmgbp",
+      "type": "blood",
+      "description": "template import 1",
+      "collectedAt": 1781753087894,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building A",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "REGISTERED",
+      "minTemp": 1,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781753087894-wxgl13",
+          "sampleId": "sample-1781753087894-050jdw",
+          "timestamp": 1781753087894,
+          "temperature": 4.5,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer A",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [
+        {
+          "id": "alert-1781753087894-et59m8",
+          "sampleId": "sample-1781753087894-050jdw",
+          "recordId": "temp-1781753087894-wxgl13",
+          "type": "TOO_LOW",
+          "threshold": 5,
+          "actualValue": 4.5,
+          "timestamp": 1781753087894,
+          "resolved": false
+        }
+      ],
+      "handoverChain": [
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781753087894-wxgl13"
+          ],
+          "id": "chain-1781753087894-1owwya",
+          "timestamp": 1781753087894
+        }
+      ],
+      "createdAt": 1781753087894,
+      "updatedAt": 1781753087894
+    },
+    {
+      "id": "sample-1781753087894-niftte",
+      "sampleCode": "TPL-mqixs96s-002",
+      "batchId": "batch-1781753087894-ncmgbp",
+      "type": "blood",
+      "description": "template import 2",
+      "collectedAt": 1781753087894,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building B",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "REGISTERED",
+      "minTemp": 1,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781753087894-hnqxux",
+          "sampleId": "sample-1781753087894-niftte",
+          "timestamp": 1781753087894,
+          "temperature": 3.8,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer B",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [
+        {
+          "id": "alert-1781753087894-d10r33",
+          "sampleId": "sample-1781753087894-niftte",
+          "recordId": "temp-1781753087894-hnqxux",
+          "type": "TOO_LOW",
+          "threshold": 5,
+          "actualValue": 3.8,
+          "timestamp": 1781753087894,
+          "resolved": false
+        }
+      ],
+      "handoverChain": [
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781753087894-hnqxux"
+          ],
+          "id": "chain-1781753087894-xg91nc",
+          "timestamp": 1781753087894
+        }
+      ],
+      "createdAt": 1781753087894,
+      "updatedAt": 1781753087894
+    },
+    {
+      "id": "sample-1781753088160-airyks",
+      "sampleCode": "UNDOBLOCK-mqixs96s-001",
+      "batchId": "batch-1781753088160-2t4br0",
+      "type": "blood",
+      "description": "undo block test",
+      "collectedAt": 1781753088160,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Building A",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "IN_TRANSIT",
+      "minTemp": 2,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781753088160-43dfiu",
+          "sampleId": "sample-1781753088160-airyks",
+          "timestamp": 1781753088160,
+          "temperature": 4,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer A",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [],
+      "handoverChain": [
+        {
+          "fromUserId": "user-sampler-001",
+          "fromUserName": "张采样",
+          "toUserId": "user-receiver-001",
+          "toUserName": "王接收",
+          "action": "INITIATE_HANDOVER",
+          "note": "For undo block test",
+          "temperatureChecks": [
+            "temp-1781753088160-43dfiu"
+          ],
+          "id": "chain-1781753088180-fw9o9n",
+          "timestamp": 1781753088180
+        },
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781753088160-43dfiu"
+          ],
+          "id": "chain-1781753088160-vex8t5",
+          "timestamp": 1781753088160
+        }
+      ],
+      "createdAt": 1781753088160,
+      "updatedAt": 1781753088180
+    },
+    {
+      "id": "sample-1781753264282-et07uo",
+      "sampleCode": "XFAIL-001",
+      "batchId": "batch-1781753264282-bra4dg",
+      "type": "blood",
+      "description": "fail test",
+      "collectedAt": 1781753264282,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "A",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "REGISTERED",
+      "minTemp": 2,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781753264282-pu4rgq",
+          "sampleId": "sample-1781753264282-et07uo",
+          "timestamp": 1781753264282,
+          "temperature": 4.1,
+          "recordedBy": "user-sampler-001",
+          "location": "loc",
+          "note": "CSV导入初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [],
+      "handoverChain": [
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781753264282-pu4rgq"
+          ],
+          "id": "chain-1781753264282-t98pyr",
+          "timestamp": 1781753264282
+        }
+      ],
+      "createdAt": 1781753264282,
+      "updatedAt": 1781753264282
     }
   ],
   "batches": [
+    {
+      "id": "batch-1781753264282-bra4dg",
+      "batchCode": "BATCH-20260618-K3XS",
+      "createdAt": 1781753264282,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781753264282-et07uo"
+      ],
+      "status": "DRAFT"
+    },
+    {
+      "id": "batch-1781753088160-2t4br0",
+      "batchCode": "BATCH-20260618-TO17",
+      "createdAt": 1781753088160,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781753088160-airyks"
+      ],
+      "status": "IN_TRANSIT",
+      "intendedReceiverId": "user-receiver-001",
+      "intendedReceiverName": "王接收",
+      "initiatedAt": 1781753088180,
+      "note": "For undo block test"
+    },
+    {
+      "id": "batch-1781753087894-ncmgbp",
+      "batchCode": "BATCH-20260618-VS05",
+      "createdAt": 1781753087894,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781753087894-050jdw",
+        "sample-1781753087894-niftte"
+      ],
+      "status": "DRAFT",
+      "templateSnapshot": {
+        "templateId": "tpl-1781753087804-nzbil0",
+        "templateVersion": 2,
+        "name": "常规血液样本模板-mqixs96s",
+        "intendedReceiverId": "user-receiver-001",
+        "intendedReceiverName": "王接收",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 1,
+        "defaultMaxTemp": 8,
+        "note": "更新：温度范围调整为1-8℃",
+        "snapshotAt": 1781753087891
+      },
+      "templateId": "tpl-1781753087804-nzbil0",
+      "intendedReceiverId": "user-receiver-001",
+      "intendedReceiverName": "王接收"
+    },
+    {
+      "id": "batch-1781752416990-2sm3or",
+      "batchCode": "BATCH-20260618-HH0L",
+      "createdAt": 1781752416990,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781752416990-w8fr5i"
+      ],
+      "status": "IN_TRANSIT",
+      "intendedReceiverId": "user-receiver-001",
+      "intendedReceiverName": "王接收",
+      "initiatedAt": 1781752417029,
+      "note": "For undo block test"
+    },
+    {
+      "id": "batch-1781752416650-o0sn62",
+      "batchCode": "BATCH-20260618-DG25",
+      "createdAt": 1781752416650,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781752416650-mfer3h",
+        "sample-1781752416650-yh83ds"
+      ],
+      "status": "DRAFT",
+      "templateSnapshot": {
+        "templateId": "tpl-1781752416574-34lpq7",
+        "templateVersion": 2,
+        "name": "常规血液样本模板-mqixdv9w",
+        "intendedReceiverId": "user-receiver-001",
+        "intendedReceiverName": "王接收",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 1,
+        "defaultMaxTemp": 8,
+        "note": "更新：温度范围调整为1-8℃",
+        "snapshotAt": 1781752416647
+      },
+      "templateId": "tpl-1781752416574-34lpq7",
+      "intendedReceiverId": "user-receiver-001",
+      "intendedReceiverName": "王接收"
+    },
+    {
+      "id": "batch-1781752297473-lshpzo",
+      "batchCode": "BATCH-20260618-ICPQ",
+      "createdAt": 1781752297473,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781752297473-0fomqw"
+      ],
+      "status": "IN_TRANSIT",
+      "intendedReceiverId": "user-receiver-001",
+      "intendedReceiverName": "王接收",
+      "initiatedAt": 1781752297505,
+      "note": "For undo block test"
+    },
+    {
+      "id": "batch-1781752297201-7iv0cw",
+      "batchCode": "BATCH-20260618-GMV3",
+      "createdAt": 1781752297201,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781752297201-wmzig1",
+        "sample-1781752297201-s4hcjn"
+      ],
+      "status": "DRAFT",
+      "templateSnapshot": {
+        "templateId": "tpl-1781752297125-hcrqjv",
+        "templateVersion": 2,
+        "name": "常规血液样本模板-mqixbb4w",
+        "intendedReceiverId": "user-receiver-001",
+        "intendedReceiverName": "王接收",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 1,
+        "defaultMaxTemp": 8,
+        "note": "更新：温度范围调整为1-8℃",
+        "snapshotAt": 1781752297199
+      },
+      "templateId": "tpl-1781752297125-hcrqjv",
+      "intendedReceiverId": "user-receiver-001",
+      "intendedReceiverName": "王接收"
+    },
+    {
+      "id": "batch-1781752180268-j4cbz4",
+      "batchCode": "BATCH-20260618-C8NZ",
+      "createdAt": 1781752180268,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781752180268-e21wng"
+      ],
+      "status": "IN_TRANSIT",
+      "intendedReceiverId": "user-receiver-001",
+      "intendedReceiverName": "王接收",
+      "initiatedAt": 1781752180290,
+      "note": "For undo block test"
+    },
+    {
+      "id": "batch-1781752179966-9mokye",
+      "batchCode": "BATCH-20260618-1LUX",
+      "createdAt": 1781752179966,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781752179966-akp4ha",
+        "sample-1781752179966-buykb5"
+      ],
+      "status": "DRAFT",
+      "templateSnapshot": {
+        "templateId": "tpl-1781752179902-xy54hw",
+        "templateVersion": 2,
+        "name": "常规血液样本模板-mqix8so6",
+        "intendedReceiverId": "user-receiver-001",
+        "intendedReceiverName": "王接收",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 1,
+        "defaultMaxTemp": 8,
+        "note": "更新：温度范围调整为1-8℃",
+        "snapshotAt": 1781752179965
+      },
+      "templateId": "tpl-1781752179902-xy54hw",
+      "intendedReceiverId": "user-receiver-001",
+      "intendedReceiverName": "王接收"
+    },
+    {
+      "id": "batch-1781752080955-khzqih",
+      "batchCode": "BATCH-20260618-SBBG",
+      "createdAt": 1781752080955,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781752080955-7s2uvx"
+      ],
+      "status": "IN_TRANSIT",
+      "intendedReceiverId": "user-receiver-001",
+      "intendedReceiverName": "王接收",
+      "initiatedAt": 1781752080984,
+      "note": "For undo block test"
+    },
+    {
+      "id": "batch-1781752080699-umaqu1",
+      "batchCode": "BATCH-20260618-N52J",
+      "createdAt": 1781752080699,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781752080699-qdjfq3",
+        "sample-1781752080699-srsw3w"
+      ],
+      "status": "DRAFT",
+      "templateSnapshot": {
+        "templateId": "tpl-1781752080635-cdr4ur",
+        "templateVersion": 2,
+        "name": "常规血液样本模板-mqix6o0n",
+        "intendedReceiverId": "user-receiver-001",
+        "intendedReceiverName": "王接收",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 1,
+        "defaultMaxTemp": 8,
+        "note": "更新：温度范围调整为1-8℃",
+        "snapshotAt": 1781752080697
+      },
+      "templateId": "tpl-1781752080635-cdr4ur",
+      "intendedReceiverId": "user-receiver-001",
+      "intendedReceiverName": "王接收"
+    },
     {
       "id": "batch-1781750913003-s4iloj",
       "batchCode": "BATCH-20260618-9XWU",
@@ -1498,6 +2603,2711 @@
     }
   ],
   "audits": [
+    {
+      "id": "audit-1781753534418-x1eiot",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781753534418,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753534397-q36j5r",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781753534397,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753264342-u69uvn",
+      "action": "DRAFT_CONFLICT_BLOCKED",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781753264307-x1m95x",
+      "timestamp": 1781753264342,
+      "success": false,
+      "failureReason": "并发冲突：当前版本 2，客户端版本 1，最后编辑者 孙管理",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753264326-rupbvy",
+      "action": "UPDATE_DRAFT",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781753264307-x1m95x",
+      "timestamp": 1781753264326,
+      "success": true,
+      "beforeState": {
+        "name": "review-draft",
+        "version": 1
+      },
+      "afterState": {
+        "name": "admin edit",
+        "version": 2,
+        "rowCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753264309-5c7bqj",
+      "action": "CREATE_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781753264307-x1m95x",
+      "timestamp": 1781753264309,
+      "success": true,
+      "afterState": {
+        "name": "review-draft",
+        "rowCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753264286-i5vws8",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781753264282-bra4dg",
+      "timestamp": 1781753264286,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-K3XS",
+        "importedCount": 1,
+        "samples": [
+          {
+            "id": "sample-1781753264282-et07uo",
+            "sampleCode": "XFAIL-001",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753264252-i92fw3",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781753264252,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753264239-kda6rs",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781753264240,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753264228-8zfjvh",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-002",
+      "operatorName": "李采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-002",
+      "timestamp": 1781753264228,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753264201-4oybm7",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781753264202,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753088487-yj7ndr",
+      "action": "DELETE_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781753087972-bdiht8",
+      "timestamp": 1781753088487,
+      "success": true,
+      "beforeState": {
+        "name": "管理员修改的草稿-mqixs96s",
+        "status": "DRAFT"
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753088470-10forp",
+      "action": "EXPORT_BATCHES",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "export",
+      "timestamp": 1781753088470,
+      "success": true,
+      "afterState": {
+        "filters": {
+          "createdBy": "user-sampler-001"
+        },
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": false,
+        "batchCount": 22
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753088410-9tk40g",
+      "action": "UNDO_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781753088328-nkmak6",
+      "timestamp": 1781753088410,
+      "success": true,
+      "beforeState": {
+        "batchCode": "BATCH-20260618-0A8Z",
+        "sampleCount": 2,
+        "batchStatus": "DRAFT"
+      },
+      "afterState": {
+        "undone": true
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753088393-t8e4yu",
+      "action": "EXPORT_BATCHES",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "export",
+      "timestamp": 1781753088393,
+      "success": true,
+      "afterState": {
+        "filters": {
+          "createdBy": "user-sampler-001"
+        },
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": false,
+        "batchCount": 23
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753088331-0sktec",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781753088328-nkmak6",
+      "timestamp": 1781753088331,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-0A8Z",
+        "importedCount": 2,
+        "samples": [
+          {
+            "id": "sample-1781753088328-cks5vb",
+            "sampleCode": "EXPORT-mqixs96s-001",
+            "status": "REGISTERED"
+          },
+          {
+            "id": "sample-1781753088328-p9dpjq",
+            "sampleCode": "EXPORT-mqixs96s-002",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753088317-a87hjc",
+      "action": "DRAFT_CONFLICT_BLOCKED",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781753087972-bdiht8",
+      "timestamp": 1781753088317,
+      "success": false,
+      "failureReason": "提交时并发冲突：当前版本 2，客户端版本 1",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753088291-dzkuq5",
+      "action": "SUBMIT_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781753088261-1lznrr",
+      "timestamp": 1781753088291,
+      "success": true,
+      "afterState": {
+        "batchId": "batch-1781753088277-juu015",
+        "importedCount": 2
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753088263-7fevk4",
+      "action": "CREATE_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781753088261-1lznrr",
+      "timestamp": 1781753088263,
+      "success": true,
+      "afterState": {
+        "name": "待提交草稿-mqixs96s",
+        "rowCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753088215-dtmhej",
+      "action": "DEACTIVATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781753087804-nzbil0",
+      "timestamp": 1781753088215,
+      "success": true,
+      "beforeState": {
+        "isActive": true
+      },
+      "afterState": {
+        "isActive": false
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753088196-flz7oj",
+      "action": "UNDO_BLOCKED",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781753088160-2t4br0",
+      "timestamp": 1781753088196,
+      "success": false,
+      "failureReason": "部分样本已流转：UNDOBLOCK-mqixs96s-001",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753088182-0e1g1a",
+      "action": "INITIATE_HANDOVER",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781753088160-2t4br0",
+      "timestamp": 1781753088182,
+      "success": true,
+      "beforeState": {
+        "batchStatus": "DRAFT",
+        "samples": [
+          {
+            "id": "sample-1781753088160-airyks",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "afterState": {
+        "batchStatus": "IN_TRANSIT",
+        "receiverId": "user-receiver-001",
+        "samples": [
+          {
+            "id": "sample-1781753088160-airyks",
+            "status": "IN_TRANSIT"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753088163-9zip82",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781753088160-2t4br0",
+      "timestamp": 1781753088163,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-TO17",
+        "importedCount": 1,
+        "samples": [
+          {
+            "id": "sample-1781753088160-airyks",
+            "sampleCode": "UNDOBLOCK-mqixs96s-001",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753088102-hvmjsr",
+      "action": "UNDO_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781753088043-qi7yhn",
+      "timestamp": 1781753088102,
+      "success": true,
+      "beforeState": {
+        "batchCode": "BATCH-20260618-UAKW",
+        "sampleCount": 1,
+        "batchStatus": "DRAFT"
+      },
+      "afterState": {
+        "undone": true
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753088045-bzhnmq",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781753088043-qi7yhn",
+      "timestamp": 1781753088045,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-UAKW",
+        "importedCount": 1,
+        "samples": [
+          {
+            "id": "sample-1781753088043-7et39x",
+            "sampleCode": "UNDO-mqixs96s-001",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753088027-g4bnt9",
+      "action": "DRAFT_CONFLICT_BLOCKED",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781753087972-bdiht8",
+      "timestamp": 1781753088027,
+      "success": false,
+      "failureReason": "并发冲突：当前版本 2，客户端版本 1，最后编辑者 孙管理",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753088014-ocjr6p",
+      "action": "UPDATE_DRAFT",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781753087972-bdiht8",
+      "timestamp": 1781753088014,
+      "success": true,
+      "beforeState": {
+        "name": "尿液样本草稿-mqixs96s",
+        "version": 1
+      },
+      "afterState": {
+        "name": "管理员修改的草稿-mqixs96s",
+        "version": 2,
+        "rowCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753087977-fvfy8t",
+      "action": "CREATE_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781753087972-bdiht8",
+      "timestamp": 1781753087977,
+      "success": true,
+      "afterState": {
+        "name": "尿液样本草稿-mqixs96s",
+        "rowCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753087953-viojsi",
+      "action": "UPDATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781753087804-nzbil0",
+      "timestamp": 1781753087953,
+      "success": true,
+      "beforeState": {
+        "name": "常规血液样本模板-mqixs96s",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 1,
+        "defaultMaxTemp": 8,
+        "note": "更新：温度范围调整为1-8℃",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781753087804-nzbil0",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781753087804,
+        "updatedAt": 1781753087842,
+        "version": 2,
+        "isActive": true,
+        "referencedCount": 1
+      },
+      "afterState": {
+        "name": "常规血液样本模板-mqixs96s",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 0,
+        "defaultMaxTemp": 10,
+        "note": "更新：温度范围调整为1-8℃",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781753087804-nzbil0",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781753087804,
+        "updatedAt": 1781753087951,
+        "version": 3,
+        "isActive": true,
+        "referencedCount": 1
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753087917-muf0o2",
+      "action": "APPLY_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781753087894-ncmgbp",
+      "timestamp": 1781753087917,
+      "success": true,
+      "afterState": {
+        "templateId": "tpl-1781753087804-nzbil0",
+        "templateName": "常规血液样本模板-mqixs96s",
+        "templateVersion": 2
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753087896-k1wioc",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781753087894-ncmgbp",
+      "timestamp": 1781753087896,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-VS05",
+        "importedCount": 2,
+        "samples": [
+          {
+            "id": "sample-1781753087894-050jdw",
+            "sampleCode": "TPL-mqixs96s-001",
+            "status": "REGISTERED"
+          },
+          {
+            "id": "sample-1781753087894-niftte",
+            "sampleCode": "TPL-mqixs96s-002",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753087844-a6ro2h",
+      "action": "UPDATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781753087804-nzbil0",
+      "timestamp": 1781753087844,
+      "success": true,
+      "beforeState": {
+        "name": "常规血液样本模板-mqixs96s",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 2,
+        "defaultMaxTemp": 8,
+        "note": "常规血液样本使用此模板",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781753087804-nzbil0",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781753087804,
+        "updatedAt": 1781753087804,
+        "version": 1,
+        "isActive": true,
+        "referencedCount": 0
+      },
+      "afterState": {
+        "name": "常规血液样本模板-mqixs96s",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 1,
+        "defaultMaxTemp": 8,
+        "note": "更新：温度范围调整为1-8℃",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781753087804-nzbil0",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781753087804,
+        "updatedAt": 1781753087842,
+        "version": 2,
+        "isActive": true,
+        "referencedCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753087809-4odm29",
+      "action": "CREATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781753087804-nzbil0",
+      "timestamp": 1781753087809,
+      "success": true,
+      "afterState": {
+        "name": "常规血液样本模板-mqixs96s",
+        "receiver": "王接收"
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753087770-82ejrk",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781753087770,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753087749-nzum5p",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781753087749,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753087733-swkaj2",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-002",
+      "operatorName": "李采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-002",
+      "timestamp": 1781753087733,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753087723-dgckf6",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781753087723,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753087712-3fiegs",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781753087712,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781753087702-f6i2m7",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781753087702,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752444410-tic0uh",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781752444410,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752444389-dhvp2u",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781752444389,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752417440-utavkb",
+      "action": "DELETE_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752416761-34ff8n",
+      "timestamp": 1781752417440,
+      "success": true,
+      "beforeState": {
+        "name": "管理员修改的草稿-mqixdv9w",
+        "status": "DRAFT"
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752417372-yqtsl8",
+      "action": "EXPORT_BATCHES",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "export",
+      "timestamp": 1781752417372,
+      "success": true,
+      "afterState": {
+        "filters": {
+          "createdBy": "user-sampler-001"
+        },
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": false,
+        "batchCount": 20
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752417307-gywd0r",
+      "action": "UNDO_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752417202-zsncjf",
+      "timestamp": 1781752417307,
+      "success": true,
+      "beforeState": {
+        "batchCode": "BATCH-20260618-M2CM",
+        "sampleCount": 2,
+        "batchStatus": "DRAFT"
+      },
+      "afterState": {
+        "undone": true
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752417292-l46h2q",
+      "action": "EXPORT_BATCHES",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "export",
+      "timestamp": 1781752417292,
+      "success": true,
+      "afterState": {
+        "filters": {
+          "createdBy": "user-sampler-001"
+        },
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": false,
+        "batchCount": 21
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752417204-9kt7j8",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752417202-zsncjf",
+      "timestamp": 1781752417204,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-M2CM",
+        "importedCount": 2,
+        "samples": [
+          {
+            "id": "sample-1781752417202-ls8pxy",
+            "sampleCode": "EXPORT-mqixdv9w-001",
+            "status": "REGISTERED"
+          },
+          {
+            "id": "sample-1781752417202-lxy9pn",
+            "sampleCode": "EXPORT-mqixdv9w-002",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752417191-mcnkd2",
+      "action": "DRAFT_CONFLICT_BLOCKED",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752416761-34ff8n",
+      "timestamp": 1781752417191,
+      "success": false,
+      "failureReason": "提交时并发冲突：当前版本 2，客户端版本 1",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752417159-1uqtu6",
+      "action": "SUBMIT_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752417127-dx7vpp",
+      "timestamp": 1781752417159,
+      "success": true,
+      "afterState": {
+        "batchId": "batch-1781752417144-rtpdcg",
+        "importedCount": 2
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752417129-0vfod9",
+      "action": "CREATE_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752417127-dx7vpp",
+      "timestamp": 1781752417129,
+      "success": true,
+      "afterState": {
+        "name": "待提交草稿-mqixdv9w",
+        "rowCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752417083-g2hv4p",
+      "action": "DEACTIVATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781752416574-34lpq7",
+      "timestamp": 1781752417083,
+      "success": true,
+      "beforeState": {
+        "isActive": true
+      },
+      "afterState": {
+        "isActive": false
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752417064-9wd4ta",
+      "action": "UNDO_BLOCKED",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752416990-2sm3or",
+      "timestamp": 1781752417064,
+      "success": false,
+      "failureReason": "部分样本已流转：UNDOBLOCK-mqixdv9w-001",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752417033-l3a8kh",
+      "action": "INITIATE_HANDOVER",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752416990-2sm3or",
+      "timestamp": 1781752417033,
+      "success": true,
+      "beforeState": {
+        "batchStatus": "DRAFT",
+        "samples": [
+          {
+            "id": "sample-1781752416990-w8fr5i",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "afterState": {
+        "batchStatus": "IN_TRANSIT",
+        "receiverId": "user-receiver-001",
+        "samples": [
+          {
+            "id": "sample-1781752416990-w8fr5i",
+            "status": "IN_TRANSIT"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752416993-5vjea5",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752416990-2sm3or",
+      "timestamp": 1781752416993,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-HH0L",
+        "importedCount": 1,
+        "samples": [
+          {
+            "id": "sample-1781752416990-w8fr5i",
+            "sampleCode": "UNDOBLOCK-mqixdv9w-001",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752416932-tg8icf",
+      "action": "UNDO_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752416854-bn4pka",
+      "timestamp": 1781752416932,
+      "success": true,
+      "beforeState": {
+        "batchCode": "BATCH-20260618-55WW",
+        "sampleCount": 1,
+        "batchStatus": "DRAFT"
+      },
+      "afterState": {
+        "undone": true
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752416857-tr1apc",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752416854-bn4pka",
+      "timestamp": 1781752416857,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-55WW",
+        "importedCount": 1,
+        "samples": [
+          {
+            "id": "sample-1781752416854-oopsfk",
+            "sampleCode": "UNDO-mqixdv9w-001",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752416818-l9ovaf",
+      "action": "DRAFT_CONFLICT_BLOCKED",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752416761-34ff8n",
+      "timestamp": 1781752416818,
+      "success": false,
+      "failureReason": "并发冲突：当前版本 2，客户端版本 1，最后编辑者 孙管理",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752416805-b523zu",
+      "action": "UPDATE_DRAFT",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752416761-34ff8n",
+      "timestamp": 1781752416805,
+      "success": true,
+      "beforeState": {
+        "name": "尿液样本草稿-mqixdv9w",
+        "version": 1
+      },
+      "afterState": {
+        "name": "管理员修改的草稿-mqixdv9w",
+        "version": 2,
+        "rowCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752416764-khyhz4",
+      "action": "CREATE_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752416761-34ff8n",
+      "timestamp": 1781752416764,
+      "success": true,
+      "afterState": {
+        "name": "尿液样本草稿-mqixdv9w",
+        "rowCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752416739-vi3i90",
+      "action": "UPDATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781752416574-34lpq7",
+      "timestamp": 1781752416739,
+      "success": true,
+      "beforeState": {
+        "name": "常规血液样本模板-mqixdv9w",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 1,
+        "defaultMaxTemp": 8,
+        "note": "更新：温度范围调整为1-8℃",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781752416574-34lpq7",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781752416574,
+        "updatedAt": 1781752416609,
+        "version": 2,
+        "isActive": true,
+        "referencedCount": 1
+      },
+      "afterState": {
+        "name": "常规血液样本模板-mqixdv9w",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 0,
+        "defaultMaxTemp": 10,
+        "note": "更新：温度范围调整为1-8℃",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781752416574-34lpq7",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781752416574,
+        "updatedAt": 1781752416737,
+        "version": 3,
+        "isActive": true,
+        "referencedCount": 1
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752416706-glhvbz",
+      "action": "APPLY_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752416650-o0sn62",
+      "timestamp": 1781752416706,
+      "success": true,
+      "afterState": {
+        "templateId": "tpl-1781752416574-34lpq7",
+        "templateName": "常规血液样本模板-mqixdv9w",
+        "templateVersion": 2
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752416654-oa3gml",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752416650-o0sn62",
+      "timestamp": 1781752416654,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-DG25",
+        "importedCount": 2,
+        "samples": [
+          {
+            "id": "sample-1781752416650-mfer3h",
+            "sampleCode": "TPL-mqixdv9w-001",
+            "status": "REGISTERED"
+          },
+          {
+            "id": "sample-1781752416650-yh83ds",
+            "sampleCode": "TPL-mqixdv9w-002",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752416611-hqgu1h",
+      "action": "UPDATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781752416574-34lpq7",
+      "timestamp": 1781752416612,
+      "success": true,
+      "beforeState": {
+        "name": "常规血液样本模板-mqixdv9w",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 2,
+        "defaultMaxTemp": 8,
+        "note": "常规血液样本使用此模板",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781752416574-34lpq7",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781752416574,
+        "updatedAt": 1781752416574,
+        "version": 1,
+        "isActive": true,
+        "referencedCount": 0
+      },
+      "afterState": {
+        "name": "常规血液样本模板-mqixdv9w",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 1,
+        "defaultMaxTemp": 8,
+        "note": "更新：温度范围调整为1-8℃",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781752416574-34lpq7",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781752416574,
+        "updatedAt": 1781752416609,
+        "version": 2,
+        "isActive": true,
+        "referencedCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752416578-j6qri3",
+      "action": "CREATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781752416574-34lpq7",
+      "timestamp": 1781752416578,
+      "success": true,
+      "afterState": {
+        "name": "常规血液样本模板-mqixdv9w",
+        "receiver": "王接收"
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752416549-ij1nv3",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781752416549,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752416538-8yt48a",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781752416538,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752416525-mt1wws",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-002",
+      "operatorName": "李采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-002",
+      "timestamp": 1781752416525,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752416504-9wwldk",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781752416504,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297836-yo4qmp",
+      "action": "DELETE_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752297274-g99u3e",
+      "timestamp": 1781752297836,
+      "success": true,
+      "beforeState": {
+        "name": "管理员修改的草稿-mqixbb4w",
+        "status": "DRAFT"
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297816-kten4z",
+      "action": "EXPORT_BATCHES",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "export",
+      "timestamp": 1781752297816,
+      "success": true,
+      "afterState": {
+        "filters": {
+          "createdBy": "user-sampler-001"
+        },
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": false,
+        "batchCount": 18
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297767-e1ldy2",
+      "action": "UNDO_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752297701-npmz6a",
+      "timestamp": 1781752297767,
+      "success": true,
+      "beforeState": {
+        "batchCode": "BATCH-20260618-RDCW",
+        "sampleCount": 2,
+        "batchStatus": "DRAFT"
+      },
+      "afterState": {
+        "undone": true
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297752-hhcjzk",
+      "action": "EXPORT_BATCHES",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "export",
+      "timestamp": 1781752297752,
+      "success": true,
+      "afterState": {
+        "filters": {
+          "createdBy": "user-sampler-001"
+        },
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": false,
+        "batchCount": 19
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297703-n3bigd",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752297701-npmz6a",
+      "timestamp": 1781752297703,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-RDCW",
+        "importedCount": 2,
+        "samples": [
+          {
+            "id": "sample-1781752297701-s414nf",
+            "sampleCode": "EXPORT-mqixbb4w-001",
+            "status": "REGISTERED"
+          },
+          {
+            "id": "sample-1781752297701-0ybozd",
+            "sampleCode": "EXPORT-mqixbb4w-002",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297667-n20j21",
+      "action": "DRAFT_CONFLICT_BLOCKED",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752297274-g99u3e",
+      "timestamp": 1781752297667,
+      "success": false,
+      "failureReason": "提交时并发冲突：当前版本 2，客户端版本 1",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297617-5wxuvu",
+      "action": "SUBMIT_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752297574-rgbyf3",
+      "timestamp": 1781752297617,
+      "success": true,
+      "afterState": {
+        "batchId": "batch-1781752297591-lmnxw0",
+        "importedCount": 2
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297576-69tipn",
+      "action": "CREATE_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752297574-rgbyf3",
+      "timestamp": 1781752297576,
+      "success": true,
+      "afterState": {
+        "name": "待提交草稿-mqixbb4w",
+        "rowCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297537-t7kb5r",
+      "action": "DEACTIVATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781752297125-hcrqjv",
+      "timestamp": 1781752297537,
+      "success": true,
+      "beforeState": {
+        "isActive": true
+      },
+      "afterState": {
+        "isActive": false
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297519-pv4nxp",
+      "action": "UNDO_BLOCKED",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752297473-lshpzo",
+      "timestamp": 1781752297519,
+      "success": false,
+      "failureReason": "部分样本已流转：UNDOBLOCK-mqixbb4w-001",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297507-7b1c0c",
+      "action": "INITIATE_HANDOVER",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752297473-lshpzo",
+      "timestamp": 1781752297507,
+      "success": true,
+      "beforeState": {
+        "batchStatus": "DRAFT",
+        "samples": [
+          {
+            "id": "sample-1781752297473-0fomqw",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "afterState": {
+        "batchStatus": "IN_TRANSIT",
+        "receiverId": "user-receiver-001",
+        "samples": [
+          {
+            "id": "sample-1781752297473-0fomqw",
+            "status": "IN_TRANSIT"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297476-xgk3fr",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752297473-lshpzo",
+      "timestamp": 1781752297476,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-ICPQ",
+        "importedCount": 1,
+        "samples": [
+          {
+            "id": "sample-1781752297473-0fomqw",
+            "sampleCode": "UNDOBLOCK-mqixbb4w-001",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297410-c081ks",
+      "action": "UNDO_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752297349-v3ba2h",
+      "timestamp": 1781752297410,
+      "success": true,
+      "beforeState": {
+        "batchCode": "BATCH-20260618-29A7",
+        "sampleCount": 1,
+        "batchStatus": "DRAFT"
+      },
+      "afterState": {
+        "undone": true
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297352-3attpp",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752297349-v3ba2h",
+      "timestamp": 1781752297352,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-29A7",
+        "importedCount": 1,
+        "samples": [
+          {
+            "id": "sample-1781752297349-xghe1w",
+            "sampleCode": "UNDO-mqixbb4w-001",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297330-m7brlb",
+      "action": "DRAFT_CONFLICT_BLOCKED",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752297274-g99u3e",
+      "timestamp": 1781752297330,
+      "success": false,
+      "failureReason": "并发冲突：当前版本 2，客户端版本 1，最后编辑者 孙管理",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297313-xoywnh",
+      "action": "UPDATE_DRAFT",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752297274-g99u3e",
+      "timestamp": 1781752297313,
+      "success": true,
+      "beforeState": {
+        "name": "尿液样本草稿-mqixbb4w",
+        "version": 1
+      },
+      "afterState": {
+        "name": "管理员修改的草稿-mqixbb4w",
+        "version": 2,
+        "rowCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297276-it8bob",
+      "action": "CREATE_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752297274-g99u3e",
+      "timestamp": 1781752297276,
+      "success": true,
+      "afterState": {
+        "name": "尿液样本草稿-mqixbb4w",
+        "rowCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297258-ahrvi7",
+      "action": "UPDATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781752297125-hcrqjv",
+      "timestamp": 1781752297258,
+      "success": true,
+      "beforeState": {
+        "name": "常规血液样本模板-mqixbb4w",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 1,
+        "defaultMaxTemp": 8,
+        "note": "更新：温度范围调整为1-8℃",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781752297125-hcrqjv",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781752297125,
+        "updatedAt": 1781752297167,
+        "version": 2,
+        "isActive": true,
+        "referencedCount": 1
+      },
+      "afterState": {
+        "name": "常规血液样本模板-mqixbb4w",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 0,
+        "defaultMaxTemp": 10,
+        "note": "更新：温度范围调整为1-8℃",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781752297125-hcrqjv",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781752297125,
+        "updatedAt": 1781752297246,
+        "version": 3,
+        "isActive": true,
+        "referencedCount": 1
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297222-tjudug",
+      "action": "APPLY_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752297201-7iv0cw",
+      "timestamp": 1781752297222,
+      "success": true,
+      "afterState": {
+        "templateId": "tpl-1781752297125-hcrqjv",
+        "templateName": "常规血液样本模板-mqixbb4w",
+        "templateVersion": 2
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297203-6v5z2v",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752297201-7iv0cw",
+      "timestamp": 1781752297203,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-GMV3",
+        "importedCount": 2,
+        "samples": [
+          {
+            "id": "sample-1781752297201-wmzig1",
+            "sampleCode": "TPL-mqixbb4w-001",
+            "status": "REGISTERED"
+          },
+          {
+            "id": "sample-1781752297201-s4hcjn",
+            "sampleCode": "TPL-mqixbb4w-002",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297169-z9yitd",
+      "action": "UPDATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781752297125-hcrqjv",
+      "timestamp": 1781752297169,
+      "success": true,
+      "beforeState": {
+        "name": "常规血液样本模板-mqixbb4w",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 2,
+        "defaultMaxTemp": 8,
+        "note": "常规血液样本使用此模板",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781752297125-hcrqjv",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781752297125,
+        "updatedAt": 1781752297125,
+        "version": 1,
+        "isActive": true,
+        "referencedCount": 0
+      },
+      "afterState": {
+        "name": "常规血液样本模板-mqixbb4w",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 1,
+        "defaultMaxTemp": 8,
+        "note": "更新：温度范围调整为1-8℃",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781752297125-hcrqjv",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781752297125,
+        "updatedAt": 1781752297167,
+        "version": 2,
+        "isActive": true,
+        "referencedCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297127-wgy8w9",
+      "action": "CREATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781752297125-hcrqjv",
+      "timestamp": 1781752297127,
+      "success": true,
+      "afterState": {
+        "name": "常规血液样本模板-mqixbb4w",
+        "receiver": "王接收"
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297105-l0t86y",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781752297105,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297092-ehfpbm",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781752297092,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297082-949vpp",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-002",
+      "operatorName": "李采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-002",
+      "timestamp": 1781752297082,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752297065-q3zmpn",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781752297065,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752180643-oexjf4",
+      "action": "DELETE_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752180042-4dpnzd",
+      "timestamp": 1781752180643,
+      "success": true,
+      "beforeState": {
+        "name": "管理员修改的草稿-mqix8so6",
+        "status": "DRAFT"
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752180623-lcy3tr",
+      "action": "EXPORT_BATCHES",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "export",
+      "timestamp": 1781752180623,
+      "success": true,
+      "afterState": {
+        "filters": {
+          "createdBy": "user-sampler-001"
+        },
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": false,
+        "batchCount": 16
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752180563-gti2q5",
+      "action": "UNDO_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752180470-5tks4v",
+      "timestamp": 1781752180563,
+      "success": true,
+      "beforeState": {
+        "batchCode": "BATCH-20260618-YQEC",
+        "sampleCount": 2,
+        "batchStatus": "DRAFT"
+      },
+      "afterState": {
+        "undone": true
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752180528-sn5aut",
+      "action": "EXPORT_BATCHES",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "export",
+      "timestamp": 1781752180528,
+      "success": true,
+      "afterState": {
+        "filters": {
+          "createdBy": "user-sampler-001"
+        },
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": false,
+        "batchCount": 17
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752180473-p3cv74",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752180470-5tks4v",
+      "timestamp": 1781752180473,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-YQEC",
+        "importedCount": 2,
+        "samples": [
+          {
+            "id": "sample-1781752180470-qbschi",
+            "sampleCode": "EXPORT-mqix8so6-001",
+            "status": "REGISTERED"
+          },
+          {
+            "id": "sample-1781752180470-ppcx6c",
+            "sampleCode": "EXPORT-mqix8so6-002",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752180459-ehoeun",
+      "action": "DRAFT_CONFLICT_BLOCKED",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752180042-4dpnzd",
+      "timestamp": 1781752180459,
+      "success": false,
+      "failureReason": "提交时并发冲突：当前版本 2，客户端版本 1",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752180417-qlzmaf",
+      "action": "SUBMIT_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752180379-jlyw7k",
+      "timestamp": 1781752180417,
+      "success": true,
+      "afterState": {
+        "batchId": "batch-1781752180403-815q0b",
+        "importedCount": 2
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752180382-464tql",
+      "action": "CREATE_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752180379-jlyw7k",
+      "timestamp": 1781752180382,
+      "success": true,
+      "afterState": {
+        "name": "待提交草稿-mqix8so6",
+        "rowCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752180330-zh5gez",
+      "action": "DEACTIVATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781752179902-xy54hw",
+      "timestamp": 1781752180330,
+      "success": true,
+      "beforeState": {
+        "isActive": true
+      },
+      "afterState": {
+        "isActive": false
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752180308-5pl6r3",
+      "action": "UNDO_BLOCKED",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752180268-j4cbz4",
+      "timestamp": 1781752180308,
+      "success": false,
+      "failureReason": "部分样本已流转：UNDOBLOCK-mqix8so6-001",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752180293-0b72ag",
+      "action": "INITIATE_HANDOVER",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752180268-j4cbz4",
+      "timestamp": 1781752180293,
+      "success": true,
+      "beforeState": {
+        "batchStatus": "DRAFT",
+        "samples": [
+          {
+            "id": "sample-1781752180268-e21wng",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "afterState": {
+        "batchStatus": "IN_TRANSIT",
+        "receiverId": "user-receiver-001",
+        "samples": [
+          {
+            "id": "sample-1781752180268-e21wng",
+            "status": "IN_TRANSIT"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752180270-cjmgmr",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752180268-j4cbz4",
+      "timestamp": 1781752180270,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-C8NZ",
+        "importedCount": 1,
+        "samples": [
+          {
+            "id": "sample-1781752180268-e21wng",
+            "sampleCode": "UNDOBLOCK-mqix8so6-001",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752180205-080w53",
+      "action": "UNDO_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752180122-a5ujrn",
+      "timestamp": 1781752180205,
+      "success": true,
+      "beforeState": {
+        "batchCode": "BATCH-20260618-PDLM",
+        "sampleCount": 1,
+        "batchStatus": "DRAFT"
+      },
+      "afterState": {
+        "undone": true
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752180124-k2ozau",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752180122-a5ujrn",
+      "timestamp": 1781752180124,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-PDLM",
+        "importedCount": 1,
+        "samples": [
+          {
+            "id": "sample-1781752180122-5483nm",
+            "sampleCode": "UNDO-mqix8so6-001",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752180104-uqxr3k",
+      "action": "DRAFT_CONFLICT_BLOCKED",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752180042-4dpnzd",
+      "timestamp": 1781752180104,
+      "success": false,
+      "failureReason": "并发冲突：当前版本 2，客户端版本 1，最后编辑者 孙管理",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752180091-fjnirs",
+      "action": "UPDATE_DRAFT",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752180042-4dpnzd",
+      "timestamp": 1781752180091,
+      "success": true,
+      "beforeState": {
+        "name": "尿液样本草稿-mqix8so6",
+        "version": 1
+      },
+      "afterState": {
+        "name": "管理员修改的草稿-mqix8so6",
+        "version": 2,
+        "rowCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752180045-zkadnd",
+      "action": "CREATE_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752180042-4dpnzd",
+      "timestamp": 1781752180045,
+      "success": true,
+      "afterState": {
+        "name": "尿液样本草稿-mqix8so6",
+        "rowCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752180020-xr7ms5",
+      "action": "UPDATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781752179902-xy54hw",
+      "timestamp": 1781752180020,
+      "success": true,
+      "beforeState": {
+        "name": "常规血液样本模板-mqix8so6",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 1,
+        "defaultMaxTemp": 8,
+        "note": "更新：温度范围调整为1-8℃",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781752179902-xy54hw",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781752179902,
+        "updatedAt": 1781752179934,
+        "version": 2,
+        "isActive": true,
+        "referencedCount": 1
+      },
+      "afterState": {
+        "name": "常规血液样本模板-mqix8so6",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 0,
+        "defaultMaxTemp": 10,
+        "note": "更新：温度范围调整为1-8℃",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781752179902-xy54hw",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781752179902,
+        "updatedAt": 1781752180017,
+        "version": 3,
+        "isActive": true,
+        "referencedCount": 1
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752179993-tfvyzj",
+      "action": "APPLY_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752179966-9mokye",
+      "timestamp": 1781752179993,
+      "success": true,
+      "afterState": {
+        "templateId": "tpl-1781752179902-xy54hw",
+        "templateName": "常规血液样本模板-mqix8so6",
+        "templateVersion": 2
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752179969-8hw4hi",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752179966-9mokye",
+      "timestamp": 1781752179969,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-1LUX",
+        "importedCount": 2,
+        "samples": [
+          {
+            "id": "sample-1781752179966-akp4ha",
+            "sampleCode": "TPL-mqix8so6-001",
+            "status": "REGISTERED"
+          },
+          {
+            "id": "sample-1781752179966-buykb5",
+            "sampleCode": "TPL-mqix8so6-002",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752179937-vvr4yo",
+      "action": "UPDATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781752179902-xy54hw",
+      "timestamp": 1781752179937,
+      "success": true,
+      "beforeState": {
+        "name": "常规血液样本模板-mqix8so6",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 2,
+        "defaultMaxTemp": 8,
+        "note": "常规血液样本使用此模板",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781752179902-xy54hw",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781752179902,
+        "updatedAt": 1781752179902,
+        "version": 1,
+        "isActive": true,
+        "referencedCount": 0
+      },
+      "afterState": {
+        "name": "常规血液样本模板-mqix8so6",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 1,
+        "defaultMaxTemp": 8,
+        "note": "更新：温度范围调整为1-8℃",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781752179902-xy54hw",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781752179902,
+        "updatedAt": 1781752179934,
+        "version": 2,
+        "isActive": true,
+        "referencedCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752179905-ceauj6",
+      "action": "CREATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781752179902-xy54hw",
+      "timestamp": 1781752179905,
+      "success": true,
+      "afterState": {
+        "name": "常规血液样本模板-mqix8so6",
+        "receiver": "王接收"
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752179882-elo1qv",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781752179882,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752179870-v99wyx",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781752179870,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752179862-evo14f",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-002",
+      "operatorName": "李采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-002",
+      "timestamp": 1781752179862,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752179843-pmopwv",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781752179843,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752081251-h22fa2",
+      "action": "DELETE_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752080759-mk6uv4",
+      "timestamp": 1781752081251,
+      "success": true,
+      "beforeState": {
+        "name": "管理员修改的草稿-mqix6o0n",
+        "status": "DRAFT"
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752081235-7im45o",
+      "action": "EXPORT_BATCHES",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "export",
+      "timestamp": 1781752081235,
+      "success": true,
+      "afterState": {
+        "filters": {
+          "createdBy": "user-sampler-001"
+        },
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": false,
+        "batchCount": 14
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752081199-5xg5vz",
+      "action": "UNDO_BLOCKED",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752080955-khzqih",
+      "timestamp": 1781752081199,
+      "success": false,
+      "failureReason": "部分样本已流转：UNDOBLOCK-mqix6o0n-001",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752081185-womogr",
+      "action": "EXPORT_BATCHES",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "export",
+      "timestamp": 1781752081185,
+      "success": true,
+      "afterState": {
+        "filters": {
+          "createdBy": "user-sampler-001"
+        },
+        "includeSignoffHistory": true,
+        "includeTempAlerts": true,
+        "includeFailureAudit": false,
+        "batchCount": 14
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752081131-nu88qr",
+      "action": "DRAFT_CONFLICT_BLOCKED",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752080759-mk6uv4",
+      "timestamp": 1781752081131,
+      "success": false,
+      "failureReason": "提交时并发冲突：当前版本 2，客户端版本 1",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752081108-ihlqic",
+      "action": "SUBMIT_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752081076-30ec7u",
+      "timestamp": 1781752081108,
+      "success": true,
+      "afterState": {
+        "batchId": "batch-1781752081091-ychv3w",
+        "importedCount": 2
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752081078-k0fzrt",
+      "action": "CREATE_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752081076-30ec7u",
+      "timestamp": 1781752081078,
+      "success": true,
+      "afterState": {
+        "name": "待提交草稿-mqix6o0n",
+        "rowCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752081025-zs6vtt",
+      "action": "DEACTIVATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781752080635-cdr4ur",
+      "timestamp": 1781752081025,
+      "success": true,
+      "beforeState": {
+        "isActive": true
+      },
+      "afterState": {
+        "isActive": false
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752080999-7ad4ia",
+      "action": "UNDO_BLOCKED",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752080955-khzqih",
+      "timestamp": 1781752080999,
+      "success": false,
+      "failureReason": "部分样本已流转：UNDOBLOCK-mqix6o0n-001",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752080986-zdjlis",
+      "action": "INITIATE_HANDOVER",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752080955-khzqih",
+      "timestamp": 1781752080986,
+      "success": true,
+      "beforeState": {
+        "batchStatus": "DRAFT",
+        "samples": [
+          {
+            "id": "sample-1781752080955-7s2uvx",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "afterState": {
+        "batchStatus": "IN_TRANSIT",
+        "receiverId": "user-receiver-001",
+        "samples": [
+          {
+            "id": "sample-1781752080955-7s2uvx",
+            "status": "IN_TRANSIT"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752080959-21g7cu",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752080955-khzqih",
+      "timestamp": 1781752080959,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-SBBG",
+        "importedCount": 1,
+        "samples": [
+          {
+            "id": "sample-1781752080955-7s2uvx",
+            "sampleCode": "UNDOBLOCK-mqix6o0n-001",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752080884-zqyuy9",
+      "action": "UNDO_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752080825-xuo3l3",
+      "timestamp": 1781752080884,
+      "success": true,
+      "beforeState": {
+        "batchCode": "BATCH-20260618-511P",
+        "sampleCount": 1,
+        "batchStatus": "DRAFT"
+      },
+      "afterState": {
+        "undone": true
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752080828-ju841h",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752080825-xuo3l3",
+      "timestamp": 1781752080828,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-511P",
+        "importedCount": 1,
+        "samples": [
+          {
+            "id": "sample-1781752080825-jttu3i",
+            "sampleCode": "UNDO-mqix6o0n-001",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752080804-yeie58",
+      "action": "DRAFT_CONFLICT_BLOCKED",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752080759-mk6uv4",
+      "timestamp": 1781752080804,
+      "success": false,
+      "failureReason": "并发冲突：当前版本 2，客户端版本 1，最后编辑者 孙管理",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752080793-3hppaq",
+      "action": "UPDATE_DRAFT",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752080759-mk6uv4",
+      "timestamp": 1781752080793,
+      "success": true,
+      "beforeState": {
+        "name": "尿液样本草稿-mqix6o0n",
+        "version": 1
+      },
+      "afterState": {
+        "name": "管理员修改的草稿-mqix6o0n",
+        "version": 2,
+        "rowCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752080761-1amzv1",
+      "action": "CREATE_DRAFT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "draft-1781752080759-mk6uv4",
+      "timestamp": 1781752080761,
+      "success": true,
+      "afterState": {
+        "name": "尿液样本草稿-mqix6o0n",
+        "rowCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752080741-ugdn7n",
+      "action": "UPDATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781752080635-cdr4ur",
+      "timestamp": 1781752080741,
+      "success": true,
+      "beforeState": {
+        "name": "常规血液样本模板-mqix6o0n",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 1,
+        "defaultMaxTemp": 8,
+        "note": "更新：温度范围调整为1-8℃",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781752080635-cdr4ur",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781752080635,
+        "updatedAt": 1781752080666,
+        "version": 2,
+        "isActive": true,
+        "referencedCount": 1
+      },
+      "afterState": {
+        "name": "常规血液样本模板-mqix6o0n",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 0,
+        "defaultMaxTemp": 10,
+        "note": "更新：温度范围调整为1-8℃",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781752080635-cdr4ur",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781752080635,
+        "updatedAt": 1781752080739,
+        "version": 3,
+        "isActive": true,
+        "referencedCount": 1
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752080717-5qib8n",
+      "action": "APPLY_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752080699-umaqu1",
+      "timestamp": 1781752080717,
+      "success": true,
+      "afterState": {
+        "templateId": "tpl-1781752080635-cdr4ur",
+        "templateName": "常规血液样本模板-mqix6o0n",
+        "templateVersion": 2
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752080701-878w3n",
+      "action": "CSV_IMPORT",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781752080699-umaqu1",
+      "timestamp": 1781752080701,
+      "success": true,
+      "afterState": {
+        "batchCode": "BATCH-20260618-N52J",
+        "importedCount": 2,
+        "samples": [
+          {
+            "id": "sample-1781752080699-qdjfq3",
+            "sampleCode": "TPL-mqix6o0n-001",
+            "status": "REGISTERED"
+          },
+          {
+            "id": "sample-1781752080699-srsw3w",
+            "sampleCode": "TPL-mqix6o0n-002",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752080668-vs4x3a",
+      "action": "UPDATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781752080635-cdr4ur",
+      "timestamp": 1781752080668,
+      "success": true,
+      "beforeState": {
+        "name": "常规血液样本模板-mqix6o0n",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 2,
+        "defaultMaxTemp": 8,
+        "note": "常规血液样本使用此模板",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781752080635-cdr4ur",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781752080635,
+        "updatedAt": 1781752080635,
+        "version": 1,
+        "isActive": true,
+        "referencedCount": 0
+      },
+      "afterState": {
+        "name": "常规血液样本模板-mqix6o0n",
+        "description": "日常血液采样的标准配置",
+        "intendedReceiverId": "user-receiver-001",
+        "storageConditions": "2-8℃冷藏，避免冷冻",
+        "shippingRequirements": "冷链运输，全程温度监控",
+        "defaultMinTemp": 1,
+        "defaultMaxTemp": 8,
+        "note": "更新：温度范围调整为1-8℃",
+        "intendedReceiverName": "王接收",
+        "id": "tpl-1781752080635-cdr4ur",
+        "createdBy": "user-sampler-001",
+        "creatorName": "张采样",
+        "createdAt": 1781752080635,
+        "updatedAt": 1781752080666,
+        "version": 2,
+        "isActive": true,
+        "referencedCount": 0
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752080638-wachb1",
+      "action": "CREATE_TEMPLATE",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "SYSTEM",
+      "targetId": "tpl-1781752080635-cdr4ur",
+      "timestamp": 1781752080638,
+      "success": true,
+      "afterState": {
+        "name": "常规血液样本模板-mqix6o0n",
+        "receiver": "王接收"
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752080612-wehskw",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781752080612,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752080602-tz8l30",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781752080602,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752080591-cjb6up",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-002",
+      "operatorName": "李采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-002",
+      "timestamp": 1781752080591,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781752080562-5xxuq1",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781752080562,
+      "success": true,
+      "ipAddress": "::1"
+    },
     {
       "id": "audit-1781750913069-0s5baj",
       "action": "EXPORT_SAMPLES",
@@ -3835,5 +7645,476 @@
     }
   ],
   "initialized": true,
-  "exportConfigs": []
+  "exportConfigs": [],
+  "sampleTemplates": [
+    {
+      "name": "常规血液样本模板-mqixs96s",
+      "description": "日常血液采样的标准配置",
+      "intendedReceiverId": "user-receiver-001",
+      "storageConditions": "2-8℃冷藏，避免冷冻",
+      "shippingRequirements": "冷链运输，全程温度监控",
+      "defaultMinTemp": 0,
+      "defaultMaxTemp": 10,
+      "note": "更新：温度范围调整为1-8℃",
+      "intendedReceiverName": "王接收",
+      "id": "tpl-1781753087804-nzbil0",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781753087804,
+      "updatedAt": 1781753088213,
+      "version": 4,
+      "isActive": false,
+      "referencedCount": 1
+    },
+    {
+      "name": "常规血液样本模板-mqixdv9w",
+      "description": "日常血液采样的标准配置",
+      "intendedReceiverId": "user-receiver-001",
+      "storageConditions": "2-8℃冷藏，避免冷冻",
+      "shippingRequirements": "冷链运输，全程温度监控",
+      "defaultMinTemp": 0,
+      "defaultMaxTemp": 10,
+      "note": "更新：温度范围调整为1-8℃",
+      "intendedReceiverName": "王接收",
+      "id": "tpl-1781752416574-34lpq7",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752416574,
+      "updatedAt": 1781752417081,
+      "version": 4,
+      "isActive": false,
+      "referencedCount": 1
+    },
+    {
+      "name": "常规血液样本模板-mqixbb4w",
+      "description": "日常血液采样的标准配置",
+      "intendedReceiverId": "user-receiver-001",
+      "storageConditions": "2-8℃冷藏，避免冷冻",
+      "shippingRequirements": "冷链运输，全程温度监控",
+      "defaultMinTemp": 0,
+      "defaultMaxTemp": 10,
+      "note": "更新：温度范围调整为1-8℃",
+      "intendedReceiverName": "王接收",
+      "id": "tpl-1781752297125-hcrqjv",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752297125,
+      "updatedAt": 1781752297535,
+      "version": 4,
+      "isActive": false,
+      "referencedCount": 1
+    },
+    {
+      "name": "常规血液样本模板-mqix8so6",
+      "description": "日常血液采样的标准配置",
+      "intendedReceiverId": "user-receiver-001",
+      "storageConditions": "2-8℃冷藏，避免冷冻",
+      "shippingRequirements": "冷链运输，全程温度监控",
+      "defaultMinTemp": 0,
+      "defaultMaxTemp": 10,
+      "note": "更新：温度范围调整为1-8℃",
+      "intendedReceiverName": "王接收",
+      "id": "tpl-1781752179902-xy54hw",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752179902,
+      "updatedAt": 1781752180328,
+      "version": 4,
+      "isActive": false,
+      "referencedCount": 1
+    },
+    {
+      "name": "常规血液样本模板-mqix6o0n",
+      "description": "日常血液采样的标准配置",
+      "intendedReceiverId": "user-receiver-001",
+      "storageConditions": "2-8℃冷藏，避免冷冻",
+      "shippingRequirements": "冷链运输，全程温度监控",
+      "defaultMinTemp": 0,
+      "defaultMaxTemp": 10,
+      "note": "更新：温度范围调整为1-8℃",
+      "intendedReceiverName": "王接收",
+      "id": "tpl-1781752080635-cdr4ur",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752080635,
+      "updatedAt": 1781752081022,
+      "version": 4,
+      "isActive": false,
+      "referencedCount": 1
+    }
+  ],
+  "importDrafts": [
+    {
+      "id": "draft-1781753264307-x1m95x",
+      "name": "admin edit",
+      "csvContent": "sampleCode,type,description,sourceLocation,minTemp,maxTemp,initialTemperature,tempLocation\nD-FAIL-001,blood,draft,A,2,8,4.0,loc\nD-FAIL-002,blood,draft,B,2,8,4.5,loc",
+      "status": "DRAFT",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781753264307,
+      "updatedAt": 1781753264323,
+      "version": 2,
+      "lastEditedBy": "user-admin-001",
+      "lastEditedByName": "孙管理",
+      "lastEditedAt": 1781753264323
+    },
+    {
+      "id": "draft-1781753088261-1lznrr",
+      "name": "待提交草稿-mqixs96s",
+      "csvContent": "sampleCode,type,description,sourceLocation,minTemp,maxTemp,initialTemperature,tempLocation\nSUBMIT-mqixs96s-001,blood,submit draft test 1,Building A,2,8,4.5,Freezer A\nSUBMIT-mqixs96s-002,blood,submit draft test 2,Building B,2,8,3.8,Freezer B",
+      "status": "IMPORTED",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781753088261,
+      "updatedAt": 1781753088288,
+      "version": 2,
+      "lastEditedBy": "user-sampler-001",
+      "lastEditedByName": "张采样",
+      "lastEditedAt": 1781753088261,
+      "batchId": "batch-1781753088277-juu015"
+    },
+    {
+      "id": "draft-1781752417127-dx7vpp",
+      "name": "待提交草稿-mqixdv9w",
+      "csvContent": "sampleCode,type,description,sourceLocation,minTemp,maxTemp,initialTemperature,tempLocation\nSUBMIT-mqixdv9w-001,blood,submit draft test 1,Building A,2,8,4.5,Freezer A\nSUBMIT-mqixdv9w-002,blood,submit draft test 2,Building B,2,8,3.8,Freezer B",
+      "status": "IMPORTED",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752417127,
+      "updatedAt": 1781752417156,
+      "version": 2,
+      "lastEditedBy": "user-sampler-001",
+      "lastEditedByName": "张采样",
+      "lastEditedAt": 1781752417127,
+      "batchId": "batch-1781752417144-rtpdcg"
+    },
+    {
+      "id": "draft-1781752297574-rgbyf3",
+      "name": "待提交草稿-mqixbb4w",
+      "csvContent": "sampleCode,type,description,sourceLocation,minTemp,maxTemp,initialTemperature,tempLocation\nSUBMIT-mqixbb4w-001,blood,submit draft test 1,Building A,2,8,4.5,Freezer A\nSUBMIT-mqixbb4w-002,blood,submit draft test 2,Building B,2,8,3.8,Freezer B",
+      "status": "IMPORTED",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752297574,
+      "updatedAt": 1781752297607,
+      "version": 2,
+      "lastEditedBy": "user-sampler-001",
+      "lastEditedByName": "张采样",
+      "lastEditedAt": 1781752297574,
+      "batchId": "batch-1781752297591-lmnxw0"
+    },
+    {
+      "id": "draft-1781752180379-jlyw7k",
+      "name": "待提交草稿-mqix8so6",
+      "csvContent": "sampleCode,type,description,sourceLocation,minTemp,maxTemp,initialTemperature,tempLocation\nSUBMIT-mqix8so6-001,blood,submit draft test 1,Building A,2,8,4.5,Freezer A\nSUBMIT-mqix8so6-002,blood,submit draft test 2,Building B,2,8,3.8,Freezer B",
+      "status": "IMPORTED",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752180379,
+      "updatedAt": 1781752180415,
+      "version": 2,
+      "lastEditedBy": "user-sampler-001",
+      "lastEditedByName": "张采样",
+      "lastEditedAt": 1781752180379,
+      "batchId": "batch-1781752180403-815q0b"
+    },
+    {
+      "id": "draft-1781752081076-30ec7u",
+      "name": "待提交草稿-mqix6o0n",
+      "csvContent": "sampleCode,type,description,sourceLocation,minTemp,maxTemp,initialTemperature,tempLocation\nSUBMIT-mqix6o0n-001,blood,submit draft test 1,Building A,2,8,4.5,Freezer A\nSUBMIT-mqix6o0n-002,blood,submit draft test 2,Building B,2,8,3.8,Freezer B",
+      "status": "IMPORTED",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752081076,
+      "updatedAt": 1781752081104,
+      "version": 2,
+      "lastEditedBy": "user-sampler-001",
+      "lastEditedByName": "张采样",
+      "lastEditedAt": 1781752081076,
+      "batchId": "batch-1781752081091-ychv3w"
+    }
+  ],
+  "importUndoRecords": [
+    {
+      "id": "undo-1781753264294-8wsyex",
+      "batchId": "batch-1781753264282-bra4dg",
+      "batchCode": "BATCH-20260618-K3XS",
+      "sampleIds": [
+        "sample-1781753264282-et07uo"
+      ],
+      "importAuditId": "audit-1781753264286-i5vws8",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781753264294,
+      "undone": false
+    },
+    {
+      "id": "undo-1781753088338-jttahd",
+      "batchId": "batch-1781753088328-nkmak6",
+      "batchCode": "BATCH-20260618-0A8Z",
+      "sampleIds": [
+        "sample-1781753088328-cks5vb",
+        "sample-1781753088328-p9dpjq"
+      ],
+      "importAuditId": "audit-1781753088331-0sktec",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781753088338,
+      "undone": true,
+      "undoneBy": "user-sampler-001",
+      "undoneByName": "张采样",
+      "undoneAt": 1781753088407
+    },
+    {
+      "id": "undo-1781753088169-vz96x2",
+      "batchId": "batch-1781753088160-2t4br0",
+      "batchCode": "BATCH-20260618-TO17",
+      "sampleIds": [
+        "sample-1781753088160-airyks"
+      ],
+      "importAuditId": "audit-1781753088163-9zip82",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781753088169,
+      "undone": false
+    },
+    {
+      "id": "undo-1781753088054-vf96wr",
+      "batchId": "batch-1781753088043-qi7yhn",
+      "batchCode": "BATCH-20260618-UAKW",
+      "sampleIds": [
+        "sample-1781753088043-7et39x"
+      ],
+      "importAuditId": "audit-1781753088045-bzhnmq",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781753088054,
+      "undone": true,
+      "undoneBy": "user-sampler-001",
+      "undoneByName": "张采样",
+      "undoneAt": 1781753088098
+    },
+    {
+      "id": "undo-1781753087904-qdxiid",
+      "batchId": "batch-1781753087894-ncmgbp",
+      "batchCode": "BATCH-20260618-VS05",
+      "sampleIds": [
+        "sample-1781753087894-050jdw",
+        "sample-1781753087894-niftte"
+      ],
+      "importAuditId": "audit-1781753087896-k1wioc",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781753087904,
+      "undone": false
+    },
+    {
+      "id": "undo-1781752417213-odlb41",
+      "batchId": "batch-1781752417202-zsncjf",
+      "batchCode": "BATCH-20260618-M2CM",
+      "sampleIds": [
+        "sample-1781752417202-ls8pxy",
+        "sample-1781752417202-lxy9pn"
+      ],
+      "importAuditId": "audit-1781752417204-9kt7j8",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752417213,
+      "undone": true,
+      "undoneBy": "user-sampler-001",
+      "undoneByName": "张采样",
+      "undoneAt": 1781752417305
+    },
+    {
+      "id": "undo-1781752417004-9cmsvg",
+      "batchId": "batch-1781752416990-2sm3or",
+      "batchCode": "BATCH-20260618-HH0L",
+      "sampleIds": [
+        "sample-1781752416990-w8fr5i"
+      ],
+      "importAuditId": "audit-1781752416993-5vjea5",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752417004,
+      "undone": false
+    },
+    {
+      "id": "undo-1781752416864-twjq8u",
+      "batchId": "batch-1781752416854-bn4pka",
+      "batchCode": "BATCH-20260618-55WW",
+      "sampleIds": [
+        "sample-1781752416854-oopsfk"
+      ],
+      "importAuditId": "audit-1781752416857-tr1apc",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752416864,
+      "undone": true,
+      "undoneBy": "user-sampler-001",
+      "undoneByName": "张采样",
+      "undoneAt": 1781752416930
+    },
+    {
+      "id": "undo-1781752416676-3xxy2z",
+      "batchId": "batch-1781752416650-o0sn62",
+      "batchCode": "BATCH-20260618-DG25",
+      "sampleIds": [
+        "sample-1781752416650-mfer3h",
+        "sample-1781752416650-yh83ds"
+      ],
+      "importAuditId": "audit-1781752416654-oa3gml",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752416676,
+      "undone": false
+    },
+    {
+      "id": "undo-1781752297710-lkvcv4",
+      "batchId": "batch-1781752297701-npmz6a",
+      "batchCode": "BATCH-20260618-RDCW",
+      "sampleIds": [
+        "sample-1781752297701-s414nf",
+        "sample-1781752297701-0ybozd"
+      ],
+      "importAuditId": "audit-1781752297703-n3bigd",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752297710,
+      "undone": false
+    },
+    {
+      "id": "undo-1781752297495-b3ecjp",
+      "batchId": "batch-1781752297473-lshpzo",
+      "batchCode": "BATCH-20260618-ICPQ",
+      "sampleIds": [
+        "sample-1781752297473-0fomqw"
+      ],
+      "importAuditId": "audit-1781752297476-xgk3fr",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752297495,
+      "undone": false
+    },
+    {
+      "id": "undo-1781752297360-ohy883",
+      "batchId": "batch-1781752297349-v3ba2h",
+      "batchCode": "BATCH-20260618-29A7",
+      "sampleIds": [
+        "sample-1781752297349-xghe1w"
+      ],
+      "importAuditId": "audit-1781752297352-3attpp",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752297360,
+      "undone": false
+    },
+    {
+      "id": "undo-1781752297210-3vcwbk",
+      "batchId": "batch-1781752297201-7iv0cw",
+      "batchCode": "BATCH-20260618-GMV3",
+      "sampleIds": [
+        "sample-1781752297201-wmzig1",
+        "sample-1781752297201-s4hcjn"
+      ],
+      "importAuditId": "audit-1781752297203-6v5z2v",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752297210,
+      "undone": false
+    },
+    {
+      "id": "undo-1781752180479-j2va60",
+      "batchId": "batch-1781752180470-5tks4v",
+      "batchCode": "BATCH-20260618-YQEC",
+      "sampleIds": [
+        "sample-1781752180470-qbschi",
+        "sample-1781752180470-ppcx6c"
+      ],
+      "importAuditId": "audit-1781752180473-p3cv74",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752180479,
+      "undone": false
+    },
+    {
+      "id": "undo-1781752180277-j2o96u",
+      "batchId": "batch-1781752180268-j4cbz4",
+      "batchCode": "BATCH-20260618-C8NZ",
+      "sampleIds": [
+        "sample-1781752180268-e21wng"
+      ],
+      "importAuditId": "audit-1781752180270-cjmgmr",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752180277,
+      "undone": false
+    },
+    {
+      "id": "undo-1781752180132-ia2hep",
+      "batchId": "batch-1781752180122-a5ujrn",
+      "batchCode": "BATCH-20260618-PDLM",
+      "sampleIds": [
+        "sample-1781752180122-5483nm"
+      ],
+      "importAuditId": "audit-1781752180124-k2ozau",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752180132,
+      "undone": false
+    },
+    {
+      "id": "undo-1781752179978-h8slfz",
+      "batchId": "batch-1781752179966-9mokye",
+      "batchCode": "BATCH-20260618-1LUX",
+      "sampleIds": [
+        "sample-1781752179966-akp4ha",
+        "sample-1781752179966-buykb5"
+      ],
+      "importAuditId": "audit-1781752179969-8hw4hi",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752179978,
+      "undone": false
+    },
+    {
+      "id": "undo-1781752080964-jgz7c8",
+      "batchId": "batch-1781752080955-khzqih",
+      "batchCode": "BATCH-20260618-SBBG",
+      "sampleIds": [
+        "sample-1781752080955-7s2uvx"
+      ],
+      "importAuditId": "audit-1781752080959-21g7cu",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752080964,
+      "undone": false
+    },
+    {
+      "id": "undo-1781752080834-ptqzk6",
+      "batchId": "batch-1781752080825-xuo3l3",
+      "batchCode": "BATCH-20260618-511P",
+      "sampleIds": [
+        "sample-1781752080825-jttu3i"
+      ],
+      "importAuditId": "audit-1781752080828-ju841h",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752080834,
+      "undone": false
+    },
+    {
+      "id": "undo-1781752080708-yhqnu6",
+      "batchId": "batch-1781752080699-umaqu1",
+      "batchCode": "BATCH-20260618-N52J",
+      "sampleIds": [
+        "sample-1781752080699-qdjfq3",
+        "sample-1781752080699-srsw3w"
+      ],
+      "importAuditId": "audit-1781752080701-878w3n",
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "createdAt": 1781752080708,
+      "undone": false
+    }
+  ]
 }

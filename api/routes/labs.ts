@@ -21,6 +21,22 @@ import {
   updateExportConfig,
   deleteExportConfig,
   listExportConfigs,
+  createSampleTemplate,
+  updateSampleTemplate,
+  deactivateSampleTemplate,
+  listSampleTemplates,
+  getSampleTemplate,
+  createTemplateSnapshot,
+  saveImportDraft,
+  listImportDrafts,
+  getImportDraft,
+  deleteImportDraft,
+  importCsvFromDraft,
+  getLastImportUndoRecord,
+  undoLastImport,
+  listImportUndoRecords,
+  importCsvSamplesWithTemplate,
+  checkDraftConflict,
 } from '../services.js';
 import type { Role } from '../types.js';
 
@@ -325,6 +341,275 @@ router.delete('/export-configs/:id', requireAuth, (req: AuthenticatedRequest, re
     res.json({ success: true });
   } catch (e) {
     res.status(500).json({ success: false, error: '删除导出配置失败' });
+  }
+});
+
+// ==================== Sample Template Routes ====================
+
+router.get('/templates', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const includeInactive = req.query.includeInactive === 'true';
+    const templates = listSampleTemplates(includeInactive);
+    res.json({ success: true, data: { templates } });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '查询模板列表失败' });
+  }
+});
+
+router.get('/templates/:id', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const template = getSampleTemplate(req.params.id);
+    if (!template) {
+      return res.status(404).json({ success: false, error: '模板不存在' });
+    }
+    res.json({ success: true, data: { template } });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '查询模板详情失败' });
+  }
+});
+
+router.post('/templates', requireAuth, requireRole('SAMPLER' as Role, 'ADMIN' as Role), (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { name, description, intendedReceiverId, storageConditions, shippingRequirements, defaultMinTemp, defaultMaxTemp, note } = req.body;
+    if (!name || !intendedReceiverId || storageConditions === undefined || shippingRequirements === undefined || defaultMinTemp === undefined || defaultMaxTemp === undefined) {
+      return res.status(400).json({ success: false, error: '模板名称、接收人、保存条件、运输要求、温度范围均为必填' });
+    }
+    const ip = getClientIp(req);
+    const result = createSampleTemplate(req.user!, {
+      name,
+      description,
+      intendedReceiverId,
+      storageConditions,
+      shippingRequirements,
+      defaultMinTemp: Number(defaultMinTemp),
+      defaultMaxTemp: Number(defaultMaxTemp),
+      note,
+    }, ip);
+    if (!result.success) {
+      return res.status(400).json({ success: false, error: result.error });
+    }
+    res.status(201).json({ success: true, data: { template: result.template } });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '创建模板失败' });
+  }
+});
+
+router.put('/templates/:id', requireAuth, requireRole('SAMPLER' as Role, 'ADMIN' as Role), (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const ip = getClientIp(req);
+    const updates = { ...req.body };
+    if (updates.defaultMinTemp !== undefined) updates.defaultMinTemp = Number(updates.defaultMinTemp);
+    if (updates.defaultMaxTemp !== undefined) updates.defaultMaxTemp = Number(updates.defaultMaxTemp);
+    const result = updateSampleTemplate(req.user!, req.params.id, updates, ip);
+    if (!result.success) {
+      return res.status(400).json({ success: false, error: result.error });
+    }
+    res.json({ success: true, data: { template: result.template } });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '更新模板失败' });
+  }
+});
+
+router.post('/templates/:id/deactivate', requireAuth, requireRole('SAMPLER' as Role, 'ADMIN' as Role), (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const ip = getClientIp(req);
+    const result = deactivateSampleTemplate(req.user!, req.params.id, ip);
+    if (!result.success) {
+      return res.status(400).json({ success: false, error: result.error });
+    }
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '停用模板失败' });
+  }
+});
+
+// ==================== Import Draft Routes ====================
+
+router.get('/drafts', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const drafts = listImportDrafts(req.user!);
+    res.json({ success: true, data: { drafts } });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '查询草稿列表失败' });
+  }
+});
+
+router.get('/drafts/:id', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const result = getImportDraft(req.user!, req.params.id);
+    if (!result.success) {
+      return res.status(400).json({ success: false, error: result.error });
+    }
+    res.json({ success: true, data: { draft: result.draft } });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '查询草稿详情失败' });
+  }
+});
+
+router.get('/drafts/:id/conflict', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const clientVersion = Number(req.query.clientVersion || 0);
+    const conflict = checkDraftConflict(req.params.id, clientVersion);
+    res.json({ success: true, data: { conflict } });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '检查冲突失败' });
+  }
+});
+
+router.post('/drafts', requireAuth, requireRole('SAMPLER' as Role, 'ADMIN' as Role), (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { id, name, csvContent, templateId, parsedRows, errors, clientVersion } = req.body;
+    if (!name || !csvContent) {
+      return res.status(400).json({ success: false, error: '草稿名称和CSV内容不能为空' });
+    }
+    const ip = getClientIp(req);
+    const result = saveImportDraft(req.user!, {
+      id,
+      name,
+      csvContent,
+      templateId,
+      parsedRows,
+      errors,
+      clientVersion: clientVersion !== undefined ? Number(clientVersion) : undefined,
+    }, ip);
+    if (!result.success) {
+      return res.status(409).json({
+        success: false,
+        error: result.error,
+        conflict: result.conflict,
+      });
+    }
+    res.status(201).json({ success: true, data: { draft: result.draft } });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '保存草稿失败' });
+  }
+});
+
+router.delete('/drafts/:id', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const ip = getClientIp(req);
+    const result = deleteImportDraft(req.user!, req.params.id, ip);
+    if (!result.success) {
+      return res.status(400).json({ success: false, error: result.error });
+    }
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '删除草稿失败' });
+  }
+});
+
+router.post('/drafts/:id/import', requireAuth, requireRole('SAMPLER' as Role, 'ADMIN' as Role), (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { clientVersion } = req.body;
+    if (clientVersion === undefined || clientVersion === null) {
+      return res.status(400).json({ success: false, error: '必须提供客户端版本号' });
+    }
+    const ip = getClientIp(req);
+    const result = importCsvFromDraft(req.user!, req.params.id, Number(clientVersion), ip);
+    if (!result.success) {
+      if (result.conflict) {
+        return res.status(409).json({
+          success: false,
+          error: result.error,
+          errors: result.errors,
+          conflict: result.conflict,
+        });
+      }
+      return res.status(400).json({
+        success: false,
+        error: result.error,
+        errors: result.errors,
+      });
+    }
+    res.status(201).json({
+      success: true,
+      data: {
+        batch: result.batch,
+        samples: result.samples,
+        importedCount: result.importedCount,
+      },
+    });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '提交草稿导入失败' });
+  }
+});
+
+// ==================== Import with Template (Direct) ====================
+
+router.post('/samples/import-csv-with-template', requireAuth, requireRole('SAMPLER' as Role, 'ADMIN' as Role), (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { csvContent, templateId } = req.body;
+    if (!csvContent || typeof csvContent !== 'string') {
+      return res.status(400).json({ success: false, error: '必须提供 CSV 内容' });
+    }
+    const ip = getClientIp(req);
+
+    let templateSnapshot = undefined;
+    if (templateId) {
+      const template = getSampleTemplate(templateId);
+      if (!template) {
+        return res.status(400).json({ success: false, error: '所选模板不存在' });
+      }
+      if (!template.isActive) {
+        return res.status(400).json({ success: false, error: '所选模板已停用' });
+      }
+      templateSnapshot = createTemplateSnapshot(template);
+    }
+
+    const result = importCsvSamplesWithTemplate(req.user!, csvContent, templateSnapshot, templateId, ip);
+    if (!result.success) {
+      return res.status(400).json({
+        success: false,
+        error: result.error,
+        errors: result.errors,
+      });
+    }
+    res.status(201).json({
+      success: true,
+      data: {
+        batch: result.batch,
+        samples: result.samples,
+        importedCount: result.importedCount,
+      },
+    });
+  } catch (e) {
+    res.status(500).json({ success: false, error: 'CSV 导入失败' });
+  }
+});
+
+// ==================== Import Undo Routes ====================
+
+router.get('/import-undo/last', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const result = getLastImportUndoRecord(req.user!);
+    if (!result.success) {
+      return res.status(400).json({ success: false, error: result.error });
+    }
+    res.json({ success: true, data: { record: result.record } });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '查询可撤销记录失败' });
+  }
+});
+
+router.get('/import-undo', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const records = listImportUndoRecords(req.user!);
+    res.json({ success: true, data: { records } });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '查询撤销记录失败' });
+  }
+});
+
+router.post('/import-undo/undo', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const ip = getClientIp(req);
+    const result = undoLastImport(req.user!, ip);
+    if (!result.success) {
+      return res.status(400).json({ success: false, error: result.error });
+    }
+    res.json({ success: true, data: { undoneData: result.undoneData } });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '撤销导入失败' });
   }
 });
 

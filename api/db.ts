@@ -1,7 +1,16 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import type { User, Sample, Batch, AuditEntry, ExportConfig } from './types.js';
+import type {
+  User,
+  Sample,
+  Batch,
+  AuditEntry,
+  ExportConfig,
+  SampleTemplate,
+  ImportDraft,
+  ImportUndoRecord,
+} from './types.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,6 +22,9 @@ export interface Database {
   batches: Batch[];
   audits: AuditEntry[];
   exportConfigs: ExportConfig[];
+  sampleTemplates: SampleTemplate[];
+  importDrafts: ImportDraft[];
+  importUndoRecords: ImportUndoRecord[];
   initialized: boolean;
 }
 
@@ -73,6 +85,9 @@ function createInitialDb(): Database {
     batches: [],
     audits: [],
     exportConfigs: [],
+    sampleTemplates: [],
+    importDrafts: [],
+    importUndoRecords: [],
     initialized: true,
   };
 }
@@ -90,9 +105,10 @@ export function loadDb(): Database {
     if (!db.initialized) {
       return createInitialDb();
     }
-    if (!db.exportConfigs) {
-      db.exportConfigs = [];
-    }
+    if (!db.exportConfigs) db.exportConfigs = [];
+    if (!db.sampleTemplates) db.sampleTemplates = [];
+    if (!db.importDrafts) db.importDrafts = [];
+    if (!db.importUndoRecords) db.importUndoRecords = [];
     return db;
   } catch (e) {
     console.error('Failed to load DB, creating new one:', e);
