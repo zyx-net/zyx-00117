@@ -11,6 +11,8 @@ import SampleDetail from "@/pages/SampleDetail";
 import AuditLog from "@/pages/AuditLog";
 import UserList from "@/pages/UserList";
 import QuickAction from "@/pages/QuickAction";
+import NotificationCenter from "@/pages/NotificationCenter";
+import NotificationDetail from "@/pages/NotificationDetail";
 import { useAppStore } from "@/store";
 
 function AppRoutes() {
@@ -32,6 +34,8 @@ function AppRoutes() {
         <Route path="/samples/:id" element={<SampleDetail />} />
         <Route path="/audit" element={<AuditLog />} />
         <Route path="/users" element={<UserList />} />
+        <Route path="/notifications" element={<NotificationCenter />} />
+        <Route path="/notifications/:id" element={<NotificationDetail />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

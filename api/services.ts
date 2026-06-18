@@ -1,5 +1,5 @@
 import { loadDb, saveDb, generateId } from './db.js';
-import { createAudit } from './audit.js';
+import { createAudit, queryAudits } from './audit.js';
 import type {
   User,
   Sample,
@@ -17,6 +17,7 @@ import type {
   ImportNotification,
   ImportNotificationType,
   ImportNotificationStatus,
+  AuditEntry,
 } from './types.js';
 
 const STATUS_FLOW: Record<SampleStatus, SampleStatus[]> = {
@@ -2315,6 +2316,7 @@ export function createImportNotification(
     result: opts.result,
     status,
     rolledBack: false,
+    readBy: {},
     createdAt: now,
     updatedAt: now,
   };
@@ -2339,7 +2341,7 @@ export interface NotificationFilters {
 export function listImportNotifications(
   operator: User,
   filters: NotificationFilters = {},
-): { notifications: ImportNotification[]; total: number; unreadCount: number } {
+): { notifications: (ImportNotification & { isRead: boolean })[]; total: number; unreadCount: number } {
   const db = loadDb();
   let notifications = [...db.importNotifications];
 
@@ -2378,24 +2380,143 @@ export function listImportNotifications(
   notifications.sort((a, b) => b.createdAt - a.createdAt);
 
   const total = notifications.length;
-  const unreadCount = 0;
+  const unreadCount = notifications.filter((n) => !n.readBy || !n.readBy[operator.id]).length;
 
-  return { notifications, total, unreadCount };
+  const withReadFlag = notifications.map((n) => ({
+    ...n,
+    isRead: !!(n.readBy && n.readBy[operator.id]),
+  }));
+
+  return { notifications: withReadFlag, total, unreadCount };
 }
 
 export function getImportNotification(
   operator: User,
   notificationId: string,
-): { success: boolean; notification?: ImportNotification; error?: string } {
+): { success: boolean; notification?: ImportNotification & { isRead: boolean }; error?: string; notFound?: boolean } {
   const db = loadDb();
   const notification = db.importNotifications.find((n) => n.id === notificationId);
   if (!notification) {
-    return { success: false, error: '通知不存在' };
+    return { success: false, error: '通知不存在', notFound: true };
   }
   if (notification.operatorId !== operator.id && operator.role !== 'ADMIN') {
     return { success: false, error: '无权查看他人通知' };
   }
-  return { success: true, notification };
+  const isRead = !!(notification.readBy && notification.readBy[operator.id]);
+  return { success: true, notification: { ...notification, isRead } };
+}
+
+export function markNotificationAsRead(
+  operator: User,
+  notificationId: string,
+): { success: boolean; error?: string; read?: boolean; readAt?: number; notFound?: boolean } {
+  const db = loadDb();
+  const notification = db.importNotifications.find((n) => n.id === notificationId);
+  if (!notification) {
+    return { success: false, error: '通知不存在', notFound: true };
+  }
+  if (notification.operatorId !== operator.id && operator.role !== 'ADMIN') {
+    return { success: false, error: '无权操作他人通知' };
+  }
+  if (!notification.readBy) {
+    notification.readBy = {};
+  }
+  let readAt: number;
+  if (!notification.readBy[operator.id]) {
+    readAt = Date.now();
+    notification.readBy[operator.id] = { readAt };
+    notification.updatedAt = Date.now();
+    saveDb(db);
+  } else {
+    readAt = notification.readBy[operator.id].readAt;
+  }
+  return { success: true, read: true, readAt };
+}
+
+export function markAllNotificationsAsRead(
+  operator: User,
+): { success: boolean; markedCount: number } {
+  const db = loadDb();
+  let markedCount = 0;
+  const now = Date.now();
+
+  for (const notification of db.importNotifications) {
+    if (operator.role !== 'ADMIN' && notification.operatorId !== operator.id) {
+      continue;
+    }
+    if (!notification.readBy) {
+      notification.readBy = {};
+    }
+    if (!notification.readBy[operator.id]) {
+      notification.readBy[operator.id] = { readAt: now };
+      notification.updatedAt = now;
+      markedCount++;
+    }
+  }
+
+  if (markedCount > 0) {
+    saveDb(db);
+  }
+
+  return { success: true, markedCount };
+}
+
+export function getNotificationDetailWithTimeline(
+  operator: User,
+  notificationId: string,
+): {
+  success: boolean;
+  error?: string;
+  notFound?: boolean;
+  notification?: ImportNotification & { isRead: boolean };
+  relatedBatch?: Batch | null;
+  relatedDraft?: ImportDraft | null;
+  relatedTemplate?: SampleTemplate | null;
+  auditTimeline?: AuditEntry[];
+} {
+  const notifResult = getImportNotification(operator, notificationId);
+  if (!notifResult.success || !notifResult.notification) {
+    return { success: false, error: notifResult.error, notFound: notifResult.notFound };
+  }
+
+  const notification = notifResult.notification;
+  const db = loadDb();
+
+  const relatedBatch = notification.batchId
+    ? db.batches.find((b) => b.id === notification.batchId) || null
+    : null;
+
+  const relatedDraft = notification.draftId
+    ? db.importDrafts.find((d) => d.id === notification.draftId) || null
+    : null;
+
+  const relatedTemplate = notification.templateId
+    ? db.sampleTemplates.find((t) => t.id === notification.templateId) || null
+    : null;
+
+  let auditTimeline: AuditEntry[] = [];
+  const targetIds: string[] = [];
+  if (notification.batchId) targetIds.push(notification.batchId);
+  if (notification.draftId) targetIds.push(notification.draftId);
+  if (notification.undoRecordId) targetIds.push(notification.undoRecordId);
+  if (notification.templateId) targetIds.push(notification.templateId);
+
+  if (targetIds.length > 0) {
+    const allAudits = queryAudits({});
+    auditTimeline = allAudits
+      .filter((a) => targetIds.includes(a.targetId))
+      .sort((a, b) => b.timestamp - a.timestamp)
+      .slice(0, 50);
+  }
+
+  return {
+    success: true,
+    notification,
+    relatedBatch,
+    relatedDraft,
+    relatedTemplate,
+    auditTimeline,
+  };
 }
 
 export function rollbackNotificationsByBatchId(

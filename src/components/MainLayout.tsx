@@ -15,6 +15,7 @@ import {
   Send,
   PackageCheck,
   RotateCcw,
+  MessageSquare,
 } from 'lucide-react';
 
 export default function MainLayout() {
@@ -22,6 +23,8 @@ export default function MainLayout() {
   const logout = useAppStore((s) => s.logout);
   const init = useAppStore((s) => s.init);
   const initialized = useAppStore((s) => s.initialized);
+  const unreadCount = useAppStore((s) => s.unreadNotificationCount);
+  const refreshUnreadCount = useAppStore((s) => s.refreshUnreadCount);
   const navigate = useNavigate();
   const toast = useAppStore((s) => s.toast);
   const clearToast = useAppStore((s) => s.clearToast);
@@ -29,6 +32,14 @@ export default function MainLayout() {
   useEffect(() => {
     if (!initialized) init();
   }, [initialized, init]);
+
+  useEffect(() => {
+    if (initialized && user) {
+      refreshUnreadCount();
+      const interval = setInterval(refreshUnreadCount, 30000);
+      return () => clearInterval(interval);
+    }
+  }, [initialized, user, refreshUnreadCount]);
 
   useEffect(() => {
     if (initialized && !user) {
@@ -45,6 +56,10 @@ export default function MainLayout() {
   async function handleLogout() {
     await logout();
     navigate('/login', { replace: true });
+  }
+
+  function goToNotifications() {
+    navigate('/notifications');
   }
 
   return (
@@ -82,6 +97,8 @@ export default function MainLayout() {
 
             <NavItem to="/batches" icon={FileBarChart} label="批次查询" />
             <NavItem to="/samples" icon={FlaskConical} label="样本追溯" />
+
+            <NavItem to="/notifications" icon={MessageSquare} label="通知中心" badge={unreadCount} />
 
             {isAdmin && (
               <NavItem to="/audit" icon={ShieldCheck} label="审计历史" />
@@ -121,8 +138,17 @@ export default function MainLayout() {
               <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
                 {ROLE_LABELS[user.role]}
               </span>
-              <button className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 transition relative">
+              <button
+                onClick={goToNotifications}
+                className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 transition relative"
+                title="通知中心"
+              >
                 <Bell className="w-5 h-5" />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </span>
+                )}
               </button>
             </div>
           </header>
@@ -158,11 +184,13 @@ function NavItem({
   icon: Icon,
   label,
   end,
+  badge,
 }: {
   to: string;
   icon: React.ComponentType<{ className?: string }>;
   label: string;
   end?: boolean;
+  badge?: number;
 }) {
   return (
     <NavLink
@@ -177,7 +205,12 @@ function NavItem({
       }
     >
       <Icon className="w-4 h-4" />
-      <span>{label}</span>
+      <span className="flex-1">{label}</span>
+      {badge !== undefined && badge > 0 && (
+        <span className="min-w-[20px] h-5 px-1.5 bg-red-500 text-white text-[11px] font-bold rounded-full flex items-center justify-center">
+          {badge > 99 ? '99+' : badge}
+        </span>
+      )}
     </NavLink>
   );
 }

@@ -259,6 +259,7 @@ export interface ImportNotification {
   rolledBackAt?: number;
   rolledBackBy?: string;
   rolledBackByName?: string;
+  readBy: Record<string, { readAt: number }>;
   createdAt: number;
   updatedAt: number;
 }

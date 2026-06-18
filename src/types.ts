@@ -286,6 +286,79 @@ export interface RegisterSampleInput {
   tempLocation: string;
 }
 
+export type ImportNotificationType =
+  | 'TEMPLATE_APPLY'
+  | 'DRAFT_SAVE'
+  | 'DRAFT_UPDATE'
+  | 'DRAFT_SUBMIT'
+  | 'IMPORT_SUCCESS'
+  | 'IMPORT_FAILURE'
+  | 'EXPORT_SUCCESS'
+  | 'EXPORT_FAILURE'
+  | 'UNDO_SUCCESS'
+  | 'UNDO_FAILURE'
+  | 'DRAFT_CONFLICT'
+  | 'DRAFT_CANCEL';
+
+export type ImportNotificationStatus =
+  | 'PENDING'
+  | 'SUCCESS'
+  | 'FAILURE'
+  | 'ROLLED_BACK';
+
+export interface ImportNotification {
+  id: string;
+  type: ImportNotificationType;
+  title: string;
+  message: string;
+  operatorId: string;
+  operatorName: string;
+  batchId?: string;
+  batchCode?: string;
+  draftId?: string;
+  templateId?: string;
+  templateName?: string;
+  undoRecordId?: string;
+  result?: Record<string, unknown>;
+  status: ImportNotificationStatus;
+  rolledBack: boolean;
+  rolledBackAt?: number;
+  rolledBackBy?: string;
+  rolledBackByName?: string;
+  isRead: boolean;
+  createdAt: number;
+  updatedAt: number;
+}
+
+export const NOTIFICATION_TYPE_LABELS: Record<ImportNotificationType, string> = {
+  TEMPLATE_APPLY: '模板套用',
+  DRAFT_SAVE: '草稿保存',
+  DRAFT_UPDATE: '草稿更新',
+  DRAFT_SUBMIT: '草稿提交',
+  IMPORT_SUCCESS: '导入成功',
+  IMPORT_FAILURE: '导入失败',
+  EXPORT_SUCCESS: '导出成功',
+  EXPORT_FAILURE: '导出失败',
+  UNDO_SUCCESS: '撤销成功',
+  UNDO_FAILURE: '撤销失败',
+  DRAFT_CONFLICT: '草稿冲突',
+  DRAFT_CANCEL: '草稿取消',
+};
+
+export const NOTIFICATION_STATUS_COLORS: Record<ImportNotificationStatus, string> = {
+  PENDING: 'bg-amber-50 text-amber-700 border-amber-200',
+  SUCCESS: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  FAILURE: 'bg-red-50 text-red-700 border-red-200',
+  ROLLED_BACK: 'bg-slate-100 text-slate-600 border-slate-200',
+};
+
+export const NOTIFICATION_STATUS_LABELS: Record<ImportNotificationStatus, string> = {
+  PENDING: '待处理',
+  SUCCESS: '成功',
+  FAILURE: '失败',
+  ROLLED_BACK: '已回退',
+};
+
 export function formatDate(ts: number): string {
   const d = new Date(ts);
   const pad = (n: number) => String(n).padStart(2, '0');

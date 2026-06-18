@@ -201,6 +201,61 @@ async function run() {
     console.log(`  Info: Sample DRAFT_CONFLICT - lastEditedByName=${n.result.lastEditedByName}`);
   }
 
+  // ============== Test 12: Read/Unread State Persists After Restart ====
+  console.log('\n=== Test 12: Read/Unread State Persistence ===');
+
+  const s1NotifsCheck = await authReq('/labs/notifications', s1Cookie);
+  assert(s1NotifsCheck.data.success === true, 'Can get notifications after restart');
+  assert(typeof s1NotifsCheck.data.data.unreadCount === 'number', 'unreadCount is present after restart');
+  console.log(`  Info: Sampler1 unreadCount after restart = ${s1NotifsCheck.data.data.unreadCount}`);
+
+  const sampleN = s1NotifsCheck.data.data.notifications[0];
+  assert(typeof sampleN.isRead === 'boolean', 'Notification has isRead field after restart');
+  assert(typeof sampleN.readBy === 'object' && sampleN.readBy !== null,
+    'Notification has readBy object after restart');
+
+  const firstRead = s1NotifsCheck.data.data.notifications.find(n => n.isRead === true);
+  if (firstRead) {
+    const readByMe = firstRead.readBy[sampler1.data.data.id];
+    assert(!!readByMe, 'Read notification has entry in readBy for user');
+    assert(!!readByMe.readAt, 'Read entry has readAt timestamp');
+    assert(readByMe.readAt > 0, 'readAt is valid timestamp');
+    console.log(`  Info: Read notification has readAt = ${new Date(readByMe.readAt).toISOString()}`);
+  } else {
+    console.log('  Info: No read notifications found (may need fresh mark-read test)');
+  }
+
+  // ============== Test 13: Per-User Read State Survives Restart ====
+  console.log('\n=== Test 13: Per-User Read State Isolation After Restart ===');
+
+  const aNotifsCheck = await authReq('/labs/notifications', aCookie);
+  const adminUnread = aNotifsCheck.data.data.unreadCount;
+  const s1Unread = s1NotifsCheck.data.data.unreadCount;
+  console.log(`  Info: Admin unread=${adminUnread}, Sampler1 unread=${s1Unread}`);
+  assert(typeof adminUnread === 'number', 'Admin has unread count after restart');
+  assert(typeof s1Unread === 'number', 'Sampler1 has unread count after restart');
+
+  const s1FirstNotif = s1NotifsCheck.data.data.notifications[0];
+  const aFirstNotif = aNotifsCheck.data.data.notifications.find(n => n.id === s1FirstNotif.id);
+  if (aFirstNotif) {
+    assert(typeof aFirstNotif.isRead === 'boolean', 'Admin view of same notif has isRead flag');
+    console.log(`  Info: Same notification - Sampler1.isRead=${s1FirstNotif.isRead}, Admin.isRead=${aFirstNotif.isRead}`);
+  }
+
+  // ============== Test 14: Rolled-back State Still Marked After Restart ====
+  console.log('\n=== Test 14: Rolled-back Markers Survive Restart ===');
+
+  const rolledBackCheck = await authReq('/labs/notifications?rolledBack=true', s1Cookie);
+  if (rolledBackCheck.data.data.notifications.length > 0) {
+    const n = rolledBackCheck.data.data.notifications[0];
+    assert(n.rolledBack === true, 'Notification still rolledBack=true after restart');
+    assert(n.status === 'ROLLED_BACK', 'Notification status still ROLLED_BACK after restart');
+    assert(!!n.rolledBackAt, 'rolledBackAt timestamp survives restart');
+    assert(!!n.rolledBackBy, 'rolledBackBy survives restart');
+    assert(!!n.rolledBackByName, 'rolledBackByName survives restart');
+    console.log(`  Info: Rolled-back notif - by=${n.rolledBackByName}, at=${new Date(n.rolledBackAt).toISOString()}`);
+  }
+
   // ============== Summary ==============
   console.log(`\n=== Results: ${passed} passed, ${failed} failed ===`);
 

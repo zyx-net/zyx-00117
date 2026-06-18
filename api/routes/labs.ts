@@ -41,6 +41,9 @@ import {
   listImportNotifications,
   getImportNotification,
   getNotificationStats,
+  markNotificationAsRead,
+  markAllNotificationsAsRead,
+  getNotificationDetailWithTimeline,
 } from '../services.js';
 import type { Role, ImportNotificationType, ImportNotificationStatus } from '../types.js';
 
@@ -677,12 +680,54 @@ router.get('/notifications/stats', requireAuth, (req: AuthenticatedRequest, res:
 router.get('/notifications/:id', requireAuth, (req: AuthenticatedRequest, res: Response) => {
   try {
     const result = getImportNotification(req.user!, req.params.id);
+    if (result.notFound) {
+      return res.status(404).json({ success: false, error: result.error });
+    }
     if (!result.success) {
       return res.status(403).json({ success: false, error: result.error });
     }
     res.json({ success: true, data: { notification: result.notification } });
   } catch (e) {
     res.status(500).json({ success: false, error: '查询通知详情失败' });
+  }
+});
+
+router.get('/notifications/:id/detail', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const result = getNotificationDetailWithTimeline(req.user!, req.params.id);
+    if (result.notFound) {
+      return res.status(404).json({ success: false, error: result.error });
+    }
+    if (!result.success) {
+      return res.status(403).json({ success: false, error: result.error });
+    }
+    res.json({ success: true, data: result });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '查询通知详情失败' });
+  }
+});
+
+router.post('/notifications/:id/read', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const result = markNotificationAsRead(req.user!, req.params.id);
+    if (result.notFound) {
+      return res.status(404).json({ success: false, error: result.error });
+    }
+    if (!result.success) {
+      return res.status(403).json({ success: false, error: result.error });
+    }
+    res.json({ success: true, data: { read: result.read, readAt: result.readAt } });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '标记已读失败' });
+  }
+});
+
+router.post('/notifications/read-all', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const result = markAllNotificationsAsRead(req.user!);
+    res.json({ success: true, data: { readCount: result.markedCount } });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '标记全部已读失败' });
   }
 });
 

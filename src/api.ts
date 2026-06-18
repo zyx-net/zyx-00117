@@ -11,9 +11,12 @@ import type {
   ImportDraft,
   ImportUndoRecord,
   DraftConflictInfo,
+  ImportNotification,
+  ImportNotificationType,
+  ImportNotificationStatus,
 } from './types';
 
-export type { RegisterSampleInput, ExportConfig, CsvImportError, SampleTemplate, ImportDraft, ImportUndoRecord, DraftConflictInfo };
+export type { RegisterSampleInput, ExportConfig, CsvImportError, SampleTemplate, ImportDraft, ImportUndoRecord, DraftConflictInfo, ImportNotification, ImportNotificationType, ImportNotificationStatus };
 
 const API_BASE = '/api';
 
@@ -235,5 +238,34 @@ export const api = {
     request<{ records: ImportUndoRecord[] }>('/labs/import-undo'),
 
   undoLastImport: () =>
-    request<{ undoneData: { batchCode: string; sampleCount: number } }>('/labs/import-undo/undo', 'POST'),
+    request<{ undoneData: { batchCode: string; sampleCount: number; draftReverted?: boolean } }>('/labs/import-undo/undo', 'POST'),
+
+  listNotifications: (filters?: Record<string, string | number | boolean | undefined>) => {
+    const qs = filters
+      ? '?' +
+        Object.entries(filters)
+          .filter(([, v]) => v !== undefined && v !== '')
+          .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`)
+          .join('&')
+      : '';
+    return request<{ notifications: ImportNotification[]; total: number; unreadCount: number }>(`/labs/notifications${qs}`);
+  },
+
+  getNotificationStats: () =>
+    request<{ stats: { total: number; successCount: number; failureCount: number; rolledBackCount: number; byType: Record<string, number> } }>('/labs/notifications/stats'),
+
+  getNotificationDetail: (id: string) =>
+    request<{
+      notification: ImportNotification;
+      relatedBatch: Batch | null;
+      relatedDraft: ImportDraft | null;
+      relatedTemplate: SampleTemplate | null;
+      auditTimeline: AuditEntry[];
+    }>(`/labs/notifications/${id}/detail`),
+
+  markNotificationRead: (id: string) =>
+    request<{ read: boolean; readAt: number }>(`/labs/notifications/${id}/read`, 'POST'),
+
+  markAllNotificationsRead: () =>
+    request<{ readCount: number }>('/labs/notifications/read-all', 'POST'),
 };

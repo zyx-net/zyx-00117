@@ -464,6 +464,150 @@ NOTIF-UNDOBLOCK-${TS}-001,blood,undo block test,Building A,2,8,4.0,Freezer A`;
     assert(validTypes.includes(t), `Notification type ${t} is a valid import-related type (not temp alert)`);
   }
 
+  // ============== Test 16: Read/Unread Tracking ====
+  console.log('\n=== Test 16: Read/Unread Tracking ===');
+
+  const s1NotifsWithRead = await authReq('/labs/notifications', s1Cookie);
+  assert(s1NotifsWithRead.data.success === true, 'Notification list includes read flags');
+  assert(typeof s1NotifsWithRead.data.data.unreadCount === 'number', 'Response includes unreadCount');
+  assert(s1NotifsWithRead.data.data.unreadCount >= 0, 'unreadCount is non-negative');
+  console.log(`  Info: Sampler1 unreadCount = ${s1NotifsWithRead.data.data.unreadCount}`);
+
+  const firstUnread = s1NotifsWithRead.data.data.notifications.find(n => n.isRead === false);
+  const testNotifForRead = firstUnread || s1NotifsWithRead.data.data.notifications[0];
+  assert(!!testNotifForRead, 'Has at least one notification for read test');
+  assert(typeof testNotifForRead.isRead === 'boolean', 'Notification has isRead field');
+
+  const readByIsObject = typeof testNotifForRead.readBy === 'object' && testNotifForRead.readBy !== null;
+  assert(readByIsObject, 'Notification has readBy object');
+
+  // ============== Test 17: Mark Single Notification as Read ====
+  console.log('\n=== Test 17: Mark Single Notification as Read ===');
+
+  const markReadRes = await authReq(`/labs/notifications/${testNotifForRead.id}/read`, s1Cookie, 'POST', {});
+  assert(markReadRes.data.success === true, 'Mark notification as read succeeds');
+  assert(markReadRes.data.data.read === true, 'Response confirms read = true');
+  assert(!!markReadRes.data.data.readAt, 'Response includes readAt timestamp');
+
+  const s1NotifsAfterRead = await authReq('/labs/notifications', s1Cookie);
+  const afterReadUnreadCount = s1NotifsAfterRead.data.data.unreadCount;
+  const beforeReadUnreadCount = s1NotifsWithRead.data.data.unreadCount;
+  if (testNotifForRead.isRead === false) {
+    assert(afterReadUnreadCount === beforeReadUnreadCount - 1,
+      `Unread count decreased by 1 (${beforeReadUnreadCount} -> ${afterReadUnreadCount})`);
+  } else {
+    assert(afterReadUnreadCount === beforeReadUnreadCount,
+      'Unread count unchanged for already-read notification');
+  }
+
+  const detailAfterRead = await authReq(`/labs/notifications/${testNotifForRead.id}`, s1Cookie);
+  assert(detailAfterRead.data.data.notification.isRead === true,
+    'Notification detail shows isRead = true after marking');
+
+  // ============== Test 18: Mark All Notifications as Read ====
+  console.log('\n=== Test 18: Mark All Notifications as Read ===');
+
+  const s2NotifsBeforeAll = await authReq('/labs/notifications', s2Cookie);
+  console.log(`  Info: Sampler2 unread before = ${s2NotifsBeforeAll.data.data.unreadCount}`);
+
+  const markAllRes = await authReq('/labs/notifications/read-all', s2Cookie, 'POST', {});
+  assert(markAllRes.data.success === true, 'Mark all as read succeeds');
+  assert(typeof markAllRes.data.data.readCount === 'number', 'Response includes readCount');
+  console.log(`  Info: Marked ${markAllRes.data.data.readCount} as read for sampler2`);
+
+  const s2NotifsAfterAll = await authReq('/labs/notifications', s2Cookie);
+  assert(s2NotifsAfterAll.data.data.unreadCount === 0,
+    `Unread count = 0 after mark-all (got ${s2NotifsAfterAll.data.data.unreadCount})`);
+  assert(s2NotifsAfterAll.data.data.notifications.every(n => n.isRead === true),
+    'All notifications show isRead = true after mark-all');
+
+  // ============== Test 19: Read State Per-User Isolation ====
+  console.log('\n=== Test 19: Read State Per-User Isolation ===');
+
+  const aNotifsBeforeAll = await authReq('/labs/notifications', aCookie);
+  const adminUnreadBefore = aNotifsBeforeAll.data.data.unreadCount;
+
+  const adminMarkAll = await authReq('/labs/notifications/read-all', aCookie, 'POST', {});
+  assert(adminMarkAll.data.success === true, 'Admin mark all succeeds');
+
+  const aNotifsAfterAll = await authReq('/labs/notifications', aCookie);
+  assert(aNotifsAfterAll.data.data.unreadCount === 0, 'Admin unread = 0 after mark-all');
+
+  const s1NotifsAfterAdminRead = await authReq('/labs/notifications', s1Cookie);
+  assert(s1NotifsAfterAdminRead.data.data.unreadCount === afterReadUnreadCount,
+    'Sampler1 unread unaffected by admin mark-all');
+
+  // ============== Test 20: Notification Detail with Related Objects & Audit Timeline ====
+  console.log('\n=== Test 20: Notification Detail with Audit Timeline ===');
+
+  const detailRes = await authReq(`/labs/notifications/${importNotifS1.id}/detail`, s1Cookie);
+  assert(detailRes.data.success === true, 'Get notification detail with timeline succeeds');
+  assert(!!detailRes.data.data.notification, 'Detail response includes notification');
+  assert(detailRes.data.data.notification.id === importNotifS1.id, 'Notification ID matches');
+  assert(typeof detailRes.data.data.relatedBatch === 'object', 'Detail includes relatedBatch field');
+  assert(typeof detailRes.data.data.relatedDraft === 'object', 'Detail includes relatedDraft field');
+  assert(typeof detailRes.data.data.relatedTemplate === 'object', 'Detail includes relatedTemplate field');
+  assert(Array.isArray(detailRes.data.data.auditTimeline), 'Detail includes auditTimeline array');
+
+  const relatedBatch = detailRes.data.data.relatedBatch;
+  assert(relatedBatch !== null, 'Import notification has related batch');
+  assert(relatedBatch.id === batch1Id, 'Related batch ID matches');
+  assert(relatedBatch.batchCode === batch1Code, 'Related batch code matches');
+  assert(!!relatedBatch.status, 'Related batch has status');
+
+  const timeline = detailRes.data.data.auditTimeline;
+  assert(timeline.length > 0, 'Audit timeline has entries for import batch');
+  const firstTimelineEntry = timeline[0];
+  assert(!!firstTimelineEntry.id, 'Timeline entry has id');
+  assert(!!firstTimelineEntry.action, 'Timeline entry has action');
+  assert(!!firstTimelineEntry.operatorName, 'Timeline entry has operatorName');
+  assert(!!firstTimelineEntry.timestamp, 'Timeline entry has timestamp');
+  assert(typeof firstTimelineEntry.success === 'boolean', 'Timeline entry has success flag');
+  console.log(`  Info: Audit timeline has ${timeline.length} entries`);
+  console.log(`  Info: First timeline action = ${firstTimelineEntry.action} by ${firstTimelineEntry.operatorName}`);
+
+  // ============== Test 21: Unauthorized Access to Notification Detail ====
+  console.log('\n=== Test 21: Unauthorized Access - Detail Endpoint ===');
+
+  const s2DetailTimeline = await authReq(`/labs/notifications/${importNotifS1.id}/detail`, s2Cookie);
+  assert(s2DetailTimeline.status === 403,
+    `Sampler2 cannot access sampler1's notification detail timeline (403, got ${s2DetailTimeline.status})`);
+  assert(s2DetailTimeline.data.success === false, 'Unauthorized detail request fails');
+  assert(s2DetailTimeline.data.error?.includes('无权') || s2DetailTimeline.data.error?.includes('权限'),
+    'Error message indicates permission denied');
+
+  const s2ReadAttempt = await authReq(`/labs/notifications/${importNotifS1.id}/read`, s2Cookie, 'POST', {});
+  assert(s2ReadAttempt.status === 403,
+    `Sampler2 cannot mark sampler1's notification as read (403, got ${s2ReadAttempt.status})`);
+
+  const r1ReadAttempt = await authReq(`/labs/notifications/${importNotifS1.id}/read`, r1Cookie, 'POST', {});
+  assert(r1ReadAttempt.status === 403,
+    `Receiver1 cannot mark sampler1's notification as read (403, got ${r1ReadAttempt.status})`);
+
+  const adminReadDetail = await authReq(`/labs/notifications/${importNotifS1.id}/detail`, aCookie);
+  assert(adminReadDetail.data.success === true,
+    'Admin CAN access any notification detail with timeline');
+
+  const adminMarkRead = await authReq(`/labs/notifications/${importNotifS1.id}/read`, aCookie, 'POST', {});
+  assert(adminMarkRead.data.success === true,
+    'Admin CAN mark any notification as read');
+
+  // ============== Test 22: Invalid Notification ID ====
+  console.log('\n=== Test 22: Invalid Notification ID Handling ===');
+
+  const invalidDetail = await authReq('/labs/notifications/nonexistent-id-12345', s1Cookie);
+  assert(invalidDetail.status === 404,
+    `Invalid notification ID returns 404 for detail (got ${invalidDetail.status})`);
+  assert(invalidDetail.data.success === false, 'Invalid ID request fails');
+
+  const invalidRead = await authReq('/labs/notifications/nonexistent-id-12345/read', s1Cookie, 'POST', {});
+  assert(invalidRead.status === 404,
+    `Invalid notification ID returns 404 for read (got ${invalidRead.status})`);
+
+  const invalidDetailTimeline = await authReq('/labs/notifications/nonexistent-id-12345/detail', s1Cookie);
+  assert(invalidDetailTimeline.status === 404,
+    `Invalid notification ID returns 404 for detail timeline (got ${invalidDetailTimeline.status})`);
+
   // ============== Summary ==============
   console.log(`\n=== Results: ${passed} passed, ${failed} failed ===`);
 

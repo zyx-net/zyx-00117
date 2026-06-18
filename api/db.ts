@@ -113,6 +113,9 @@ export function loadDb(): Database {
     if (!db.importDrafts) db.importDrafts = [];
     if (!db.importUndoRecords) db.importUndoRecords = [];
     if (!db.importNotifications) db.importNotifications = [];
+    for (const n of db.importNotifications) {
+      if (!n.readBy) n.readBy = {};
+    }
     return db;
   } catch (e) {
     console.error('Failed to load DB, creating new one:', e);

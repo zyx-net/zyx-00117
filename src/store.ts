@@ -6,6 +6,7 @@ interface AppState {
   user: User | null;
   initialized: boolean;
   toast: { message: string; type: 'success' | 'error' | 'info' } | null;
+  unreadNotificationCount: number;
 
   init: () => Promise<void>;
   login: (username: string, password: string) => Promise<{ success: boolean; error?: string }>;
@@ -13,17 +14,22 @@ interface AppState {
 
   showToast: (message: string, type?: 'success' | 'error' | 'info') => void;
   clearToast: () => void;
+
+  refreshUnreadCount: () => Promise<void>;
+  decrementUnreadCount: () => void;
 }
 
-export const useAppStore = create<AppState>((set) => ({
+export const useAppStore = create<AppState>((set, get) => ({
   user: null,
   initialized: false,
   toast: null,
+  unreadNotificationCount: 0,
 
   init: async () => {
     const res = await api.me();
     if (res.success && res.data) {
       set({ user: res.data, initialized: true });
+      get().refreshUnreadCount();
     } else {
       set({ user: null, initialized: true });
     }
@@ -33,6 +39,7 @@ export const useAppStore = create<AppState>((set) => ({
     const res = await api.login(username, password);
     if (res.success && res.data) {
       set({ user: res.data });
+      get().refreshUnreadCount();
       return { success: true };
     }
     return { success: false, error: res.error };
@@ -40,7 +47,7 @@ export const useAppStore = create<AppState>((set) => ({
 
   logout: async () => {
     await api.logout();
-    set({ user: null });
+    set({ user: null, unreadNotificationCount: 0 });
   },
 
   showToast: (message, type = 'info') => {
@@ -49,4 +56,19 @@ export const useAppStore = create<AppState>((set) => ({
   },
 
   clearToast: () => set({ toast: null }),
+
+  refreshUnreadCount: async () => {
+    const user = get().user;
+    if (!user) return;
+    const res = await api.listNotifications();
+    if (res.success && res.data) {
+      set({ unreadNotificationCount: res.data.unreadCount });
+    }
+  },
+
+  decrementUnreadCount: () => {
+    set((state) => ({
+      unreadNotificationCount: Math.max(0, state.unreadNotificationCount - 1),
+    }));
+  },
 }));
