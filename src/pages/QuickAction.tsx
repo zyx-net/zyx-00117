@@ -39,7 +39,7 @@ export default function QuickActionPage({ mode }: Props) {
       } else if (mode === 'receive') {
         list = list.filter((b) => ['IN_TRANSIT', 'PARTIAL_RECEIVED'].includes(b.status));
       } else {
-        list = list.filter((b) => ['IN_TRANSIT', 'PARTIAL_RECEIVED', 'FULLY_RECEIVED', 'RETURNED'].includes(b.status));
+        list = list.filter((b) => ['IN_TRANSIT', 'PARTIAL_RECEIVED', 'RETURNED'].includes(b.status));
       }
       setItems(list);
     }

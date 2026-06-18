@@ -226,8 +226,7 @@ router.get('/export/batches', requireAuth, (req: AuthenticatedRequest, res: Resp
     res.setHeader('Content-Type', 'text/csv; charset=utf-8');
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
     res.setHeader('Cache-Control', 'no-store');
-    res.write('\uFEFF');
-    res.send(csvContent);
+    res.end('\uFEFF' + csvContent);
   } catch (e) {
     res.status(500).json({ success: false, error: '导出失败' });
   }
@@ -289,8 +288,7 @@ router.get('/export/samples', requireAuth, (req: AuthenticatedRequest, res: Resp
     res.setHeader('Content-Type', 'text/csv; charset=utf-8');
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
     res.setHeader('Cache-Control', 'no-store');
-    res.write('\uFEFF');
-    res.send(csvContent);
+    res.end('\uFEFF' + csvContent);
   } catch (e) {
     res.status(500).json({ success: false, error: '导出失败' });
   }

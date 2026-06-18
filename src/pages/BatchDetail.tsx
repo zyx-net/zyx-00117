@@ -233,7 +233,8 @@ export default function BatchDetail() {
 
   const { batch, samples } = detail;
   const canInitiate = user && (user.role === 'SAMPLER' || user.role === 'ADMIN');
-  const canReceive = user && (user.role === 'RECEIVER' || user.role === 'ADMIN');
+  const canReceive = user && (user.role === 'RECEIVER' || user.role === 'ADMIN') && batch.status === 'IN_TRANSIT';
+  const canReturn = user && (user.role === 'RECEIVER' || user.role === 'ADMIN') && batch.status === 'IN_TRANSIT';
   const canVoid = user && user.role === 'ADMIN';
   const isIntendedReceiver = user && batch.intendedReceiverId === user.id;
 
@@ -307,11 +308,13 @@ export default function BatchDetail() {
                 }`}>
                 <PackageCheck className="w-4 h-4" /> 签收
               </button>
-              <button onClick={() => startAction('return')}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-orange-600 text-white text-sm font-medium shadow-sm hover:bg-orange-700 transition">
-                <XCircle className="w-4 h-4" /> 退回
-              </button>
             </>
+          )}
+          {canReturn && (
+            <button onClick={() => startAction('return')}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-orange-600 text-white text-sm font-medium shadow-sm hover:bg-orange-700 transition">
+              <XCircle className="w-4 h-4" /> 退回
+            </button>
           )}
           {canVoid && (
             <button onClick={() => startAction('void')}
@@ -581,7 +584,7 @@ function isSampleSelectableForAction(s: Sample, mode: ActionMode): boolean {
   switch (mode) {
     case 'handover': return ['REGISTERED', 'PENDING_HANDOVER'].includes(s.status);
     case 'receive': return s.status === 'IN_TRANSIT';
-    case 'return': return ['IN_TRANSIT', 'RECEIVED'].includes(s.status);
+    case 'return': return s.status === 'IN_TRANSIT';
     case 're-handover': return ['RETURNED', 'REGISTERED'].includes(s.status);
     case 'void': return s.status !== 'VOIDED';
     default: return true;

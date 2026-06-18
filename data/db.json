@@ -43,211 +43,12 @@
   ],
   "samples": [
     {
-      "id": "sample-1781744250938-7dvy4a",
-      "sampleCode": "S-DEMO-001",
-      "batchId": "batch-1781744250938-58ugju",
-      "type": "????",
-      "description": "????",
-      "collectedAt": 1781744250938,
-      "collectedBy": "user-sampler-001",
-      "collectorName": "张采样",
-      "sourceLocation": "??3?",
-      "currentHolderId": "user-sampler-001",
-      "currentHolderName": "张采样",
-      "status": "REGISTERED",
-      "minTemp": 2,
-      "maxTemp": 8,
-      "temperatureRecords": [
-        {
-          "id": "temp-1781744250938-e9t4go",
-          "sampleId": "sample-1781744250938-7dvy4a",
-          "timestamp": 1781744250938,
-          "temperature": 4,
-          "recordedBy": "user-sampler-001",
-          "location": "????",
-          "note": "登记时初始温度记录"
-        }
-      ],
-      "temperatureAlerts": [],
-      "handoverChain": [
-        {
-          "fromUserId": "SYSTEM",
-          "fromUserName": "系统",
-          "toUserId": "user-sampler-001",
-          "toUserName": "张采样",
-          "action": "REGISTER",
-          "temperatureChecks": [
-            "temp-1781744250938-e9t4go"
-          ],
-          "id": "chain-1781744250939-y8n5il",
-          "timestamp": 1781744250939
-        }
-      ],
-      "createdAt": 1781744250938,
-      "updatedAt": 1781744250938
-    },
-    {
-      "id": "sample-1781744250939-swlmch",
-      "sampleCode": "S-DEMO-002",
-      "batchId": "batch-1781744250938-58ugju",
-      "type": "????",
-      "description": "PCR??",
-      "collectedAt": 1781744250938,
-      "collectedBy": "user-sampler-001",
-      "collectorName": "张采样",
-      "sourceLocation": "??5?",
-      "currentHolderId": "user-sampler-001",
-      "currentHolderName": "张采样",
-      "status": "REGISTERED",
-      "minTemp": -20,
-      "maxTemp": -10,
-      "temperatureRecords": [
-        {
-          "id": "temp-1781744250939-fc99ik",
-          "sampleId": "sample-1781744250939-swlmch",
-          "timestamp": 1781744250938,
-          "temperature": -15,
-          "recordedBy": "user-sampler-001",
-          "location": "????",
-          "note": "登记时初始温度记录"
-        }
-      ],
-      "temperatureAlerts": [],
-      "handoverChain": [
-        {
-          "fromUserId": "SYSTEM",
-          "fromUserName": "系统",
-          "toUserId": "user-sampler-001",
-          "toUserName": "张采样",
-          "action": "REGISTER",
-          "temperatureChecks": [
-            "temp-1781744250939-fc99ik"
-          ],
-          "id": "chain-1781744250939-t5hcjm",
-          "timestamp": 1781744250939
-        }
-      ],
-      "createdAt": 1781744250938,
-      "updatedAt": 1781744250938
-    },
-    {
-      "id": "sample-1781744337922-dkxs2q",
-      "sampleCode": "TEST-A001",
-      "batchId": "batch-1781744337922-w3fs3n",
-      "type": "????",
-      "description": "???",
-      "collectedAt": 1781744337922,
-      "collectedBy": "user-sampler-001",
-      "collectorName": "张采样",
-      "sourceLocation": "??",
-      "currentHolderId": "user-sampler-001",
-      "currentHolderName": "张采样",
-      "status": "RETURNED",
-      "minTemp": 2,
-      "maxTemp": 8,
-      "temperatureRecords": [
-        {
-          "id": "temp-1781744338122-f7wasi",
-          "sampleId": "sample-1781744337922-dkxs2q",
-          "timestamp": 1781744338122,
-          "temperature": 12,
-          "recordedBy": "user-receiver-001",
-          "location": "???",
-          "note": "退回时温度记录"
-        },
-        {
-          "id": "temp-1781744338073-lkim35",
-          "sampleId": "sample-1781744337922-dkxs2q",
-          "timestamp": 1781744338073,
-          "temperature": 5.5,
-          "recordedBy": "user-receiver-001",
-          "location": "??????",
-          "note": "签收时温度记录"
-        },
-        {
-          "id": "temp-1781744337922-pyljob",
-          "sampleId": "sample-1781744337922-dkxs2q",
-          "timestamp": 1781744337922,
-          "temperature": 5,
-          "recordedBy": "user-sampler-001",
-          "location": "??",
-          "note": "登记时初始温度记录"
-        }
-      ],
-      "temperatureAlerts": [
-        {
-          "id": "alert-1781744338122-zoxbcg",
-          "sampleId": "sample-1781744337922-dkxs2q",
-          "recordId": "temp-1781744338122-f7wasi",
-          "type": "TOO_HIGH",
-          "threshold": 8,
-          "actualValue": 12,
-          "timestamp": 1781744338122,
-          "resolved": false
-        }
-      ],
-      "handoverChain": [
-        {
-          "fromUserId": "user-receiver-001",
-          "fromUserName": "王接收",
-          "toUserId": "user-sampler-001",
-          "toUserName": "张采样",
-          "action": "RETURN",
-          "returnReason": "???????,????",
-          "temperatureChecks": [
-            "temp-1781744338122-f7wasi"
-          ],
-          "id": "chain-1781744338122-5wvqx7",
-          "timestamp": 1781744338122
-        },
-        {
-          "fromUserId": "user-sampler-001",
-          "fromUserName": "张采样",
-          "toUserId": "user-receiver-001",
-          "toUserName": "王接收",
-          "action": "RECEIVE",
-          "temperatureChecks": [
-            "temp-1781744338073-lkim35"
-          ],
-          "id": "chain-1781744338073-jdxdhc",
-          "timestamp": 1781744338073
-        },
-        {
-          "fromUserId": "user-sampler-001",
-          "fromUserName": "张采样",
-          "toUserId": "user-receiver-001",
-          "toUserName": "王接收",
-          "action": "INITIATE_HANDOVER",
-          "note": "????",
-          "temperatureChecks": [
-            "temp-1781744337922-pyljob"
-          ],
-          "id": "chain-1781744337980-hws4hq",
-          "timestamp": 1781744337980
-        },
-        {
-          "fromUserId": "SYSTEM",
-          "fromUserName": "系统",
-          "toUserId": "user-sampler-001",
-          "toUserName": "张采样",
-          "action": "REGISTER",
-          "temperatureChecks": [
-            "temp-1781744337922-pyljob"
-          ],
-          "id": "chain-1781744337922-aqzvss",
-          "timestamp": 1781744337922
-        }
-      ],
-      "createdAt": 1781744337922,
-      "updatedAt": 1781744338122
-    },
-    {
-      "id": "sample-1781744337922-vj644j",
-      "sampleCode": "TEST-A002",
-      "batchId": "batch-1781744337922-w3fs3n",
-      "type": "????",
-      "description": "??",
-      "collectedAt": 1781744337922,
+      "id": "sample-1781746510977-lo5gq7",
+      "sampleCode": "R-001",
+      "batchId": "batch-1781746510977-zhsgey",
+      "type": "??",
+      "description": "??1",
+      "collectedAt": 1781746510977,
       "collectedBy": "user-sampler-001",
       "collectorName": "张采样",
       "sourceLocation": "??",
@@ -258,19 +59,19 @@
       "maxTemp": 8,
       "temperatureRecords": [
         {
-          "id": "temp-1781744338073-2ts4s3",
-          "sampleId": "sample-1781744337922-vj644j",
-          "timestamp": 1781744338073,
-          "temperature": 6.1,
+          "id": "temp-1781746511027-1398ag",
+          "sampleId": "sample-1781746510977-lo5gq7",
+          "timestamp": 1781746511027,
+          "temperature": 5.5,
           "recordedBy": "user-receiver-001",
-          "location": "??????",
+          "location": "???",
           "note": "签收时温度记录"
         },
         {
-          "id": "temp-1781744337922-xsyljd",
-          "sampleId": "sample-1781744337922-vj644j",
-          "timestamp": 1781744337922,
-          "temperature": 6,
+          "id": "temp-1781746510977-t02mqt",
+          "sampleId": "sample-1781746510977-lo5gq7",
+          "timestamp": 1781746510977,
+          "temperature": 5,
           "recordedBy": "user-sampler-001",
           "location": "??",
           "note": "登记时初始温度记录"
@@ -285,10 +86,10 @@
           "toUserName": "王接收",
           "action": "RECEIVE",
           "temperatureChecks": [
-            "temp-1781744338073-2ts4s3"
+            "temp-1781746511027-1398ag"
           ],
-          "id": "chain-1781744338073-j0p5v5",
-          "timestamp": 1781744338073
+          "id": "chain-1781746511027-yp6799",
+          "timestamp": 1781746511027
         },
         {
           "fromUserId": "user-sampler-001",
@@ -296,12 +97,12 @@
           "toUserId": "user-receiver-001",
           "toUserName": "王接收",
           "action": "INITIATE_HANDOVER",
-          "note": "????",
+          "note": "??",
           "temperatureChecks": [
-            "temp-1781744337922-xsyljd"
+            "temp-1781746510977-t02mqt"
           ],
-          "id": "chain-1781744337980-df0vlk",
-          "timestamp": 1781744337980
+          "id": "chain-1781746511015-5xc4x0",
+          "timestamp": 1781746511015
         },
         {
           "fromUserId": "SYSTEM",
@@ -310,25 +111,103 @@
           "toUserName": "张采样",
           "action": "REGISTER",
           "temperatureChecks": [
-            "temp-1781744337922-xsyljd"
+            "temp-1781746510977-t02mqt"
           ],
-          "id": "chain-1781744337922-3ypt81",
-          "timestamp": 1781744337922
+          "id": "chain-1781746510977-wkdpn5",
+          "timestamp": 1781746510977
         }
       ],
-      "createdAt": 1781744337922,
-      "updatedAt": 1781744338073
+      "createdAt": 1781746510977,
+      "updatedAt": 1781746511027
     },
     {
-      "id": "sample-1781744969682-wftpg7",
-      "sampleCode": "RV-1781744969-A",
-      "batchId": "batch-1781744969682-hdoazq",
-      "type": "blood",
-      "description": "review sample A",
-      "collectedAt": 1781744969682,
+      "id": "sample-1781746510977-fay8sm",
+      "sampleCode": "R-002",
+      "batchId": "batch-1781746510977-zhsgey",
+      "type": "??",
+      "description": "??2",
+      "collectedAt": 1781746510977,
       "collectedBy": "user-sampler-001",
       "collectorName": "张采样",
-      "sourceLocation": "Lab-A",
+      "sourceLocation": "???",
+      "currentHolderId": "user-receiver-001",
+      "currentHolderName": "王接收",
+      "status": "RECEIVED",
+      "minTemp": -20,
+      "maxTemp": -10,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781746511027-gga423",
+          "sampleId": "sample-1781746510977-fay8sm",
+          "timestamp": 1781746511027,
+          "temperature": -14,
+          "recordedBy": "user-receiver-001",
+          "location": "???",
+          "note": "签收时温度记录"
+        },
+        {
+          "id": "temp-1781746510977-q6iy5m",
+          "sampleId": "sample-1781746510977-fay8sm",
+          "timestamp": 1781746510977,
+          "temperature": -15,
+          "recordedBy": "user-sampler-001",
+          "location": "??",
+          "note": "登记时初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [],
+      "handoverChain": [
+        {
+          "fromUserId": "user-sampler-001",
+          "fromUserName": "张采样",
+          "toUserId": "user-receiver-001",
+          "toUserName": "王接收",
+          "action": "RECEIVE",
+          "temperatureChecks": [
+            "temp-1781746511027-gga423"
+          ],
+          "id": "chain-1781746511027-kk60ja",
+          "timestamp": 1781746511027
+        },
+        {
+          "fromUserId": "user-sampler-001",
+          "fromUserName": "张采样",
+          "toUserId": "user-receiver-001",
+          "toUserName": "王接收",
+          "action": "INITIATE_HANDOVER",
+          "note": "??",
+          "temperatureChecks": [
+            "temp-1781746510977-q6iy5m"
+          ],
+          "id": "chain-1781746511015-707aw3",
+          "timestamp": 1781746511015
+        },
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781746510977-q6iy5m"
+          ],
+          "id": "chain-1781746510977-dso9cd",
+          "timestamp": 1781746510977
+        }
+      ],
+      "createdAt": 1781746510977,
+      "updatedAt": 1781746511027
+    },
+    {
+      "id": "sample-1781746511043-uq6y3p",
+      "sampleCode": "R-003",
+      "batchId": "batch-1781746511043-s7gnql",
+      "type": "??",
+      "description": "??",
+      "collectedAt": 1781746511043,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "??",
       "currentHolderId": "user-sampler-001",
       "currentHolderName": "张采样",
       "status": "RETURNED",
@@ -336,42 +215,33 @@
       "maxTemp": 8,
       "temperatureRecords": [
         {
-          "id": "temp-1781744969725-o119r2",
-          "sampleId": "sample-1781744969682-wftpg7",
-          "timestamp": 1781744969725,
-          "temperature": 12,
+          "id": "temp-1781746511323-19na2o",
+          "sampleId": "sample-1781746511043-uq6y3p",
+          "timestamp": 1781746511323,
+          "temperature": 15,
           "recordedBy": "user-receiver-001",
-          "location": "Receiver Bench",
+          "location": "???",
           "note": "退回时温度记录"
         },
         {
-          "id": "temp-1781744969711-pgn7ot",
-          "sampleId": "sample-1781744969682-wftpg7",
-          "timestamp": 1781744969711,
-          "temperature": 4.3,
-          "recordedBy": "user-receiver-001",
-          "location": "Receiver Bench",
-          "note": "签收时温度记录"
-        },
-        {
-          "id": "temp-1781744969682-n4hz20",
-          "sampleId": "sample-1781744969682-wftpg7",
-          "timestamp": 1781744969682,
-          "temperature": 4.2,
+          "id": "temp-1781746511043-4pa0wn",
+          "sampleId": "sample-1781746511043-uq6y3p",
+          "timestamp": 1781746511043,
+          "temperature": 6,
           "recordedBy": "user-sampler-001",
-          "location": "Collection Room",
+          "location": "??",
           "note": "登记时初始温度记录"
         }
       ],
       "temperatureAlerts": [
         {
-          "id": "alert-1781744969725-j2zumf",
-          "sampleId": "sample-1781744969682-wftpg7",
-          "recordId": "temp-1781744969725-o119r2",
+          "id": "alert-1781746511323-7y9hlc",
+          "sampleId": "sample-1781746511043-uq6y3p",
+          "recordId": "temp-1781746511323-19na2o",
           "type": "TOO_HIGH",
           "threshold": 8,
-          "actualValue": 12,
-          "timestamp": 1781744969725,
+          "actualValue": 15,
+          "timestamp": 1781746511323,
           "resolved": false
         }
       ],
@@ -382,24 +252,12 @@
           "toUserId": "user-sampler-001",
           "toUserName": "张采样",
           "action": "RETURN",
-          "returnReason": "review return after receive",
+          "returnReason": "????????",
           "temperatureChecks": [
-            "temp-1781744969725-o119r2"
+            "temp-1781746511323-19na2o"
           ],
-          "id": "chain-1781744969725-1g6fi2",
-          "timestamp": 1781744969725
-        },
-        {
-          "fromUserId": "user-sampler-001",
-          "fromUserName": "张采样",
-          "toUserId": "user-receiver-001",
-          "toUserName": "王接收",
-          "action": "RECEIVE",
-          "temperatureChecks": [
-            "temp-1781744969711-pgn7ot"
-          ],
-          "id": "chain-1781744969711-tkh1m1",
-          "timestamp": 1781744969711
+          "id": "chain-1781746511323-o5euyr",
+          "timestamp": 1781746511323
         },
         {
           "fromUserId": "user-sampler-001",
@@ -407,12 +265,11 @@
           "toUserId": "user-receiver-001",
           "toUserName": "王接收",
           "action": "INITIATE_HANDOVER",
-          "note": "review handover",
           "temperatureChecks": [
-            "temp-1781744969682-n4hz20"
+            "temp-1781746511043-4pa0wn"
           ],
-          "id": "chain-1781744969688-xtdsek",
-          "timestamp": 1781744969688
+          "id": "chain-1781746511049-tof1lt",
+          "timestamp": 1781746511049
         },
         {
           "fromUserId": "SYSTEM",
@@ -421,25 +278,81 @@
           "toUserName": "张采样",
           "action": "REGISTER",
           "temperatureChecks": [
-            "temp-1781744969682-n4hz20"
+            "temp-1781746511043-4pa0wn"
           ],
-          "id": "chain-1781744969682-gqjveq",
-          "timestamp": 1781744969682
+          "id": "chain-1781746511043-qrt8hh",
+          "timestamp": 1781746511043
         }
       ],
-      "createdAt": 1781744969682,
-      "updatedAt": 1781744969725
+      "createdAt": 1781746511043,
+      "updatedAt": 1781746511323
     },
     {
-      "id": "sample-1781744969682-iuatk4",
-      "sampleCode": "RV-1781744969-B",
-      "batchId": "batch-1781744969682-hdoazq",
-      "type": "serum",
-      "description": "review sample B",
-      "collectedAt": 1781744969682,
+      "id": "sample-1781746511354-whs38j",
+      "sampleCode": "R-004",
+      "batchId": "batch-1781746511354-7ugfj4",
+      "type": "??",
+      "description": "???",
+      "collectedAt": 1781746511354,
       "collectedBy": "user-sampler-001",
       "collectorName": "张采样",
-      "sourceLocation": "Lab-B",
+      "sourceLocation": "??",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "IN_TRANSIT",
+      "minTemp": 2,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781746511354-geaq8o",
+          "sampleId": "sample-1781746511354-whs38j",
+          "timestamp": 1781746511354,
+          "temperature": 5,
+          "recordedBy": "user-sampler-001",
+          "location": "??",
+          "note": "登记时初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [],
+      "handoverChain": [
+        {
+          "fromUserId": "user-sampler-001",
+          "fromUserName": "张采样",
+          "toUserId": "user-receiver-001",
+          "toUserName": "王接收",
+          "action": "INITIATE_HANDOVER",
+          "temperatureChecks": [
+            "temp-1781746511354-geaq8o"
+          ],
+          "id": "chain-1781746511361-2u4p6t",
+          "timestamp": 1781746511361
+        },
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781746511354-geaq8o"
+          ],
+          "id": "chain-1781746511354-dspxux",
+          "timestamp": 1781746511354
+        }
+      ],
+      "createdAt": 1781746511354,
+      "updatedAt": 1781746511361
+    },
+    {
+      "id": "sample-1781746549185-plmale",
+      "sampleCode": "TRANSIT-TEST",
+      "batchId": "batch-1781746549185-213hu2",
+      "type": "??",
+      "description": "test",
+      "collectedAt": 1781746549185,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "??",
       "currentHolderId": "user-sampler-001",
       "currentHolderName": "张采样",
       "status": "RETURNED",
@@ -447,59 +360,204 @@
       "maxTemp": 8,
       "temperatureRecords": [
         {
-          "id": "temp-1781744969725-yk9ra3",
-          "sampleId": "sample-1781744969682-iuatk4",
-          "timestamp": 1781744969725,
-          "temperature": 11.5,
+          "id": "temp-1781746549256-0yos5u",
+          "sampleId": "sample-1781746549185-plmale",
+          "timestamp": 1781746549256,
+          "temperature": 15,
           "recordedBy": "user-receiver-001",
-          "location": "Receiver Bench",
+          "location": "???",
           "note": "退回时温度记录"
         },
         {
-          "id": "temp-1781744969711-j20wcv",
-          "sampleId": "sample-1781744969682-iuatk4",
-          "timestamp": 1781744969711,
-          "temperature": 4.4,
+          "id": "temp-1781746549185-9agzl2",
+          "sampleId": "sample-1781746549185-plmale",
+          "timestamp": 1781746549185,
+          "temperature": 5,
+          "recordedBy": "user-sampler-001",
+          "location": "??",
+          "note": "登记时初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [
+        {
+          "id": "alert-1781746549256-gb4xca",
+          "sampleId": "sample-1781746549185-plmale",
+          "recordId": "temp-1781746549256-0yos5u",
+          "type": "TOO_HIGH",
+          "threshold": 8,
+          "actualValue": 15,
+          "timestamp": 1781746549256,
+          "resolved": false
+        }
+      ],
+      "handoverChain": [
+        {
+          "fromUserId": "user-receiver-001",
+          "fromUserName": "王接收",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "RETURN",
+          "returnReason": "?????",
+          "temperatureChecks": [
+            "temp-1781746549256-0yos5u"
+          ],
+          "id": "chain-1781746549256-1a5od7",
+          "timestamp": 1781746549256
+        },
+        {
+          "fromUserId": "user-sampler-001",
+          "fromUserName": "张采样",
+          "toUserId": "user-receiver-001",
+          "toUserName": "王接收",
+          "action": "INITIATE_HANDOVER",
+          "temperatureChecks": [
+            "temp-1781746549185-9agzl2"
+          ],
+          "id": "chain-1781746549228-0fu6rz",
+          "timestamp": 1781746549228
+        },
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781746549185-9agzl2"
+          ],
+          "id": "chain-1781746549185-d8ga6c",
+          "timestamp": 1781746549185
+        }
+      ],
+      "createdAt": 1781746549185,
+      "updatedAt": 1781746549256
+    },
+    {
+      "id": "sample-1781746611202-z6smmj",
+      "sampleCode": "TRANSIT-2",
+      "batchId": "batch-1781746611202-1dc16y",
+      "type": "??",
+      "description": "test2",
+      "collectedAt": 1781746611202,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "??",
+      "currentHolderId": "user-sampler-001",
+      "currentHolderName": "张采样",
+      "status": "RETURNED",
+      "minTemp": 2,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781746611242-kt19vy",
+          "sampleId": "sample-1781746611202-z6smmj",
+          "timestamp": 1781746611242,
+          "temperature": 15,
           "recordedBy": "user-receiver-001",
-          "location": "Receiver Bench",
+          "location": "???",
+          "note": "退回时温度记录"
+        },
+        {
+          "id": "temp-1781746611202-zp5nmq",
+          "sampleId": "sample-1781746611202-z6smmj",
+          "timestamp": 1781746611202,
+          "temperature": 5,
+          "recordedBy": "user-sampler-001",
+          "location": "??",
+          "note": "登记时初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [
+        {
+          "id": "alert-1781746611242-k8cln0",
+          "sampleId": "sample-1781746611202-z6smmj",
+          "recordId": "temp-1781746611242-kt19vy",
+          "type": "TOO_HIGH",
+          "threshold": 8,
+          "actualValue": 15,
+          "timestamp": 1781746611242,
+          "resolved": false
+        }
+      ],
+      "handoverChain": [
+        {
+          "fromUserId": "user-receiver-001",
+          "fromUserName": "王接收",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "RETURN",
+          "returnReason": "???????",
+          "temperatureChecks": [
+            "temp-1781746611242-kt19vy"
+          ],
+          "id": "chain-1781746611242-gx3mf1",
+          "timestamp": 1781746611242
+        },
+        {
+          "fromUserId": "user-sampler-001",
+          "fromUserName": "张采样",
+          "toUserId": "user-receiver-001",
+          "toUserName": "王接收",
+          "action": "INITIATE_HANDOVER",
+          "temperatureChecks": [
+            "temp-1781746611202-zp5nmq"
+          ],
+          "id": "chain-1781746611229-vu1qdf",
+          "timestamp": 1781746611229
+        },
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781746611202-zp5nmq"
+          ],
+          "id": "chain-1781746611202-196aev",
+          "timestamp": 1781746611202
+        }
+      ],
+      "createdAt": 1781746611202,
+      "updatedAt": 1781746611242
+    },
+    {
+      "id": "sample-1781747318382-htc13b",
+      "sampleCode": "REV-1781747318378-A",
+      "batchId": "batch-1781747318382-evgogr",
+      "type": "Blood",
+      "description": "review sample A",
+      "collectedAt": 1781747318382,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Ward-7A",
+      "currentHolderId": "user-receiver-001",
+      "currentHolderName": "王接收",
+      "status": "RECEIVED",
+      "minTemp": 2,
+      "maxTemp": 8,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781747318407-jjnqgn",
+          "sampleId": "sample-1781747318382-htc13b",
+          "timestamp": 1781747318407,
+          "temperature": 5.2,
+          "recordedBy": "user-receiver-001",
+          "location": "Desk-R1",
           "note": "签收时温度记录"
         },
         {
-          "id": "temp-1781744969682-pyo6hs",
-          "sampleId": "sample-1781744969682-iuatk4",
-          "timestamp": 1781744969682,
+          "id": "temp-1781747318382-m1024e",
+          "sampleId": "sample-1781747318382-htc13b",
+          "timestamp": 1781747318382,
           "temperature": 4.5,
           "recordedBy": "user-sampler-001",
-          "location": "Collection Room",
+          "location": "Fridge-A",
           "note": "登记时初始温度记录"
         }
       ],
-      "temperatureAlerts": [
-        {
-          "id": "alert-1781744969725-d0tat0",
-          "sampleId": "sample-1781744969682-iuatk4",
-          "recordId": "temp-1781744969725-yk9ra3",
-          "type": "TOO_HIGH",
-          "threshold": 8,
-          "actualValue": 11.5,
-          "timestamp": 1781744969725,
-          "resolved": false
-        }
-      ],
+      "temperatureAlerts": [],
       "handoverChain": [
-        {
-          "fromUserId": "user-receiver-001",
-          "fromUserName": "王接收",
-          "toUserId": "user-sampler-001",
-          "toUserName": "张采样",
-          "action": "RETURN",
-          "returnReason": "review return after receive",
-          "temperatureChecks": [
-            "temp-1781744969725-yk9ra3"
-          ],
-          "id": "chain-1781744969725-vmgnzb",
-          "timestamp": 1781744969725
-        },
         {
           "fromUserId": "user-sampler-001",
           "fromUserName": "张采样",
@@ -507,10 +565,10 @@
           "toUserName": "王接收",
           "action": "RECEIVE",
           "temperatureChecks": [
-            "temp-1781744969711-j20wcv"
+            "temp-1781747318407-jjnqgn"
           ],
-          "id": "chain-1781744969711-s76pul",
-          "timestamp": 1781744969711
+          "id": "chain-1781747318407-rrjnuj",
+          "timestamp": 1781747318407
         },
         {
           "fromUserId": "user-sampler-001",
@@ -520,10 +578,10 @@
           "action": "INITIATE_HANDOVER",
           "note": "review handover",
           "temperatureChecks": [
-            "temp-1781744969682-pyo6hs"
+            "temp-1781747318382-m1024e"
           ],
-          "id": "chain-1781744969688-5n5fsd",
-          "timestamp": 1781744969688
+          "id": "chain-1781747318390-fdl8v4",
+          "timestamp": 1781747318390
         },
         {
           "fromUserId": "SYSTEM",
@@ -532,196 +590,130 @@
           "toUserName": "张采样",
           "action": "REGISTER",
           "temperatureChecks": [
-            "temp-1781744969682-pyo6hs"
+            "temp-1781747318382-m1024e"
           ],
-          "id": "chain-1781744969683-m6gjnn",
-          "timestamp": 1781744969683
+          "id": "chain-1781747318382-ktaw63",
+          "timestamp": 1781747318382
         }
       ],
-      "createdAt": 1781744969682,
-      "updatedAt": 1781744969725
+      "createdAt": 1781747318382,
+      "updatedAt": 1781747318407
     },
     {
-      "id": "sample-1781745024993-yb4sed",
-      "sampleCode": "RV-1781745024-A",
-      "batchId": "batch-1781745024993-klo1ft",
-      "type": "blood",
-      "description": "review sample A",
-      "collectedAt": 1781745024993,
-      "collectedBy": "user-sampler-001",
-      "collectorName": "张采样",
-      "sourceLocation": "Lab-A",
-      "currentHolderId": "user-sampler-001",
-      "currentHolderName": "张采样",
-      "status": "RETURNED",
-      "minTemp": 2,
-      "maxTemp": 8,
-      "temperatureRecords": [
-        {
-          "id": "temp-1781745025022-n5zbd1",
-          "sampleId": "sample-1781745024993-yb4sed",
-          "timestamp": 1781745025022,
-          "temperature": 12,
-          "recordedBy": "user-receiver-001",
-          "location": "Receiver Bench",
-          "note": "退回时温度记录"
-        },
-        {
-          "id": "temp-1781745025010-bo7fge",
-          "sampleId": "sample-1781745024993-yb4sed",
-          "timestamp": 1781745025010,
-          "temperature": 4.3,
-          "recordedBy": "user-receiver-001",
-          "location": "Receiver Bench",
-          "note": "签收时温度记录"
-        },
-        {
-          "id": "temp-1781745024993-37u6sq",
-          "sampleId": "sample-1781745024993-yb4sed",
-          "timestamp": 1781745024993,
-          "temperature": 4.2,
-          "recordedBy": "user-sampler-001",
-          "location": "Collection Room",
-          "note": "登记时初始温度记录"
-        }
-      ],
-      "temperatureAlerts": [
-        {
-          "id": "alert-1781745025022-4nlog4",
-          "sampleId": "sample-1781745024993-yb4sed",
-          "recordId": "temp-1781745025022-n5zbd1",
-          "type": "TOO_HIGH",
-          "threshold": 8,
-          "actualValue": 12,
-          "timestamp": 1781745025022,
-          "resolved": false
-        }
-      ],
-      "handoverChain": [
-        {
-          "fromUserId": "user-receiver-001",
-          "fromUserName": "王接收",
-          "toUserId": "user-sampler-001",
-          "toUserName": "张采样",
-          "action": "RETURN",
-          "returnReason": "review return after receive",
-          "temperatureChecks": [
-            "temp-1781745025022-n5zbd1"
-          ],
-          "id": "chain-1781745025022-fzqnyt",
-          "timestamp": 1781745025023
-        },
-        {
-          "fromUserId": "user-sampler-001",
-          "fromUserName": "张采样",
-          "toUserId": "user-receiver-001",
-          "toUserName": "王接收",
-          "action": "RECEIVE",
-          "temperatureChecks": [
-            "temp-1781745025010-bo7fge"
-          ],
-          "id": "chain-1781745025010-93evdz",
-          "timestamp": 1781745025010
-        },
-        {
-          "fromUserId": "user-sampler-001",
-          "fromUserName": "张采样",
-          "toUserId": "user-receiver-001",
-          "toUserName": "王接收",
-          "action": "INITIATE_HANDOVER",
-          "note": "review handover",
-          "temperatureChecks": [
-            "temp-1781745024993-37u6sq"
-          ],
-          "id": "chain-1781745024998-0k7lvm",
-          "timestamp": 1781745024998
-        },
-        {
-          "fromUserId": "SYSTEM",
-          "fromUserName": "系统",
-          "toUserId": "user-sampler-001",
-          "toUserName": "张采样",
-          "action": "REGISTER",
-          "temperatureChecks": [
-            "temp-1781745024993-37u6sq"
-          ],
-          "id": "chain-1781745024993-s59zyz",
-          "timestamp": 1781745024993
-        }
-      ],
-      "createdAt": 1781745024993,
-      "updatedAt": 1781745025022
-    },
-    {
-      "id": "sample-1781745024993-npm51n",
-      "sampleCode": "RV-1781745024-B",
-      "batchId": "batch-1781745024993-klo1ft",
-      "type": "serum",
+      "id": "sample-1781747318382-jcej95",
+      "sampleCode": "REV-1781747318378-B",
+      "batchId": "batch-1781747318382-evgogr",
+      "type": "Plasma",
       "description": "review sample B",
-      "collectedAt": 1781745024993,
+      "collectedAt": 1781747318382,
       "collectedBy": "user-sampler-001",
       "collectorName": "张采样",
-      "sourceLocation": "Lab-B",
-      "currentHolderId": "user-sampler-001",
-      "currentHolderName": "张采样",
-      "status": "RETURNED",
+      "sourceLocation": "Ward-7A",
+      "currentHolderId": "user-receiver-001",
+      "currentHolderName": "王接收",
+      "status": "RECEIVED",
+      "minTemp": -20,
+      "maxTemp": -10,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781747318407-in6ugf",
+          "sampleId": "sample-1781747318382-jcej95",
+          "timestamp": 1781747318407,
+          "temperature": -14.2,
+          "recordedBy": "user-receiver-001",
+          "location": "Desk-R1",
+          "note": "签收时温度记录"
+        },
+        {
+          "id": "temp-1781747318382-3qdnmq",
+          "sampleId": "sample-1781747318382-jcej95",
+          "timestamp": 1781747318382,
+          "temperature": -15.5,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer-B",
+          "note": "登记时初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [],
+      "handoverChain": [
+        {
+          "fromUserId": "user-sampler-001",
+          "fromUserName": "张采样",
+          "toUserId": "user-receiver-001",
+          "toUserName": "王接收",
+          "action": "RECEIVE",
+          "temperatureChecks": [
+            "temp-1781747318407-in6ugf"
+          ],
+          "id": "chain-1781747318407-zt21lm",
+          "timestamp": 1781747318407
+        },
+        {
+          "fromUserId": "user-sampler-001",
+          "fromUserName": "张采样",
+          "toUserId": "user-receiver-001",
+          "toUserName": "王接收",
+          "action": "INITIATE_HANDOVER",
+          "note": "review handover",
+          "temperatureChecks": [
+            "temp-1781747318382-3qdnmq"
+          ],
+          "id": "chain-1781747318390-x4hwe2",
+          "timestamp": 1781747318390
+        },
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781747318382-3qdnmq"
+          ],
+          "id": "chain-1781747318382-tthkei",
+          "timestamp": 1781747318382
+        }
+      ],
+      "createdAt": 1781747318382,
+      "updatedAt": 1781747318407
+    },
+    {
+      "id": "sample-1781747434459-e0yadc",
+      "sampleCode": "REV-1781747434456-A",
+      "batchId": "batch-1781747434459-ja85f3",
+      "type": "Blood",
+      "description": "review sample A",
+      "collectedAt": 1781747434459,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Ward-7A",
+      "currentHolderId": "user-receiver-001",
+      "currentHolderName": "王接收",
+      "status": "RECEIVED",
       "minTemp": 2,
       "maxTemp": 8,
       "temperatureRecords": [
         {
-          "id": "temp-1781745025023-32h9cf",
-          "sampleId": "sample-1781745024993-npm51n",
-          "timestamp": 1781745025022,
-          "temperature": 11.5,
+          "id": "temp-1781747434482-z4z4ve",
+          "sampleId": "sample-1781747434459-e0yadc",
+          "timestamp": 1781747434482,
+          "temperature": 5.2,
           "recordedBy": "user-receiver-001",
-          "location": "Receiver Bench",
-          "note": "退回时温度记录"
-        },
-        {
-          "id": "temp-1781745025010-5see9p",
-          "sampleId": "sample-1781745024993-npm51n",
-          "timestamp": 1781745025010,
-          "temperature": 4.4,
-          "recordedBy": "user-receiver-001",
-          "location": "Receiver Bench",
+          "location": "Desk-R1",
           "note": "签收时温度记录"
         },
         {
-          "id": "temp-1781745024993-8kvbyh",
-          "sampleId": "sample-1781745024993-npm51n",
-          "timestamp": 1781745024993,
+          "id": "temp-1781747434459-ilitbx",
+          "sampleId": "sample-1781747434459-e0yadc",
+          "timestamp": 1781747434459,
           "temperature": 4.5,
           "recordedBy": "user-sampler-001",
-          "location": "Collection Room",
+          "location": "Fridge-A",
           "note": "登记时初始温度记录"
         }
       ],
-      "temperatureAlerts": [
-        {
-          "id": "alert-1781745025023-dtrmls",
-          "sampleId": "sample-1781745024993-npm51n",
-          "recordId": "temp-1781745025023-32h9cf",
-          "type": "TOO_HIGH",
-          "threshold": 8,
-          "actualValue": 11.5,
-          "timestamp": 1781745025023,
-          "resolved": false
-        }
-      ],
+      "temperatureAlerts": [],
       "handoverChain": [
-        {
-          "fromUserId": "user-receiver-001",
-          "fromUserName": "王接收",
-          "toUserId": "user-sampler-001",
-          "toUserName": "张采样",
-          "action": "RETURN",
-          "returnReason": "review return after receive",
-          "temperatureChecks": [
-            "temp-1781745025023-32h9cf"
-          ],
-          "id": "chain-1781745025023-kq3xdy",
-          "timestamp": 1781745025023
-        },
         {
           "fromUserId": "user-sampler-001",
           "fromUserName": "张采样",
@@ -729,10 +721,10 @@
           "toUserName": "王接收",
           "action": "RECEIVE",
           "temperatureChecks": [
-            "temp-1781745025010-5see9p"
+            "temp-1781747434482-z4z4ve"
           ],
-          "id": "chain-1781745025010-ebtdzr",
-          "timestamp": 1781745025010
+          "id": "chain-1781747434482-8od5ta",
+          "timestamp": 1781747434482
         },
         {
           "fromUserId": "user-sampler-001",
@@ -742,10 +734,10 @@
           "action": "INITIATE_HANDOVER",
           "note": "review handover",
           "temperatureChecks": [
-            "temp-1781745024993-8kvbyh"
+            "temp-1781747434459-ilitbx"
           ],
-          "id": "chain-1781745024998-5asww0",
-          "timestamp": 1781745024998
+          "id": "chain-1781747434465-9zao2i",
+          "timestamp": 1781747434465
         },
         {
           "fromUserId": "SYSTEM",
@@ -754,196 +746,141 @@
           "toUserName": "张采样",
           "action": "REGISTER",
           "temperatureChecks": [
-            "temp-1781745024993-8kvbyh"
+            "temp-1781747434459-ilitbx"
           ],
-          "id": "chain-1781745024993-elw0p3",
-          "timestamp": 1781745024993
+          "id": "chain-1781747434459-wtd2fy",
+          "timestamp": 1781747434459
         }
       ],
-      "createdAt": 1781745024993,
-      "updatedAt": 1781745025022
+      "createdAt": 1781747434459,
+      "updatedAt": 1781747434482
     },
     {
-      "id": "sample-1781745073284-mpzytl",
-      "sampleCode": "RV-1781745073-A",
-      "batchId": "batch-1781745073284-99zfbc",
-      "type": "blood",
-      "description": "review sample A",
-      "collectedAt": 1781745073284,
-      "collectedBy": "user-sampler-001",
-      "collectorName": "张采样",
-      "sourceLocation": "Lab-A",
-      "currentHolderId": "user-sampler-001",
-      "currentHolderName": "张采样",
-      "status": "RETURNED",
-      "minTemp": 2,
-      "maxTemp": 8,
-      "temperatureRecords": [
-        {
-          "id": "temp-1781745073319-h2s1fd",
-          "sampleId": "sample-1781745073284-mpzytl",
-          "timestamp": 1781745073319,
-          "temperature": 12,
-          "recordedBy": "user-receiver-001",
-          "location": "Receiver Bench",
-          "note": "退回时温度记录"
-        },
-        {
-          "id": "temp-1781745073306-edfsol",
-          "sampleId": "sample-1781745073284-mpzytl",
-          "timestamp": 1781745073306,
-          "temperature": 4.3,
-          "recordedBy": "user-receiver-001",
-          "location": "Receiver Bench",
-          "note": "签收时温度记录"
-        },
-        {
-          "id": "temp-1781745073284-ejlfuu",
-          "sampleId": "sample-1781745073284-mpzytl",
-          "timestamp": 1781745073284,
-          "temperature": 4.2,
-          "recordedBy": "user-sampler-001",
-          "location": "Collection Room",
-          "note": "登记时初始温度记录"
-        }
-      ],
-      "temperatureAlerts": [
-        {
-          "id": "alert-1781745073319-pbhrg2",
-          "sampleId": "sample-1781745073284-mpzytl",
-          "recordId": "temp-1781745073319-h2s1fd",
-          "type": "TOO_HIGH",
-          "threshold": 8,
-          "actualValue": 12,
-          "timestamp": 1781745073319,
-          "resolved": false
-        }
-      ],
-      "handoverChain": [
-        {
-          "fromUserId": "user-receiver-001",
-          "fromUserName": "王接收",
-          "toUserId": "user-sampler-001",
-          "toUserName": "张采样",
-          "action": "RETURN",
-          "returnReason": "review return after receive",
-          "temperatureChecks": [
-            "temp-1781745073319-h2s1fd"
-          ],
-          "id": "chain-1781745073319-3qogmt",
-          "timestamp": 1781745073319
-        },
-        {
-          "fromUserId": "user-sampler-001",
-          "fromUserName": "张采样",
-          "toUserId": "user-receiver-001",
-          "toUserName": "王接收",
-          "action": "RECEIVE",
-          "temperatureChecks": [
-            "temp-1781745073306-edfsol"
-          ],
-          "id": "chain-1781745073306-r7apef",
-          "timestamp": 1781745073306
-        },
-        {
-          "fromUserId": "user-sampler-001",
-          "fromUserName": "张采样",
-          "toUserId": "user-receiver-001",
-          "toUserName": "王接收",
-          "action": "INITIATE_HANDOVER",
-          "note": "review handover",
-          "temperatureChecks": [
-            "temp-1781745073284-ejlfuu"
-          ],
-          "id": "chain-1781745073291-21gzen",
-          "timestamp": 1781745073291
-        },
-        {
-          "fromUserId": "SYSTEM",
-          "fromUserName": "系统",
-          "toUserId": "user-sampler-001",
-          "toUserName": "张采样",
-          "action": "REGISTER",
-          "temperatureChecks": [
-            "temp-1781745073284-ejlfuu"
-          ],
-          "id": "chain-1781745073284-bdhbv8",
-          "timestamp": 1781745073284
-        }
-      ],
-      "createdAt": 1781745073284,
-      "updatedAt": 1781745073319
-    },
-    {
-      "id": "sample-1781745073284-p4xfnw",
-      "sampleCode": "RV-1781745073-B",
-      "batchId": "batch-1781745073284-99zfbc",
-      "type": "serum",
+      "id": "sample-1781747434459-slnkel",
+      "sampleCode": "REV-1781747434456-B",
+      "batchId": "batch-1781747434459-ja85f3",
+      "type": "Plasma",
       "description": "review sample B",
-      "collectedAt": 1781745073284,
+      "collectedAt": 1781747434459,
       "collectedBy": "user-sampler-001",
       "collectorName": "张采样",
-      "sourceLocation": "Lab-B",
-      "currentHolderId": "user-sampler-001",
-      "currentHolderName": "张采样",
-      "status": "RETURNED",
+      "sourceLocation": "Ward-7A",
+      "currentHolderId": "user-receiver-001",
+      "currentHolderName": "王接收",
+      "status": "RECEIVED",
+      "minTemp": -20,
+      "maxTemp": -10,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781747434482-dsggey",
+          "sampleId": "sample-1781747434459-slnkel",
+          "timestamp": 1781747434482,
+          "temperature": -14.2,
+          "recordedBy": "user-receiver-001",
+          "location": "Desk-R1",
+          "note": "签收时温度记录"
+        },
+        {
+          "id": "temp-1781747434459-5mho6v",
+          "sampleId": "sample-1781747434459-slnkel",
+          "timestamp": 1781747434459,
+          "temperature": -15.5,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer-B",
+          "note": "登记时初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [],
+      "handoverChain": [
+        {
+          "fromUserId": "user-sampler-001",
+          "fromUserName": "张采样",
+          "toUserId": "user-receiver-001",
+          "toUserName": "王接收",
+          "action": "RECEIVE",
+          "temperatureChecks": [
+            "temp-1781747434482-dsggey"
+          ],
+          "id": "chain-1781747434482-y0hkt0",
+          "timestamp": 1781747434482
+        },
+        {
+          "fromUserId": "user-sampler-001",
+          "fromUserName": "张采样",
+          "toUserId": "user-receiver-001",
+          "toUserName": "王接收",
+          "action": "INITIATE_HANDOVER",
+          "note": "review handover",
+          "temperatureChecks": [
+            "temp-1781747434459-5mho6v"
+          ],
+          "id": "chain-1781747434465-493j16",
+          "timestamp": 1781747434465
+        },
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781747434459-5mho6v"
+          ],
+          "id": "chain-1781747434459-9unh4z",
+          "timestamp": 1781747434459
+        }
+      ],
+      "createdAt": 1781747434459,
+      "updatedAt": 1781747434482
+    },
+    {
+      "id": "sample-1781747735570-o7cpwu",
+      "sampleCode": "REV-1781747735569-A",
+      "batchId": "batch-1781747735570-aq0fsi",
+      "type": "Blood",
+      "description": "review sample A",
+      "collectedAt": 1781747735570,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Ward-7A",
+      "currentHolderId": "user-receiver-001",
+      "currentHolderName": "王接收",
+      "status": "RECEIVED",
       "minTemp": 2,
       "maxTemp": 8,
       "temperatureRecords": [
         {
-          "id": "temp-1781745073319-uamk3f",
-          "sampleId": "sample-1781745073284-p4xfnw",
-          "timestamp": 1781745073319,
-          "temperature": 11.5,
+          "id": "temp-1781747735597-1smrao",
+          "sampleId": "sample-1781747735570-o7cpwu",
+          "timestamp": 1781747735597,
+          "temperature": 12.3,
           "recordedBy": "user-receiver-001",
-          "location": "Receiver Bench",
-          "note": "退回时温度记录"
-        },
-        {
-          "id": "temp-1781745073306-vuw2hw",
-          "sampleId": "sample-1781745073284-p4xfnw",
-          "timestamp": 1781745073306,
-          "temperature": 4.4,
-          "recordedBy": "user-receiver-001",
-          "location": "Receiver Bench",
+          "location": "Desk-R1",
           "note": "签收时温度记录"
         },
         {
-          "id": "temp-1781745073284-xaemr7",
-          "sampleId": "sample-1781745073284-p4xfnw",
-          "timestamp": 1781745073284,
+          "id": "temp-1781747735570-nwsulw",
+          "sampleId": "sample-1781747735570-o7cpwu",
+          "timestamp": 1781747735570,
           "temperature": 4.5,
           "recordedBy": "user-sampler-001",
-          "location": "Collection Room",
+          "location": "Fridge-A",
           "note": "登记时初始温度记录"
         }
       ],
       "temperatureAlerts": [
         {
-          "id": "alert-1781745073319-8c5mc7",
-          "sampleId": "sample-1781745073284-p4xfnw",
-          "recordId": "temp-1781745073319-uamk3f",
+          "id": "alert-1781747735597-4bnhz8",
+          "sampleId": "sample-1781747735570-o7cpwu",
+          "recordId": "temp-1781747735597-1smrao",
           "type": "TOO_HIGH",
           "threshold": 8,
-          "actualValue": 11.5,
-          "timestamp": 1781745073319,
+          "actualValue": 12.3,
+          "timestamp": 1781747735597,
           "resolved": false
         }
       ],
       "handoverChain": [
-        {
-          "fromUserId": "user-receiver-001",
-          "fromUserName": "王接收",
-          "toUserId": "user-sampler-001",
-          "toUserName": "张采样",
-          "action": "RETURN",
-          "returnReason": "review return after receive",
-          "temperatureChecks": [
-            "temp-1781745073319-uamk3f"
-          ],
-          "id": "chain-1781745073319-bt6tv0",
-          "timestamp": 1781745073319
-        },
         {
           "fromUserId": "user-sampler-001",
           "fromUserName": "张采样",
@@ -951,10 +888,10 @@
           "toUserName": "王接收",
           "action": "RECEIVE",
           "temperatureChecks": [
-            "temp-1781745073306-vuw2hw"
+            "temp-1781747735597-1smrao"
           ],
-          "id": "chain-1781745073306-gp3ziz",
-          "timestamp": 1781745073306
+          "id": "chain-1781747735597-iy7sxj",
+          "timestamp": 1781747735597
         },
         {
           "fromUserId": "user-sampler-001",
@@ -964,10 +901,10 @@
           "action": "INITIATE_HANDOVER",
           "note": "review handover",
           "temperatureChecks": [
-            "temp-1781745073284-xaemr7"
+            "temp-1781747735570-nwsulw"
           ],
-          "id": "chain-1781745073291-9go1a7",
-          "timestamp": 1781745073291
+          "id": "chain-1781747735577-lq3y10",
+          "timestamp": 1781747735577
         },
         {
           "fromUserId": "SYSTEM",
@@ -976,209 +913,267 @@
           "toUserName": "张采样",
           "action": "REGISTER",
           "temperatureChecks": [
-            "temp-1781745073284-xaemr7"
+            "temp-1781747735570-nwsulw"
           ],
-          "id": "chain-1781745073284-twg96r",
-          "timestamp": 1781745073284
+          "id": "chain-1781747735570-1i58cs",
+          "timestamp": 1781747735570
         }
       ],
-      "createdAt": 1781745073284,
-      "updatedAt": 1781745073319
+      "createdAt": 1781747735570,
+      "updatedAt": 1781747735597
+    },
+    {
+      "id": "sample-1781747735570-lsn0dh",
+      "sampleCode": "REV-1781747735569-B",
+      "batchId": "batch-1781747735570-aq0fsi",
+      "type": "Plasma",
+      "description": "review sample B",
+      "collectedAt": 1781747735570,
+      "collectedBy": "user-sampler-001",
+      "collectorName": "张采样",
+      "sourceLocation": "Ward-7A",
+      "currentHolderId": "user-receiver-001",
+      "currentHolderName": "王接收",
+      "status": "RECEIVED",
+      "minTemp": -20,
+      "maxTemp": -10,
+      "temperatureRecords": [
+        {
+          "id": "temp-1781747735597-hwfdyi",
+          "sampleId": "sample-1781747735570-lsn0dh",
+          "timestamp": 1781747735597,
+          "temperature": -14.2,
+          "recordedBy": "user-receiver-001",
+          "location": "Desk-R1",
+          "note": "签收时温度记录"
+        },
+        {
+          "id": "temp-1781747735570-g0hin5",
+          "sampleId": "sample-1781747735570-lsn0dh",
+          "timestamp": 1781747735570,
+          "temperature": -15.5,
+          "recordedBy": "user-sampler-001",
+          "location": "Freezer-B",
+          "note": "登记时初始温度记录"
+        }
+      ],
+      "temperatureAlerts": [],
+      "handoverChain": [
+        {
+          "fromUserId": "user-sampler-001",
+          "fromUserName": "张采样",
+          "toUserId": "user-receiver-001",
+          "toUserName": "王接收",
+          "action": "RECEIVE",
+          "temperatureChecks": [
+            "temp-1781747735597-hwfdyi"
+          ],
+          "id": "chain-1781747735597-hp7oc3",
+          "timestamp": 1781747735597
+        },
+        {
+          "fromUserId": "user-sampler-001",
+          "fromUserName": "张采样",
+          "toUserId": "user-receiver-001",
+          "toUserName": "王接收",
+          "action": "INITIATE_HANDOVER",
+          "note": "review handover",
+          "temperatureChecks": [
+            "temp-1781747735570-g0hin5"
+          ],
+          "id": "chain-1781747735577-ia3uwe",
+          "timestamp": 1781747735577
+        },
+        {
+          "fromUserId": "SYSTEM",
+          "fromUserName": "系统",
+          "toUserId": "user-sampler-001",
+          "toUserName": "张采样",
+          "action": "REGISTER",
+          "temperatureChecks": [
+            "temp-1781747735570-g0hin5"
+          ],
+          "id": "chain-1781747735570-uvt6sx",
+          "timestamp": 1781747735570
+        }
+      ],
+      "createdAt": 1781747735570,
+      "updatedAt": 1781747735597
     }
   ],
   "batches": [
     {
-      "id": "batch-1781745073284-99zfbc",
-      "batchCode": "BATCH-20260618-9SIU",
-      "createdAt": 1781745073284,
+      "id": "batch-1781747735570-aq0fsi",
+      "batchCode": "BATCH-20260618-RYFX",
+      "createdAt": 1781747735570,
       "createdBy": "user-sampler-001",
       "creatorName": "张采样",
       "sampleIds": [
-        "sample-1781745073284-mpzytl",
-        "sample-1781745073284-p4xfnw"
-      ],
-      "status": "RETURNED",
-      "intendedReceiverId": "user-receiver-001",
-      "intendedReceiverName": "王接收",
-      "initiatedAt": 1781745073291,
-      "note": "review handover",
-      "receivedAt": 1781745073306,
-      "receivedBy": "user-receiver-001"
-    },
-    {
-      "id": "batch-1781745024993-klo1ft",
-      "batchCode": "BATCH-20260618-QB1L",
-      "createdAt": 1781745024993,
-      "createdBy": "user-sampler-001",
-      "creatorName": "张采样",
-      "sampleIds": [
-        "sample-1781745024993-yb4sed",
-        "sample-1781745024993-npm51n"
-      ],
-      "status": "RETURNED",
-      "intendedReceiverId": "user-receiver-001",
-      "intendedReceiverName": "王接收",
-      "initiatedAt": 1781745024998,
-      "note": "review handover",
-      "receivedAt": 1781745025010,
-      "receivedBy": "user-receiver-001"
-    },
-    {
-      "id": "batch-1781744969682-hdoazq",
-      "batchCode": "BATCH-20260618-L21O",
-      "createdAt": 1781744969682,
-      "createdBy": "user-sampler-001",
-      "creatorName": "张采样",
-      "sampleIds": [
-        "sample-1781744969682-wftpg7",
-        "sample-1781744969682-iuatk4"
-      ],
-      "status": "RETURNED",
-      "intendedReceiverId": "user-receiver-001",
-      "intendedReceiverName": "王接收",
-      "initiatedAt": 1781744969688,
-      "note": "review handover",
-      "receivedAt": 1781744969711,
-      "receivedBy": "user-receiver-001"
-    },
-    {
-      "id": "batch-1781744337922-w3fs3n",
-      "batchCode": "BATCH-20260618-DXAY",
-      "createdAt": 1781744337922,
-      "createdBy": "user-sampler-001",
-      "creatorName": "张采样",
-      "sampleIds": [
-        "sample-1781744337922-dkxs2q",
-        "sample-1781744337922-vj644j"
+        "sample-1781747735570-o7cpwu",
+        "sample-1781747735570-lsn0dh"
       ],
       "status": "FULLY_RECEIVED",
       "intendedReceiverId": "user-receiver-001",
       "intendedReceiverName": "王接收",
-      "initiatedAt": 1781744337980,
-      "note": "????",
-      "receivedAt": 1781744338122,
+      "initiatedAt": 1781747735577,
+      "note": "review handover",
+      "receivedAt": 1781747735597,
       "receivedBy": "user-receiver-001"
     },
     {
-      "id": "batch-1781744250938-58ugju",
-      "batchCode": "BATCH-20260618-90OL",
-      "createdAt": 1781744250938,
+      "id": "batch-1781747434459-ja85f3",
+      "batchCode": "BATCH-20260618-QJ0L",
+      "createdAt": 1781747434459,
       "createdBy": "user-sampler-001",
       "creatorName": "张采样",
       "sampleIds": [
-        "sample-1781744250938-7dvy4a",
-        "sample-1781744250939-swlmch"
+        "sample-1781747434459-e0yadc",
+        "sample-1781747434459-slnkel"
       ],
-      "status": "DRAFT"
+      "status": "FULLY_RECEIVED",
+      "intendedReceiverId": "user-receiver-001",
+      "intendedReceiverName": "王接收",
+      "initiatedAt": 1781747434465,
+      "note": "review handover",
+      "receivedAt": 1781747434482,
+      "receivedBy": "user-receiver-001"
+    },
+    {
+      "id": "batch-1781747318382-evgogr",
+      "batchCode": "BATCH-20260618-890S",
+      "createdAt": 1781747318382,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781747318382-htc13b",
+        "sample-1781747318382-jcej95"
+      ],
+      "status": "FULLY_RECEIVED",
+      "intendedReceiverId": "user-receiver-001",
+      "intendedReceiverName": "王接收",
+      "initiatedAt": 1781747318390,
+      "note": "review handover",
+      "receivedAt": 1781747318407,
+      "receivedBy": "user-receiver-001"
+    },
+    {
+      "id": "batch-1781746611202-1dc16y",
+      "batchCode": "BATCH-20260618-DMXA",
+      "createdAt": 1781746611202,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781746611202-z6smmj"
+      ],
+      "status": "RETURNED",
+      "intendedReceiverId": "user-receiver-001",
+      "intendedReceiverName": "王接收",
+      "initiatedAt": 1781746611229
+    },
+    {
+      "id": "batch-1781746549185-213hu2",
+      "batchCode": "BATCH-20260618-LDFB",
+      "createdAt": 1781746549185,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781746549185-plmale"
+      ],
+      "status": "RETURNED",
+      "intendedReceiverId": "user-receiver-001",
+      "intendedReceiverName": "王接收",
+      "initiatedAt": 1781746549228
+    },
+    {
+      "id": "batch-1781746511354-7ugfj4",
+      "batchCode": "BATCH-20260618-HRW1",
+      "createdAt": 1781746511354,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781746511354-whs38j"
+      ],
+      "status": "IN_TRANSIT",
+      "intendedReceiverId": "user-receiver-001",
+      "intendedReceiverName": "王接收",
+      "initiatedAt": 1781746511361
+    },
+    {
+      "id": "batch-1781746511043-s7gnql",
+      "batchCode": "BATCH-20260618-OB8Z",
+      "createdAt": 1781746511043,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781746511043-uq6y3p"
+      ],
+      "status": "RETURNED",
+      "intendedReceiverId": "user-receiver-001",
+      "intendedReceiverName": "王接收",
+      "initiatedAt": 1781746511049
+    },
+    {
+      "id": "batch-1781746510977-zhsgey",
+      "batchCode": "BATCH-20260618-O76B",
+      "createdAt": 1781746510977,
+      "createdBy": "user-sampler-001",
+      "creatorName": "张采样",
+      "sampleIds": [
+        "sample-1781746510977-lo5gq7",
+        "sample-1781746510977-fay8sm"
+      ],
+      "status": "FULLY_RECEIVED",
+      "intendedReceiverId": "user-receiver-001",
+      "intendedReceiverName": "王接收",
+      "initiatedAt": 1781746511015,
+      "note": "??",
+      "receivedAt": 1781746511027,
+      "receivedBy": "user-receiver-001"
     }
   ],
   "audits": [
     {
-      "id": "audit-1781745204414-fmyhyt",
-      "action": "LOGIN",
-      "operatorId": "user-admin-001",
-      "operatorName": "孙管理",
-      "targetType": "USER",
-      "targetId": "user-admin-001",
-      "timestamp": 1781745204414,
-      "success": true,
-      "ipAddress": "::ffff:127.0.0.1"
-    },
-    {
-      "id": "audit-1781745180307-t0jlvn",
-      "action": "LOGIN",
-      "operatorId": "user-admin-001",
-      "operatorName": "孙管理",
-      "targetType": "USER",
-      "targetId": "user-admin-001",
-      "timestamp": 1781745180307,
-      "success": true,
-      "ipAddress": "::ffff:127.0.0.1"
-    },
-    {
-      "id": "audit-1781745180293-ztb7ah",
+      "id": "audit-1781747738511-13aprc",
       "action": "LOGIN",
       "operatorId": "user-receiver-001",
       "operatorName": "王接收",
       "targetType": "USER",
       "targetId": "user-receiver-001",
-      "timestamp": 1781745180293,
+      "timestamp": 1781747738511,
       "success": true,
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781745073320-m9btbe",
+      "id": "audit-1781747735604-2he1uq",
       "action": "RETURN_BATCH",
       "operatorId": "user-receiver-001",
       "operatorName": "王接收",
       "targetType": "BATCH",
-      "targetId": "batch-1781745073284-99zfbc",
-      "timestamp": 1781745073320,
-      "success": true,
-      "beforeState": {
-        "batchStatus": "FULLY_RECEIVED",
-        "samples": [
-          {
-            "id": "sample-1781745073284-mpzytl",
-            "status": "RECEIVED",
-            "holder": "王接收"
-          },
-          {
-            "id": "sample-1781745073284-p4xfnw",
-            "status": "RECEIVED",
-            "holder": "王接收"
-          }
-        ]
-      },
-      "afterState": {
-        "batchStatus": "RETURNED",
-        "returnReason": "review return after receive",
-        "samples": [
-          {
-            "id": "sample-1781745073284-mpzytl",
-            "status": "RETURNED",
-            "holder": "张采样"
-          },
-          {
-            "id": "sample-1781745073284-p4xfnw",
-            "status": "RETURNED",
-            "holder": "张采样"
-          }
-        ]
-      },
-      "ipAddress": "::ffff:127.0.0.1"
-    },
-    {
-      "id": "audit-1781745073314-q2itny",
-      "action": "INITIATE_HANDOVER",
-      "operatorId": "user-sampler-001",
-      "operatorName": "张采样",
-      "targetType": "BATCH",
-      "targetId": "batch-1781745073284-99zfbc",
-      "timestamp": 1781745073314,
+      "targetId": "batch-1781747735570-aq0fsi",
+      "timestamp": 1781747735604,
       "success": false,
-      "failureReason": "样本 RV-1781745073-A 当前状态 RECEIVED 不允许发起交接",
+      "failureReason": "样本 REV-1781747735569-A 当前状态 RECEIVED 不允许退回，仅 IN_TRANSIT 状态可退回",
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781745073307-6s8pcc",
+      "id": "audit-1781747735598-m8b25j",
       "action": "RECEIVE_BATCH",
       "operatorId": "user-receiver-001",
       "operatorName": "王接收",
       "targetType": "BATCH",
-      "targetId": "batch-1781745073284-99zfbc",
-      "timestamp": 1781745073307,
+      "targetId": "batch-1781747735570-aq0fsi",
+      "timestamp": 1781747735598,
       "success": true,
       "beforeState": {
         "batchStatus": "IN_TRANSIT",
         "samples": [
           {
-            "id": "sample-1781745073284-mpzytl",
+            "id": "sample-1781747735570-o7cpwu",
             "status": "IN_TRANSIT",
             "holder": "张采样"
           },
           {
-            "id": "sample-1781745073284-p4xfnw",
+            "id": "sample-1781747735570-lsn0dh",
             "status": "IN_TRANSIT",
             "holder": "张采样"
           }
@@ -1188,12 +1183,12 @@
         "batchStatus": "FULLY_RECEIVED",
         "samples": [
           {
-            "id": "sample-1781745073284-mpzytl",
+            "id": "sample-1781747735570-o7cpwu",
             "status": "RECEIVED",
             "holder": "王接收"
           },
           {
-            "id": "sample-1781745073284-p4xfnw",
+            "id": "sample-1781747735570-lsn0dh",
             "status": "RECEIVED",
             "holder": "王接收"
           }
@@ -1202,35 +1197,57 @@
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781745073297-1p7tl6",
+      "id": "audit-1781747735592-crf8cx",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781747735592,
+      "success": true,
+      "ipAddress": "::ffff:127.0.0.1"
+    },
+    {
+      "id": "audit-1781747735588-ag5avq",
       "action": "RECEIVE_BATCH",
       "operatorId": "user-receiver-002",
       "operatorName": "赵接收",
       "targetType": "BATCH",
-      "targetId": "batch-1781745073284-99zfbc",
-      "timestamp": 1781745073297,
+      "targetId": "batch-1781747735570-aq0fsi",
+      "timestamp": 1781747735588,
       "success": false,
       "failureReason": "非指定接收人王接收，禁止替签",
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781745073292-sedh4x",
+      "id": "audit-1781747735583-3j361l",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-002",
+      "operatorName": "赵接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-002",
+      "timestamp": 1781747735583,
+      "success": true,
+      "ipAddress": "::ffff:127.0.0.1"
+    },
+    {
+      "id": "audit-1781747735578-gg2qca",
       "action": "INITIATE_HANDOVER",
       "operatorId": "user-sampler-001",
       "operatorName": "张采样",
       "targetType": "BATCH",
-      "targetId": "batch-1781745073284-99zfbc",
-      "timestamp": 1781745073292,
+      "targetId": "batch-1781747735570-aq0fsi",
+      "timestamp": 1781747735578,
       "success": true,
       "beforeState": {
         "batchStatus": "DRAFT",
         "samples": [
           {
-            "id": "sample-1781745073284-mpzytl",
+            "id": "sample-1781747735570-o7cpwu",
             "status": "REGISTERED"
           },
           {
-            "id": "sample-1781745073284-p4xfnw",
+            "id": "sample-1781747735570-lsn0dh",
             "status": "REGISTERED"
           }
         ]
@@ -1240,11 +1257,11 @@
         "receiverId": "user-receiver-001",
         "samples": [
           {
-            "id": "sample-1781745073284-mpzytl",
+            "id": "sample-1781747735570-o7cpwu",
             "status": "IN_TRANSIT"
           },
           {
-            "id": "sample-1781745073284-p4xfnw",
+            "id": "sample-1781747735570-lsn0dh",
             "status": "IN_TRANSIT"
           }
         ]
@@ -1252,27 +1269,27 @@
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781745073285-tv81gw",
+      "id": "audit-1781747735571-q8xrnm",
       "action": "REGISTER_SAMPLES",
       "operatorId": "user-sampler-001",
       "operatorName": "张采样",
       "targetType": "BATCH",
-      "targetId": "batch-1781745073284-99zfbc",
-      "timestamp": 1781745073285,
+      "targetId": "batch-1781747735570-aq0fsi",
+      "timestamp": 1781747735571,
       "success": true,
       "beforeState": {
         "samples": []
       },
       "afterState": {
-        "batchCode": "BATCH-20260618-9SIU",
+        "batchCode": "BATCH-20260618-RYFX",
         "samples": [
           {
-            "id": "sample-1781745073284-mpzytl",
+            "id": "sample-1781747735570-o7cpwu",
             "status": "REGISTERED",
             "holder": "张采样"
           },
           {
-            "id": "sample-1781745073284-p4xfnw",
+            "id": "sample-1781747735570-lsn0dh",
             "status": "REGISTERED",
             "holder": "张采样"
           }
@@ -1281,122 +1298,58 @@
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781745073267-qvnddn",
-      "action": "LOGIN",
-      "operatorId": "user-admin-001",
-      "operatorName": "孙管理",
-      "targetType": "USER",
-      "targetId": "user-admin-001",
-      "timestamp": 1781745073267,
-      "success": true,
-      "ipAddress": "::ffff:127.0.0.1"
-    },
-    {
-      "id": "audit-1781745073263-aal7t4",
-      "action": "LOGIN",
-      "operatorId": "user-receiver-002",
-      "operatorName": "赵接收",
-      "targetType": "USER",
-      "targetId": "user-receiver-002",
-      "timestamp": 1781745073263,
-      "success": true,
-      "ipAddress": "::ffff:127.0.0.1"
-    },
-    {
-      "id": "audit-1781745073259-zy7ukh",
-      "action": "LOGIN",
-      "operatorId": "user-receiver-001",
-      "operatorName": "王接收",
-      "targetType": "USER",
-      "targetId": "user-receiver-001",
-      "timestamp": 1781745073259,
-      "success": true,
-      "ipAddress": "::ffff:127.0.0.1"
-    },
-    {
-      "id": "audit-1781745073255-8kagry",
+      "id": "audit-1781747735565-szbl8s",
       "action": "LOGIN",
       "operatorId": "user-sampler-001",
       "operatorName": "张采样",
       "targetType": "USER",
       "targetId": "user-sampler-001",
-      "timestamp": 1781745073255,
+      "timestamp": 1781747735565,
       "success": true,
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781745025023-470p4u",
+      "id": "audit-1781747458730-8sktor",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781747458730,
+      "success": true,
+      "ipAddress": "::ffff:127.0.0.1"
+    },
+    {
+      "id": "audit-1781747434490-0k9832",
       "action": "RETURN_BATCH",
       "operatorId": "user-receiver-001",
       "operatorName": "王接收",
       "targetType": "BATCH",
-      "targetId": "batch-1781745024993-klo1ft",
-      "timestamp": 1781745025023,
-      "success": true,
-      "beforeState": {
-        "batchStatus": "FULLY_RECEIVED",
-        "samples": [
-          {
-            "id": "sample-1781745024993-yb4sed",
-            "status": "RECEIVED",
-            "holder": "王接收"
-          },
-          {
-            "id": "sample-1781745024993-npm51n",
-            "status": "RECEIVED",
-            "holder": "王接收"
-          }
-        ]
-      },
-      "afterState": {
-        "batchStatus": "RETURNED",
-        "returnReason": "review return after receive",
-        "samples": [
-          {
-            "id": "sample-1781745024993-yb4sed",
-            "status": "RETURNED",
-            "holder": "张采样"
-          },
-          {
-            "id": "sample-1781745024993-npm51n",
-            "status": "RETURNED",
-            "holder": "张采样"
-          }
-        ]
-      },
-      "ipAddress": "::ffff:127.0.0.1"
-    },
-    {
-      "id": "audit-1781745025018-t1swqk",
-      "action": "INITIATE_HANDOVER",
-      "operatorId": "user-sampler-001",
-      "operatorName": "张采样",
-      "targetType": "BATCH",
-      "targetId": "batch-1781745024993-klo1ft",
-      "timestamp": 1781745025018,
+      "targetId": "batch-1781747434459-ja85f3",
+      "timestamp": 1781747434490,
       "success": false,
-      "failureReason": "样本 RV-1781745024-A 当前状态 RECEIVED 不允许发起交接",
+      "failureReason": "样本 REV-1781747434456-A 当前状态 RECEIVED 不允许退回，仅 IN_TRANSIT 状态可退回",
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781745025011-vnquc1",
+      "id": "audit-1781747434483-ky1xml",
       "action": "RECEIVE_BATCH",
       "operatorId": "user-receiver-001",
       "operatorName": "王接收",
       "targetType": "BATCH",
-      "targetId": "batch-1781745024993-klo1ft",
-      "timestamp": 1781745025011,
+      "targetId": "batch-1781747434459-ja85f3",
+      "timestamp": 1781747434483,
       "success": true,
       "beforeState": {
         "batchStatus": "IN_TRANSIT",
         "samples": [
           {
-            "id": "sample-1781745024993-yb4sed",
+            "id": "sample-1781747434459-e0yadc",
             "status": "IN_TRANSIT",
             "holder": "张采样"
           },
           {
-            "id": "sample-1781745024993-npm51n",
+            "id": "sample-1781747434459-slnkel",
             "status": "IN_TRANSIT",
             "holder": "张采样"
           }
@@ -1406,12 +1359,12 @@
         "batchStatus": "FULLY_RECEIVED",
         "samples": [
           {
-            "id": "sample-1781745024993-yb4sed",
+            "id": "sample-1781747434459-e0yadc",
             "status": "RECEIVED",
             "holder": "王接收"
           },
           {
-            "id": "sample-1781745024993-npm51n",
+            "id": "sample-1781747434459-slnkel",
             "status": "RECEIVED",
             "holder": "王接收"
           }
@@ -1420,35 +1373,57 @@
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781745025004-x6xpql",
+      "id": "audit-1781747434478-v7q6tp",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781747434478,
+      "success": true,
+      "ipAddress": "::ffff:127.0.0.1"
+    },
+    {
+      "id": "audit-1781747434474-8xadid",
       "action": "RECEIVE_BATCH",
       "operatorId": "user-receiver-002",
       "operatorName": "赵接收",
       "targetType": "BATCH",
-      "targetId": "batch-1781745024993-klo1ft",
-      "timestamp": 1781745025004,
+      "targetId": "batch-1781747434459-ja85f3",
+      "timestamp": 1781747434474,
       "success": false,
       "failureReason": "非指定接收人王接收，禁止替签",
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781745024999-m0mzd8",
+      "id": "audit-1781747434470-tfysol",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-002",
+      "operatorName": "赵接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-002",
+      "timestamp": 1781747434470,
+      "success": true,
+      "ipAddress": "::ffff:127.0.0.1"
+    },
+    {
+      "id": "audit-1781747434466-our2v6",
       "action": "INITIATE_HANDOVER",
       "operatorId": "user-sampler-001",
       "operatorName": "张采样",
       "targetType": "BATCH",
-      "targetId": "batch-1781745024993-klo1ft",
-      "timestamp": 1781745024999,
+      "targetId": "batch-1781747434459-ja85f3",
+      "timestamp": 1781747434466,
       "success": true,
       "beforeState": {
         "batchStatus": "DRAFT",
         "samples": [
           {
-            "id": "sample-1781745024993-yb4sed",
+            "id": "sample-1781747434459-e0yadc",
             "status": "REGISTERED"
           },
           {
-            "id": "sample-1781745024993-npm51n",
+            "id": "sample-1781747434459-slnkel",
             "status": "REGISTERED"
           }
         ]
@@ -1458,11 +1433,11 @@
         "receiverId": "user-receiver-001",
         "samples": [
           {
-            "id": "sample-1781745024993-yb4sed",
+            "id": "sample-1781747434459-e0yadc",
             "status": "IN_TRANSIT"
           },
           {
-            "id": "sample-1781745024993-npm51n",
+            "id": "sample-1781747434459-slnkel",
             "status": "IN_TRANSIT"
           }
         ]
@@ -1470,27 +1445,27 @@
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781745024994-s76gtx",
+      "id": "audit-1781747434460-dpd6d8",
       "action": "REGISTER_SAMPLES",
       "operatorId": "user-sampler-001",
       "operatorName": "张采样",
       "targetType": "BATCH",
-      "targetId": "batch-1781745024993-klo1ft",
-      "timestamp": 1781745024994,
+      "targetId": "batch-1781747434459-ja85f3",
+      "timestamp": 1781747434460,
       "success": true,
       "beforeState": {
         "samples": []
       },
       "afterState": {
-        "batchCode": "BATCH-20260618-QB1L",
+        "batchCode": "BATCH-20260618-QJ0L",
         "samples": [
           {
-            "id": "sample-1781745024993-yb4sed",
+            "id": "sample-1781747434459-e0yadc",
             "status": "REGISTERED",
             "holder": "张采样"
           },
           {
-            "id": "sample-1781745024993-npm51n",
+            "id": "sample-1781747434459-slnkel",
             "status": "REGISTERED",
             "holder": "张采样"
           }
@@ -1499,122 +1474,58 @@
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781745024986-ennl53",
-      "action": "LOGIN",
-      "operatorId": "user-admin-001",
-      "operatorName": "孙管理",
-      "targetType": "USER",
-      "targetId": "user-admin-001",
-      "timestamp": 1781745024986,
-      "success": true,
-      "ipAddress": "::ffff:127.0.0.1"
-    },
-    {
-      "id": "audit-1781745024972-em0w75",
-      "action": "LOGIN",
-      "operatorId": "user-receiver-002",
-      "operatorName": "赵接收",
-      "targetType": "USER",
-      "targetId": "user-receiver-002",
-      "timestamp": 1781745024972,
-      "success": true,
-      "ipAddress": "::ffff:127.0.0.1"
-    },
-    {
-      "id": "audit-1781745024968-ar0t7x",
-      "action": "LOGIN",
-      "operatorId": "user-receiver-001",
-      "operatorName": "王接收",
-      "targetType": "USER",
-      "targetId": "user-receiver-001",
-      "timestamp": 1781745024968,
-      "success": true,
-      "ipAddress": "::ffff:127.0.0.1"
-    },
-    {
-      "id": "audit-1781745024963-d26juc",
+      "id": "audit-1781747434455-ydjhd6",
       "action": "LOGIN",
       "operatorId": "user-sampler-001",
       "operatorName": "张采样",
       "targetType": "USER",
       "targetId": "user-sampler-001",
-      "timestamp": 1781745024963,
+      "timestamp": 1781747434455,
       "success": true,
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781744969726-fk37v2",
+      "id": "audit-1781747351981-9hefnz",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781747351981,
+      "success": true,
+      "ipAddress": "::ffff:127.0.0.1"
+    },
+    {
+      "id": "audit-1781747318413-mueguk",
       "action": "RETURN_BATCH",
       "operatorId": "user-receiver-001",
       "operatorName": "王接收",
       "targetType": "BATCH",
-      "targetId": "batch-1781744969682-hdoazq",
-      "timestamp": 1781744969726,
-      "success": true,
-      "beforeState": {
-        "batchStatus": "FULLY_RECEIVED",
-        "samples": [
-          {
-            "id": "sample-1781744969682-wftpg7",
-            "status": "RECEIVED",
-            "holder": "王接收"
-          },
-          {
-            "id": "sample-1781744969682-iuatk4",
-            "status": "RECEIVED",
-            "holder": "王接收"
-          }
-        ]
-      },
-      "afterState": {
-        "batchStatus": "RETURNED",
-        "returnReason": "review return after receive",
-        "samples": [
-          {
-            "id": "sample-1781744969682-wftpg7",
-            "status": "RETURNED",
-            "holder": "张采样"
-          },
-          {
-            "id": "sample-1781744969682-iuatk4",
-            "status": "RETURNED",
-            "holder": "张采样"
-          }
-        ]
-      },
-      "ipAddress": "::ffff:127.0.0.1"
-    },
-    {
-      "id": "audit-1781744969720-6xt7qg",
-      "action": "INITIATE_HANDOVER",
-      "operatorId": "user-sampler-001",
-      "operatorName": "张采样",
-      "targetType": "BATCH",
-      "targetId": "batch-1781744969682-hdoazq",
-      "timestamp": 1781744969720,
+      "targetId": "batch-1781747318382-evgogr",
+      "timestamp": 1781747318413,
       "success": false,
-      "failureReason": "样本 RV-1781744969-A 当前状态 RECEIVED 不允许发起交接",
+      "failureReason": "样本 REV-1781747318378-A 当前状态 RECEIVED 不允许退回，仅 IN_TRANSIT 状态可退回",
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781744969712-46zuza",
+      "id": "audit-1781747318408-rvqqqv",
       "action": "RECEIVE_BATCH",
       "operatorId": "user-receiver-001",
       "operatorName": "王接收",
       "targetType": "BATCH",
-      "targetId": "batch-1781744969682-hdoazq",
-      "timestamp": 1781744969712,
+      "targetId": "batch-1781747318382-evgogr",
+      "timestamp": 1781747318408,
       "success": true,
       "beforeState": {
         "batchStatus": "IN_TRANSIT",
         "samples": [
           {
-            "id": "sample-1781744969682-wftpg7",
+            "id": "sample-1781747318382-htc13b",
             "status": "IN_TRANSIT",
             "holder": "张采样"
           },
           {
-            "id": "sample-1781744969682-iuatk4",
+            "id": "sample-1781747318382-jcej95",
             "status": "IN_TRANSIT",
             "holder": "张采样"
           }
@@ -1624,12 +1535,12 @@
         "batchStatus": "FULLY_RECEIVED",
         "samples": [
           {
-            "id": "sample-1781744969682-wftpg7",
+            "id": "sample-1781747318382-htc13b",
             "status": "RECEIVED",
             "holder": "王接收"
           },
           {
-            "id": "sample-1781744969682-iuatk4",
+            "id": "sample-1781747318382-jcej95",
             "status": "RECEIVED",
             "holder": "王接收"
           }
@@ -1638,35 +1549,57 @@
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781744969694-bqbn1i",
+      "id": "audit-1781747318403-n90mon",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781747318403,
+      "success": true,
+      "ipAddress": "::ffff:127.0.0.1"
+    },
+    {
+      "id": "audit-1781747318399-nzmfpi",
       "action": "RECEIVE_BATCH",
       "operatorId": "user-receiver-002",
       "operatorName": "赵接收",
       "targetType": "BATCH",
-      "targetId": "batch-1781744969682-hdoazq",
-      "timestamp": 1781744969694,
+      "targetId": "batch-1781747318382-evgogr",
+      "timestamp": 1781747318399,
       "success": false,
       "failureReason": "非指定接收人王接收，禁止替签",
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781744969689-vx6ju5",
+      "id": "audit-1781747318394-z1263p",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-002",
+      "operatorName": "赵接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-002",
+      "timestamp": 1781747318394,
+      "success": true,
+      "ipAddress": "::ffff:127.0.0.1"
+    },
+    {
+      "id": "audit-1781747318390-y2uyfd",
       "action": "INITIATE_HANDOVER",
       "operatorId": "user-sampler-001",
       "operatorName": "张采样",
       "targetType": "BATCH",
-      "targetId": "batch-1781744969682-hdoazq",
-      "timestamp": 1781744969689,
+      "targetId": "batch-1781747318382-evgogr",
+      "timestamp": 1781747318390,
       "success": true,
       "beforeState": {
         "batchStatus": "DRAFT",
         "samples": [
           {
-            "id": "sample-1781744969682-wftpg7",
+            "id": "sample-1781747318382-htc13b",
             "status": "REGISTERED"
           },
           {
-            "id": "sample-1781744969682-iuatk4",
+            "id": "sample-1781747318382-jcej95",
             "status": "REGISTERED"
           }
         ]
@@ -1676,11 +1609,11 @@
         "receiverId": "user-receiver-001",
         "samples": [
           {
-            "id": "sample-1781744969682-wftpg7",
+            "id": "sample-1781747318382-htc13b",
             "status": "IN_TRANSIT"
           },
           {
-            "id": "sample-1781744969682-iuatk4",
+            "id": "sample-1781747318382-jcej95",
             "status": "IN_TRANSIT"
           }
         ]
@@ -1688,27 +1621,27 @@
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781744969683-yo517f",
+      "id": "audit-1781747318383-xenr6t",
       "action": "REGISTER_SAMPLES",
       "operatorId": "user-sampler-001",
       "operatorName": "张采样",
       "targetType": "BATCH",
-      "targetId": "batch-1781744969682-hdoazq",
-      "timestamp": 1781744969683,
+      "targetId": "batch-1781747318382-evgogr",
+      "timestamp": 1781747318383,
       "success": true,
       "beforeState": {
         "samples": []
       },
       "afterState": {
-        "batchCode": "BATCH-20260618-L21O",
+        "batchCode": "BATCH-20260618-890S",
         "samples": [
           {
-            "id": "sample-1781744969682-wftpg7",
+            "id": "sample-1781747318382-htc13b",
             "status": "REGISTERED",
             "holder": "张采样"
           },
           {
-            "id": "sample-1781744969682-iuatk4",
+            "id": "sample-1781747318382-jcej95",
             "status": "REGISTERED",
             "holder": "张采样"
           }
@@ -1717,109 +1650,97 @@
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781744969674-7lqw24",
+      "id": "audit-1781747318373-9ytbmc",
       "action": "LOGIN",
-      "operatorId": "user-admin-001",
-      "operatorName": "孙管理",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
       "targetType": "USER",
-      "targetId": "user-admin-001",
-      "timestamp": 1781744969674,
+      "targetId": "user-sampler-001",
+      "timestamp": 1781747318373,
       "success": true,
       "ipAddress": "::ffff:127.0.0.1"
     },
     {
-      "id": "audit-1781744969670-fc4sx1",
-      "action": "LOGIN",
-      "operatorId": "user-receiver-002",
-      "operatorName": "赵接收",
-      "targetType": "USER",
-      "targetId": "user-receiver-002",
-      "timestamp": 1781744969670,
-      "success": true,
-      "ipAddress": "::ffff:127.0.0.1"
+      "id": "audit-1781746750225-zua8p4",
+      "action": "RETURN_BATCH",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "BATCH",
+      "targetId": "batch-1781746510977-zhsgey",
+      "timestamp": 1781746750225,
+      "success": false,
+      "failureReason": "样本 R-001 当前状态 RECEIVED 不允许退回，仅 IN_TRANSIT 状态可退回",
+      "ipAddress": "::1"
     },
     {
-      "id": "audit-1781744969667-s57nqy",
+      "id": "audit-1781746750216-2961kk",
       "action": "LOGIN",
       "operatorId": "user-receiver-001",
       "operatorName": "王接收",
       "targetType": "USER",
       "targetId": "user-receiver-001",
-      "timestamp": 1781744969667,
+      "timestamp": 1781746750216,
       "success": true,
-      "ipAddress": "::ffff:127.0.0.1"
+      "ipAddress": "::1"
     },
     {
-      "id": "audit-1781744969661-lxhzb7",
+      "id": "audit-1781746750034-ofhtii",
       "action": "LOGIN",
       "operatorId": "user-sampler-001",
       "operatorName": "张采样",
       "targetType": "USER",
       "targetId": "user-sampler-001",
-      "timestamp": 1781744969661,
+      "timestamp": 1781746750034,
       "success": true,
-      "ipAddress": "::ffff:127.0.0.1"
-    },
-    {
-      "id": "audit-1781744458997-36mjk2",
-      "action": "LOGIN_FAILED",
-      "operatorId": "user-sampler-001",
-      "operatorName": "张采样",
-      "targetType": "USER",
-      "targetId": "user-sampler-001",
-      "timestamp": 1781744458997,
-      "success": false,
-      "failureReason": "密码错误",
       "ipAddress": "::1"
     },
     {
-      "id": "audit-1781744425859-09uv9l",
-      "action": "LOGIN_FAILED",
-      "operatorId": "user-sampler-001",
-      "operatorName": "张采样",
-      "targetType": "USER",
-      "targetId": "user-sampler-001",
-      "timestamp": 1781744425859,
-      "success": false,
-      "failureReason": "密码错误",
-      "ipAddress": "::1"
-    },
-    {
-      "id": "audit-1781744338224-2gf6bo",
+      "id": "audit-1781746749924-419qs8",
       "action": "LOGIN",
       "operatorId": "user-admin-001",
       "operatorName": "孙管理",
       "targetType": "USER",
       "targetId": "user-admin-001",
-      "timestamp": 1781744338224,
+      "timestamp": 1781746749924,
       "success": true,
       "ipAddress": "::1"
     },
     {
-      "id": "audit-1781744338123-cqj7rf",
+      "id": "audit-1781746655113-bok7fb",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781746655113,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781746611242-azz6yf",
       "action": "RETURN_BATCH",
       "operatorId": "user-receiver-001",
       "operatorName": "王接收",
       "targetType": "BATCH",
-      "targetId": "batch-1781744337922-w3fs3n",
-      "timestamp": 1781744338123,
+      "targetId": "batch-1781746611202-1dc16y",
+      "timestamp": 1781746611242,
       "success": true,
       "beforeState": {
-        "batchStatus": "FULLY_RECEIVED",
+        "batchStatus": "IN_TRANSIT",
         "samples": [
           {
-            "id": "sample-1781744337922-dkxs2q",
-            "status": "RECEIVED",
-            "holder": "王接收"
+            "id": "sample-1781746611202-z6smmj",
+            "status": "IN_TRANSIT",
+            "holder": "张采样"
           }
         ]
       },
       "afterState": {
-        "batchStatus": "FULLY_RECEIVED",
-        "returnReason": "???????,????",
+        "batchStatus": "RETURNED",
+        "returnReason": "???????",
         "samples": [
           {
-            "id": "sample-1781744337922-dkxs2q",
+            "id": "sample-1781746611202-z6smmj",
             "status": "RETURNED",
             "holder": "张采样"
           }
@@ -1828,122 +1749,226 @@
       "ipAddress": "::1"
     },
     {
-      "id": "audit-1781744338102-88792e",
+      "id": "audit-1781746611236-xhs9tj",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781746611236,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781746611230-hyu68u",
+      "action": "INITIATE_HANDOVER",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781746611202-1dc16y",
+      "timestamp": 1781746611230,
+      "success": true,
+      "beforeState": {
+        "batchStatus": "DRAFT",
+        "samples": [
+          {
+            "id": "sample-1781746611202-z6smmj",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "afterState": {
+        "batchStatus": "IN_TRANSIT",
+        "receiverId": "user-receiver-001",
+        "samples": [
+          {
+            "id": "sample-1781746611202-z6smmj",
+            "status": "IN_TRANSIT"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781746611203-5am9fg",
+      "action": "REGISTER_SAMPLES",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781746611202-1dc16y",
+      "timestamp": 1781746611203,
+      "success": true,
+      "beforeState": {
+        "samples": []
+      },
+      "afterState": {
+        "batchCode": "BATCH-20260618-DMXA",
+        "samples": [
+          {
+            "id": "sample-1781746611202-z6smmj",
+            "status": "REGISTERED",
+            "holder": "张采样"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781746611186-dgs93q",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781746611186,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781746549257-6shgmn",
       "action": "RETURN_BATCH",
       "operatorId": "user-receiver-001",
       "operatorName": "王接收",
       "targetType": "BATCH",
-      "targetId": "batch-1781744337922-w3fs3n",
-      "timestamp": 1781744338102,
+      "targetId": "batch-1781746549185-213hu2",
+      "timestamp": 1781746549258,
+      "success": true,
+      "beforeState": {
+        "batchStatus": "IN_TRANSIT",
+        "samples": [
+          {
+            "id": "sample-1781746549185-plmale",
+            "status": "IN_TRANSIT",
+            "holder": "张采样"
+          }
+        ]
+      },
+      "afterState": {
+        "batchStatus": "RETURNED",
+        "returnReason": "?????",
+        "samples": [
+          {
+            "id": "sample-1781746549185-plmale",
+            "status": "RETURNED",
+            "holder": "张采样"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781746549248-znucou",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "USER",
+      "targetId": "user-receiver-001",
+      "timestamp": 1781746549248,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781746549229-p3javu",
+      "action": "INITIATE_HANDOVER",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781746549185-213hu2",
+      "timestamp": 1781746549229,
+      "success": true,
+      "beforeState": {
+        "batchStatus": "DRAFT",
+        "samples": [
+          {
+            "id": "sample-1781746549185-plmale",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "afterState": {
+        "batchStatus": "IN_TRANSIT",
+        "receiverId": "user-receiver-001",
+        "samples": [
+          {
+            "id": "sample-1781746549185-plmale",
+            "status": "IN_TRANSIT"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781746549186-hobq7m",
+      "action": "REGISTER_SAMPLES",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781746549185-213hu2",
+      "timestamp": 1781746549186,
+      "success": true,
+      "beforeState": {
+        "samples": []
+      },
+      "afterState": {
+        "batchCode": "BATCH-20260618-LDFB",
+        "samples": [
+          {
+            "id": "sample-1781746549185-plmale",
+            "status": "REGISTERED",
+            "holder": "张采样"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781746549163-mjyg4a",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781746549163,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781746511371-98ejfh",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781746511371,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781746511365-o1xgqo",
+      "action": "RETURN_BATCH",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "BATCH",
+      "targetId": "batch-1781746511354-7ugfj4",
+      "timestamp": 1781746511365,
       "success": false,
       "failureReason": "无退回原因",
       "ipAddress": "::1"
     },
     {
-      "id": "audit-1781744338091-rpvbgn",
+      "id": "audit-1781746511362-bbfri2",
       "action": "INITIATE_HANDOVER",
       "operatorId": "user-sampler-001",
       "operatorName": "张采样",
       "targetType": "BATCH",
-      "targetId": "batch-1781744337922-w3fs3n",
-      "timestamp": 1781744338091,
-      "success": false,
-      "failureReason": "样本 TEST-A001 当前状态 RECEIVED 不允许发起交接",
-      "ipAddress": "::1"
-    },
-    {
-      "id": "audit-1781744338073-hvf438",
-      "action": "RECEIVE_BATCH",
-      "operatorId": "user-receiver-001",
-      "operatorName": "王接收",
-      "targetType": "BATCH",
-      "targetId": "batch-1781744337922-w3fs3n",
-      "timestamp": 1781744338073,
-      "success": true,
-      "beforeState": {
-        "batchStatus": "IN_TRANSIT",
-        "samples": [
-          {
-            "id": "sample-1781744337922-dkxs2q",
-            "status": "IN_TRANSIT",
-            "holder": "张采样"
-          },
-          {
-            "id": "sample-1781744337922-vj644j",
-            "status": "IN_TRANSIT",
-            "holder": "张采样"
-          }
-        ]
-      },
-      "afterState": {
-        "batchStatus": "FULLY_RECEIVED",
-        "samples": [
-          {
-            "id": "sample-1781744337922-dkxs2q",
-            "status": "RECEIVED",
-            "holder": "王接收"
-          },
-          {
-            "id": "sample-1781744337922-vj644j",
-            "status": "RECEIVED",
-            "holder": "王接收"
-          }
-        ]
-      },
-      "ipAddress": "::1"
-    },
-    {
-      "id": "audit-1781744338068-ko5ktm",
-      "action": "LOGIN",
-      "operatorId": "user-receiver-001",
-      "operatorName": "王接收",
-      "targetType": "USER",
-      "targetId": "user-receiver-001",
-      "timestamp": 1781744338068,
-      "success": true,
-      "ipAddress": "::1"
-    },
-    {
-      "id": "audit-1781744338003-6awbme",
-      "action": "RECEIVE_BATCH",
-      "operatorId": "user-receiver-002",
-      "operatorName": "赵接收",
-      "targetType": "BATCH",
-      "targetId": "batch-1781744337922-w3fs3n",
-      "timestamp": 1781744338003,
-      "success": false,
-      "failureReason": "非指定接收人王接收，禁止替签",
-      "ipAddress": "::1"
-    },
-    {
-      "id": "audit-1781744337990-wm3zdh",
-      "action": "LOGIN",
-      "operatorId": "user-receiver-002",
-      "operatorName": "赵接收",
-      "targetType": "USER",
-      "targetId": "user-receiver-002",
-      "timestamp": 1781744337990,
-      "success": true,
-      "ipAddress": "::1"
-    },
-    {
-      "id": "audit-1781744337980-02jly1",
-      "action": "INITIATE_HANDOVER",
-      "operatorId": "user-sampler-001",
-      "operatorName": "张采样",
-      "targetType": "BATCH",
-      "targetId": "batch-1781744337922-w3fs3n",
-      "timestamp": 1781744337980,
+      "targetId": "batch-1781746511354-7ugfj4",
+      "timestamp": 1781746511362,
       "success": true,
       "beforeState": {
         "batchStatus": "DRAFT",
         "samples": [
           {
-            "id": "sample-1781744337922-dkxs2q",
-            "status": "REGISTERED"
-          },
-          {
-            "id": "sample-1781744337922-vj644j",
+            "id": "sample-1781746511354-whs38j",
             "status": "REGISTERED"
           }
         ]
@@ -1953,11 +1978,7 @@
         "receiverId": "user-receiver-001",
         "samples": [
           {
-            "id": "sample-1781744337922-dkxs2q",
-            "status": "IN_TRANSIT"
-          },
-          {
-            "id": "sample-1781744337922-vj644j",
+            "id": "sample-1781746511354-whs38j",
             "status": "IN_TRANSIT"
           }
         ]
@@ -1965,27 +1986,22 @@
       "ipAddress": "::1"
     },
     {
-      "id": "audit-1781744337923-m8v0bx",
+      "id": "audit-1781746511355-ygj4wb",
       "action": "REGISTER_SAMPLES",
       "operatorId": "user-sampler-001",
       "operatorName": "张采样",
       "targetType": "BATCH",
-      "targetId": "batch-1781744337922-w3fs3n",
-      "timestamp": 1781744337923,
+      "targetId": "batch-1781746511354-7ugfj4",
+      "timestamp": 1781746511355,
       "success": true,
       "beforeState": {
         "samples": []
       },
       "afterState": {
-        "batchCode": "BATCH-20260618-DXAY",
+        "batchCode": "BATCH-20260618-HRW1",
         "samples": [
           {
-            "id": "sample-1781744337922-dkxs2q",
-            "status": "REGISTERED",
-            "holder": "张采样"
-          },
-          {
-            "id": "sample-1781744337922-vj644j",
+            "id": "sample-1781746511354-whs38j",
             "status": "REGISTERED",
             "holder": "张采样"
           }
@@ -1994,73 +2010,238 @@
       "ipAddress": "::1"
     },
     {
-      "id": "audit-1781744337893-dhrdor",
-      "action": "LOGIN",
+      "id": "audit-1781746511324-tuqlty",
+      "action": "RETURN_BATCH",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "BATCH",
+      "targetId": "batch-1781746511043-s7gnql",
+      "timestamp": 1781746511324,
+      "success": true,
+      "beforeState": {
+        "batchStatus": "IN_TRANSIT",
+        "samples": [
+          {
+            "id": "sample-1781746511043-uq6y3p",
+            "status": "IN_TRANSIT",
+            "holder": "张采样"
+          }
+        ]
+      },
+      "afterState": {
+        "batchStatus": "RETURNED",
+        "returnReason": "????????",
+        "samples": [
+          {
+            "id": "sample-1781746511043-uq6y3p",
+            "status": "RETURNED",
+            "holder": "张采样"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781746511089-yh81v1",
+      "action": "RETURN_BATCH",
+      "operatorId": "user-receiver-001",
+      "operatorName": "王接收",
+      "targetType": "BATCH",
+      "targetId": "batch-1781746510977-zhsgey",
+      "timestamp": 1781746511089,
+      "success": false,
+      "failureReason": "样本 R-001 当前状态 RECEIVED 不允许退回，仅 IN_TRANSIT 状态可退回",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781746511057-8mjgts",
+      "action": "RECEIVE_BATCH",
+      "operatorId": "user-receiver-002",
+      "operatorName": "赵接收",
+      "targetType": "BATCH",
+      "targetId": "batch-1781746511043-s7gnql",
+      "timestamp": 1781746511057,
+      "success": false,
+      "failureReason": "非指定接收人王接收，禁止替签",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781746511050-fmoje7",
+      "action": "INITIATE_HANDOVER",
       "operatorId": "user-sampler-001",
       "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781746511043-s7gnql",
+      "timestamp": 1781746511050,
+      "success": true,
+      "beforeState": {
+        "batchStatus": "DRAFT",
+        "samples": [
+          {
+            "id": "sample-1781746511043-uq6y3p",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "afterState": {
+        "batchStatus": "IN_TRANSIT",
+        "receiverId": "user-receiver-001",
+        "samples": [
+          {
+            "id": "sample-1781746511043-uq6y3p",
+            "status": "IN_TRANSIT"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781746511044-7h07y3",
+      "action": "REGISTER_SAMPLES",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "BATCH",
+      "targetId": "batch-1781746511043-s7gnql",
+      "timestamp": 1781746511044,
+      "success": true,
+      "beforeState": {
+        "samples": []
+      },
+      "afterState": {
+        "batchCode": "BATCH-20260618-OB8Z",
+        "samples": [
+          {
+            "id": "sample-1781746511043-uq6y3p",
+            "status": "REGISTERED",
+            "holder": "张采样"
+          }
+        ]
+      },
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781746511037-6wflek",
+      "action": "LOGIN",
+      "operatorId": "user-receiver-002",
+      "operatorName": "赵接收",
       "targetType": "USER",
-      "targetId": "user-sampler-001",
-      "timestamp": 1781744337893,
+      "targetId": "user-receiver-002",
+      "timestamp": 1781746511037,
       "success": true,
       "ipAddress": "::1"
     },
     {
-      "id": "audit-1781744251164-mhjrd6",
+      "id": "audit-1781746511028-yb7kcw",
       "action": "RECEIVE_BATCH",
       "operatorId": "user-receiver-001",
       "operatorName": "王接收",
       "targetType": "BATCH",
-      "targetId": "batch-1781744250938-58ugju",
-      "timestamp": 1781744251164,
-      "success": false,
-      "failureReason": "批次未发起交接",
+      "targetId": "batch-1781746510977-zhsgey",
+      "timestamp": 1781746511028,
+      "success": true,
+      "beforeState": {
+        "batchStatus": "IN_TRANSIT",
+        "samples": [
+          {
+            "id": "sample-1781746510977-lo5gq7",
+            "status": "IN_TRANSIT",
+            "holder": "张采样"
+          },
+          {
+            "id": "sample-1781746510977-fay8sm",
+            "status": "IN_TRANSIT",
+            "holder": "张采样"
+          }
+        ]
+      },
+      "afterState": {
+        "batchStatus": "FULLY_RECEIVED",
+        "samples": [
+          {
+            "id": "sample-1781746510977-lo5gq7",
+            "status": "RECEIVED",
+            "holder": "王接收"
+          },
+          {
+            "id": "sample-1781746510977-fay8sm",
+            "status": "RECEIVED",
+            "holder": "王接收"
+          }
+        ]
+      },
       "ipAddress": "::1"
     },
     {
-      "id": "audit-1781744251156-16vc6k",
+      "id": "audit-1781746511022-h4ytdw",
       "action": "LOGIN",
       "operatorId": "user-receiver-001",
       "operatorName": "王接收",
       "targetType": "USER",
       "targetId": "user-receiver-001",
-      "timestamp": 1781744251156,
+      "timestamp": 1781746511022,
       "success": true,
       "ipAddress": "::1"
     },
     {
-      "id": "audit-1781744250976-ptuhnc",
+      "id": "audit-1781746511016-ygh6ml",
       "action": "INITIATE_HANDOVER",
       "operatorId": "user-sampler-001",
       "operatorName": "张采样",
       "targetType": "BATCH",
-      "targetId": "batch-1781744250938-58ugju",
-      "timestamp": 1781744250977,
-      "success": false,
-      "failureReason": "样本 S-DEMO-001 当前状态 REGISTERED 不允许发起交接",
+      "targetId": "batch-1781746510977-zhsgey",
+      "timestamp": 1781746511016,
+      "success": true,
+      "beforeState": {
+        "batchStatus": "DRAFT",
+        "samples": [
+          {
+            "id": "sample-1781746510977-lo5gq7",
+            "status": "REGISTERED"
+          },
+          {
+            "id": "sample-1781746510977-fay8sm",
+            "status": "REGISTERED"
+          }
+        ]
+      },
+      "afterState": {
+        "batchStatus": "IN_TRANSIT",
+        "receiverId": "user-receiver-001",
+        "samples": [
+          {
+            "id": "sample-1781746510977-lo5gq7",
+            "status": "IN_TRANSIT"
+          },
+          {
+            "id": "sample-1781746510977-fay8sm",
+            "status": "IN_TRANSIT"
+          }
+        ]
+      },
       "ipAddress": "::1"
     },
     {
-      "id": "audit-1781744250939-5xh6co",
+      "id": "audit-1781746510978-5va989",
       "action": "REGISTER_SAMPLES",
       "operatorId": "user-sampler-001",
       "operatorName": "张采样",
       "targetType": "BATCH",
-      "targetId": "batch-1781744250938-58ugju",
-      "timestamp": 1781744250939,
+      "targetId": "batch-1781746510977-zhsgey",
+      "timestamp": 1781746510978,
       "success": true,
       "beforeState": {
         "samples": []
       },
       "afterState": {
-        "batchCode": "BATCH-20260618-90OL",
+        "batchCode": "BATCH-20260618-O76B",
         "samples": [
           {
-            "id": "sample-1781744250938-7dvy4a",
+            "id": "sample-1781746510977-lo5gq7",
             "status": "REGISTERED",
             "holder": "张采样"
           },
           {
-            "id": "sample-1781744250939-swlmch",
+            "id": "sample-1781746510977-fay8sm",
             "status": "REGISTERED",
             "holder": "张采样"
           }
@@ -2069,13 +2250,13 @@
       "ipAddress": "::1"
     },
     {
-      "id": "audit-1781744250912-bflzhj",
+      "id": "audit-1781746510951-7g6hj4",
       "action": "LOGIN",
       "operatorId": "user-sampler-001",
       "operatorName": "张采样",
       "targetType": "USER",
       "targetId": "user-sampler-001",
-      "timestamp": 1781744250912,
+      "timestamp": 1781746510951,
       "success": true,
       "ipAddress": "::1"
     }

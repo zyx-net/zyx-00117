@@ -13,7 +13,7 @@ const STATUS_FLOW: Record<SampleStatus, SampleStatus[]> = {
   REGISTERED: ['PENDING_HANDOVER', 'IN_TRANSIT', 'VOIDED'],
   PENDING_HANDOVER: ['IN_TRANSIT', 'VOIDED'],
   IN_TRANSIT: ['RECEIVED', 'RETURNED', 'VOIDED'],
-  RECEIVED: ['RETURNED', 'VOIDED'],
+  RECEIVED: ['VOIDED'],
   RETURNED: ['PENDING_HANDOVER', 'IN_TRANSIT', 'VOIDED'],
   VOIDED: [],
 };
@@ -491,19 +491,19 @@ export function returnBatch(
 
   const tempMap = new Map(temperatureRecords.map((t) => [t.sampleId, t]));
   for (const sample of targetSamples) {
-    if (sample.status !== 'IN_TRANSIT' && sample.status !== 'RECEIVED') {
+    if (sample.status !== 'IN_TRANSIT') {
       createAudit(operator, 'RETURN_BATCH', 'BATCH', batchId, false, {
-        failureReason: `样本 ${sample.sampleCode} 状态不允许退回`,
+        failureReason: `样本 ${sample.sampleCode} 当前状态 ${sample.status} 不允许退回，仅 IN_TRANSIT 状态可退回`,
         ipAddress: ip,
       });
-      return { success: false as const, error: `样本 ${sample.sampleCode} 当前状态不允许退回` };
+      return { success: false as const, error: `样本 ${sample.sampleCode} 当前状态不允许退回，已签收样本不可退回` };
     }
-    if (sample.currentHolderId !== operator.id && operator.role !== 'ADMIN') {
+    if (sample.currentHolderId !== operator.id && batch.intendedReceiverId !== operator.id && operator.role !== 'ADMIN') {
       createAudit(operator, 'RETURN_BATCH', 'BATCH', batchId, false, {
-        failureReason: `样本 ${sample.sampleCode} 不属于当前用户`,
+        failureReason: `样本 ${sample.sampleCode} 不属于当前用户，且非指定接收人`,
         ipAddress: ip,
       });
-      return { success: false as const, error: `样本 ${sample.sampleCode} 不属于您` };
+      return { success: false as const, error: `样本 ${sample.sampleCode} 不属于您，且非指定接收人` };
     }
     if (!tempMap.has(sample.id)) {
       createAudit(operator, 'RETURN_BATCH', 'BATCH', batchId, false, {
