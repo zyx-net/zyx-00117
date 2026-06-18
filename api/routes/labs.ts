@@ -31,6 +31,7 @@ import {
   listImportDrafts,
   getImportDraft,
   deleteImportDraft,
+  cancelImportDraft,
   importCsvFromDraft,
   getLastImportUndoRecord,
   undoLastImport,
@@ -495,6 +496,19 @@ router.delete('/drafts/:id', requireAuth, (req: AuthenticatedRequest, res: Respo
     res.json({ success: true });
   } catch (e) {
     res.status(500).json({ success: false, error: '删除草稿失败' });
+  }
+});
+
+router.post('/drafts/:id/cancel', requireAuth, requireRole('SAMPLER' as Role, 'ADMIN' as Role), (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const ip = getClientIp(req);
+    const result = cancelImportDraft(req.user!, req.params.id, ip);
+    if (!result.success) {
+      return res.status(400).json({ success: false, error: result.error });
+    }
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '取消草稿失败' });
   }
 });
 

@@ -7,9 +7,13 @@ import type {
   RegisterSampleInput,
   ExportConfig,
   CsvImportError,
+  SampleTemplate,
+  ImportDraft,
+  ImportUndoRecord,
+  DraftConflictInfo,
 } from './types';
 
-export type { RegisterSampleInput, ExportConfig, CsvImportError };
+export type { RegisterSampleInput, ExportConfig, CsvImportError, SampleTemplate, ImportDraft, ImportUndoRecord, DraftConflictInfo };
 
 const API_BASE = '/api';
 
@@ -180,4 +184,56 @@ export const api = {
 
   deleteExportConfig: (id: string) =>
     request(`/labs/export-configs/${id}`, 'DELETE'),
+
+  listSampleTemplates: (includeInactive = false) => {
+    const qs = includeInactive ? '?includeInactive=true' : '';
+    return request<{ templates: SampleTemplate[] }>(`/labs/templates${qs}`);
+  },
+
+  getSampleTemplate: (id: string) =>
+    request<{ template: SampleTemplate }>(`/labs/templates/${id}`),
+
+  createSampleTemplate: (input: Omit<SampleTemplate, 'id' | 'createdBy' | 'creatorName' | 'createdAt' | 'updatedAt' | 'version' | 'isActive' | 'referencedCount' | 'intendedReceiverName'>) =>
+    request<{ template: SampleTemplate }>('/labs/templates', 'POST', input),
+
+  updateSampleTemplate: (id: string, updates: Partial<Omit<SampleTemplate, 'id' | 'createdBy' | 'creatorName' | 'createdAt' | 'version' | 'referencedCount'>>) =>
+    request<{ template: SampleTemplate }>(`/labs/templates/${id}`, 'PUT', updates),
+
+  deactivateSampleTemplate: (id: string) =>
+    request(`/labs/templates/${id}/deactivate`, 'POST'),
+
+  importCsvWithTemplate: (csvContent: string, templateId?: string) =>
+    request<{ batch: Batch; samples: Sample[]; importedCount: number }>('/labs/samples/import-csv-with-template', 'POST', { csvContent, templateId }),
+
+  listImportDrafts: () =>
+    request<{ drafts: ImportDraft[] }>('/labs/drafts'),
+
+  getImportDraft: (id: string) =>
+    request<{ draft: ImportDraft }>(`/labs/drafts/${id}`),
+
+  checkDraftConflict: (id: string, clientVersion: number) => {
+    const qs = `?clientVersion=${clientVersion}`;
+    return request<{ conflict: DraftConflictInfo }>(`/labs/drafts/${id}/conflict${qs}`);
+  },
+
+  saveImportDraft: (input: { id?: string; name: string; csvContent: string; templateId?: string; parsedRows?: Array<Record<string, unknown>>; errors?: CsvImportError[]; clientVersion?: number }) =>
+    request<{ draft: ImportDraft }>('/labs/drafts', 'POST', input),
+
+  deleteImportDraft: (id: string) =>
+    request(`/labs/drafts/${id}`, 'DELETE'),
+
+  cancelImportDraft: (id: string) =>
+    request(`/labs/drafts/${id}/cancel`, 'POST'),
+
+  importCsvFromDraft: (id: string, clientVersion: number) =>
+    request<{ batch: Batch; samples: Sample[]; importedCount: number }>(`/labs/drafts/${id}/import`, 'POST', { clientVersion }),
+
+  getLastImportUndoRecord: () =>
+    request<{ record: ImportUndoRecord }>('/labs/import-undo/last'),
+
+  listImportUndoRecords: () =>
+    request<{ records: ImportUndoRecord[] }>('/labs/import-undo'),
+
+  undoLastImport: () =>
+    request<{ undoneData: { batchCode: string; sampleCount: number } }>('/labs/import-undo/undo', 'POST'),
 };

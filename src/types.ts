@@ -79,6 +79,84 @@ export interface Sample {
   hasUnresolvedAlert?: boolean;
 }
 
+export interface TemplateSnapshot {
+  templateId: string;
+  templateVersion: number;
+  name: string;
+  intendedReceiverId: string;
+  intendedReceiverName: string;
+  storageConditions: string;
+  shippingRequirements: string;
+  defaultMinTemp: number;
+  defaultMaxTemp: number;
+  note?: string;
+  snapshotAt: number;
+}
+
+export interface SampleTemplate {
+  id: string;
+  name: string;
+  description?: string;
+  intendedReceiverId: string;
+  intendedReceiverName: string;
+  storageConditions: string;
+  shippingRequirements: string;
+  defaultMinTemp: number;
+  defaultMaxTemp: number;
+  note?: string;
+  createdBy: string;
+  creatorName: string;
+  createdAt: number;
+  updatedAt: number;
+  version: number;
+  isActive: boolean;
+  referencedCount: number;
+}
+
+export interface ImportDraft {
+  id: string;
+  name: string;
+  csvContent: string;
+  templateId?: string;
+  templateSnapshot?: TemplateSnapshot;
+  parsedRows?: Array<Record<string, unknown>>;
+  errors?: CsvImportError[];
+  status: 'DRAFT' | 'IMPORTING' | 'IMPORTED' | 'CANCELLED';
+  createdBy: string;
+  creatorName: string;
+  createdAt: number;
+  updatedAt: number;
+  version: number;
+  lastEditedBy: string;
+  lastEditedByName: string;
+  lastEditedAt: number;
+  batchId?: string;
+}
+
+export interface ImportUndoRecord {
+  id: string;
+  batchId: string;
+  batchCode: string;
+  sampleIds: string[];
+  importAuditId: string;
+  createdBy: string;
+  creatorName: string;
+  createdAt: number;
+  undone: boolean;
+  undoneBy?: string;
+  undoneByName?: string;
+  undoneAt?: number;
+}
+
+export type DraftConflictInfo = {
+  hasConflict: boolean;
+  currentVersion: number;
+  clientVersion: number;
+  lastEditedBy: string;
+  lastEditedByName: string;
+  lastEditedAt: number;
+};
+
 export interface Batch {
   id: string;
   batchCode: string;
@@ -97,6 +175,8 @@ export interface Batch {
   receivedCount?: number;
   returnedCount?: number;
   voidedCount?: number;
+  templateSnapshot?: TemplateSnapshot;
+  templateId?: string;
 }
 
 export interface AuditEntry {

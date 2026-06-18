@@ -66,7 +66,9 @@ async function run() {
   console.log(`  Found ${draftCount} drafts`);
 
   const importedDrafts = drafts.data.data.drafts.filter(d => d.status === 'IMPORTED');
-  console.log(`  Imported: ${importedDrafts.length}`);
+  const cancelledDrafts = drafts.data.data.drafts.filter(d => d.status === 'CANCELLED');
+  const draftDrafts = drafts.data.data.drafts.filter(d => d.status === 'DRAFT');
+  console.log(`  Imported: ${importedDrafts.length}, Cancelled: ${cancelledDrafts.length}, Draft: ${draftDrafts.length}`);
 
   if (drafts.data.data.drafts.length > 0) {
     const firstDraft = drafts.data.data.drafts[0];
@@ -143,6 +145,15 @@ async function run() {
   const applyTplAudits = await authReq('/admin/audits?action=APPLY_TEMPLATE', aCookie);
   assert(applyTplAudits.data.success === true, 'Query APPLY_TEMPLATE audits after restart');
   assert(applyTplAudits.data.data.audits.length > 0, 'APPLY_TEMPLATE audit records preserved');
+
+  const cancelDraftAudits = await authReq('/admin/audits?action=CANCEL_DRAFT', aCookie);
+  assert(cancelDraftAudits.data.success === true, 'Query CANCEL_DRAFT audits after restart');
+
+  const undoRevertDraftAudits = await authReq('/admin/audits?action=UNDO_REVERT_DRAFT', aCookie);
+  assert(undoRevertDraftAudits.data.success === true, 'Query UNDO_REVERT_DRAFT audits after restart');
+
+  const undoCleanupAudits = await authReq('/admin/audits?action=UNDO_CLEANUP_EXPORT_CONFIGS', aCookie);
+  assert(undoCleanupAudits.data.success === true, 'Query UNDO_CLEANUP_EXPORT_CONFIGS audits after restart');
 
   console.log('\n--- Data consistency checks ---');
   for (const tpl of templates.data.data.templates) {

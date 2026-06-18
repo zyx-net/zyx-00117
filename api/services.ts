@@ -1628,6 +1628,10 @@ export function saveImportDraft(
 
     const existing = db.importDrafts[idx];
 
+    if (existing.createdBy !== operator.id && operator.role !== 'ADMIN') {
+      return { success: false, error: '无权修改他人草稿' };
+    }
+
     if (input.clientVersion !== undefined && existing.version > input.clientVersion) {
       const conflict = checkDraftConflict(input.id, input.clientVersion);
       createAudit(operator, 'DRAFT_CONFLICT_BLOCKED', 'SYSTEM', input.id, false, {
@@ -1770,6 +1774,45 @@ export function deleteImportDraft(
   return { success: true };
 }
 
+export function cancelImportDraft(
+  operator: User,
+  draftId: string,
+  ip?: string,
+): { success: boolean; error?: string } {
+  if (operator.role !== 'SAMPLER' && operator.role !== 'ADMIN') {
+    return { success: false, error: '只有采样员或管理员可以取消草稿' };
+  }
+
+  const db = loadDb();
+  const draft = db.importDrafts.find((d) => d.id === draftId);
+  if (!draft) {
+    return { success: false, error: '草稿不存在' };
+  }
+  if (draft.createdBy !== operator.id && operator.role !== 'ADMIN') {
+    return { success: false, error: '无权取消他人草稿' };
+  }
+  if (draft.status !== 'DRAFT') {
+    return { success: false, error: '只有草稿状态的导入任务可以取消' };
+  }
+
+  const beforeState = { name: draft.name, status: draft.status };
+  draft.status = 'CANCELLED';
+  draft.updatedAt = Date.now();
+  draft.version += 1;
+  draft.lastEditedBy = operator.id;
+  draft.lastEditedByName = operator.name;
+  draft.lastEditedAt = Date.now();
+  saveDb(db);
+
+  createAudit(operator, 'CANCEL_DRAFT', 'SYSTEM', draftId, true, {
+    beforeState,
+    afterState: { status: 'CANCELLED' },
+    ipAddress: ip,
+  });
+
+  return { success: true };
+}
+
 export function importCsvFromDraft(
   operator: User,
   draftId: string,
@@ -1814,11 +1857,15 @@ export function importCsvFromDraft(
   );
 
   if (result.success && result.batch) {
-    draft.status = 'IMPORTED';
-    draft.batchId = result.batch.id;
-    draft.updatedAt = Date.now();
-    draft.version += 1;
-    saveDb(db);
+    const freshDb = loadDb();
+    const freshDraft = freshDb.importDrafts.find((d) => d.id === draftId);
+    if (freshDraft) {
+      freshDraft.status = 'IMPORTED';
+      freshDraft.batchId = result.batch.id;
+      freshDraft.updatedAt = Date.now();
+      freshDraft.version += 1;
+      saveDb(freshDb);
+    }
 
     createAudit(operator, 'SUBMIT_DRAFT', 'SYSTEM', draftId, true, {
       afterState: { batchId: result.batch.id, importedCount: result.importedCount },
@@ -1944,7 +1991,7 @@ export function getLastImportUndoRecord(
 export function undoLastImport(
   operator: User,
   ip?: string,
-): { success: boolean; error?: string; undoneData?: { batchCode: string; sampleCount: number } } {
+): { success: boolean; error?: string; undoneData?: { batchCode: string; sampleCount: number; draftReverted?: boolean }; conflict?: DraftConflictInfo } {
   const db = loadDb();
 
   const recordResult = getLastImportUndoRecord(operator);
@@ -2013,6 +2060,37 @@ export function undoLastImport(
     }
   }
 
+  const linkedDraft = db.importDrafts.find((d) => d.batchId === record.batchId && d.status === 'IMPORTED');
+  if (linkedDraft) {
+    linkedDraft.status = 'DRAFT';
+    linkedDraft.batchId = undefined;
+    linkedDraft.updatedAt = Date.now();
+    linkedDraft.version += 1;
+    linkedDraft.lastEditedBy = operator.id;
+    linkedDraft.lastEditedByName = operator.name;
+    linkedDraft.lastEditedAt = Date.now();
+
+    createAudit(operator, 'UNDO_REVERT_DRAFT', 'SYSTEM', linkedDraft.id, true, {
+      beforeState: { status: 'IMPORTED', batchId: record.batchId },
+      afterState: { status: 'DRAFT', batchId: undefined },
+      ipAddress: ip,
+    });
+  }
+
+  const affectedExportConfigs = db.exportConfigs.filter(
+    (c) => c.filters && c.filters.batchId === record.batchId,
+  );
+  for (const ec of affectedExportConfigs) {
+    ec.filters = { ...ec.filters, batchId: '__UNDO_DELETED__' };
+    ec.updatedAt = Date.now();
+  }
+  if (affectedExportConfigs.length > 0) {
+    createAudit(operator, 'UNDO_CLEANUP_EXPORT_CONFIGS', 'SYSTEM', record.batchId, true, {
+      afterState: { cleanedUpConfigCount: affectedExportConfigs.length },
+      ipAddress: ip,
+    });
+  }
+
   saveDb(db);
 
   createAudit(operator, 'UNDO_IMPORT', 'BATCH', record.batchId, true, {
@@ -2026,6 +2104,7 @@ export function undoLastImport(
     undoneData: {
       batchCode: record.batchCode,
       sampleCount: record.sampleIds.length,
+      draftReverted: !!linkedDraft,
     },
   };
 }
