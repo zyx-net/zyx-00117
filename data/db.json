@@ -3644,6 +3644,105 @@
   ],
   "audits": [
     {
+      "id": "audit-1781768012029-dc5puo",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781768012029,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781767899483-hjir6b",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781767899483,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781767899452-u5jnum",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781767899452,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781767899437-zc42sj",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781767899437,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781767880260-b7fudc",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781767880260,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781767880220-8q9pw5",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781767880220,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781767880202-6rvcgh",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781767880202,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781767861330-lpw5nh",
+      "action": "LOGIN",
+      "operatorId": "user-sampler-001",
+      "operatorName": "张采样",
+      "targetType": "USER",
+      "targetId": "user-sampler-001",
+      "timestamp": 1781767861330,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
+      "id": "audit-1781767861311-9yhbff",
+      "action": "LOGIN",
+      "operatorId": "user-admin-001",
+      "operatorName": "孙管理",
+      "targetType": "USER",
+      "targetId": "user-admin-001",
+      "timestamp": 1781767861311,
+      "success": true,
+      "ipAddress": "::1"
+    },
+    {
       "id": "audit-1781766083557-vl8jry",
       "action": "CSV_IMPORT",
       "operatorId": "user-sampler-001",
