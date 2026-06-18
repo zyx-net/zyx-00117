@@ -18,6 +18,12 @@ import type {
   ImportNotificationType,
   ImportNotificationStatus,
   AuditEntry,
+  NotificationEvent,
+  NotificationResultPayload,
+  NotificationListFilters,
+  NotificationStats,
+  NotificationRelatedObjects,
+  NotificationDetailResponse,
 } from './types.js';
 
 const STATUS_FLOW: Record<SampleStatus, SampleStatus[]> = {
@@ -2261,7 +2267,7 @@ export function listImportUndoRecords(operator: User): ImportUndoRecord[] {
   return records.sort((a, b) => b.createdAt - a.createdAt);
 }
 
-// ==================== Import Notification Center Services ====================
+// ==================== Import Notification Center - Unified App Service ====================
 
 const NOTIFICATION_TITLE_MAP: Record<ImportNotificationType, string> = {
   TEMPLATE_APPLY: '模板套用成功',
@@ -2278,42 +2284,36 @@ const NOTIFICATION_TITLE_MAP: Record<ImportNotificationType, string> = {
   DRAFT_CANCEL: '草稿已取消',
 };
 
-export function createImportNotification(
-  operator: User,
-  type: ImportNotificationType,
-  opts: {
-    message?: string;
-    batchId?: string;
-    batchCode?: string;
-    draftId?: string;
-    templateId?: string;
-    templateName?: string;
-    undoRecordId?: string;
-    result?: Record<string, unknown>;
-    status?: ImportNotificationStatus;
-  } = {},
-): ImportNotification {
+// ============== Boundary 1: Status Resolution ==============
+
+function resolveNotificationStatus(type: ImportNotificationType, explicitStatus?: ImportNotificationStatus): ImportNotificationStatus {
+  if (explicitStatus) return explicitStatus;
+  if (type.includes('FAILURE')) return 'FAILURE';
+  if (type.includes('CONFLICT')) return 'FAILURE';
+  return 'SUCCESS';
+}
+
+// ============== Boundary 2: Event Emit (Unified Entry) ==============
+
+export function emitNotificationEvent(event: NotificationEvent): ImportNotification {
   const db = loadDb();
   const now = Date.now();
-
-  const status: ImportNotificationStatus = opts.status ??
-    (type.includes('FAILURE') ? 'FAILURE' :
-     type.includes('CONFLICT') ? 'FAILURE' : 'SUCCESS');
+  const status = resolveNotificationStatus(event.type, event.status);
 
   const notification: ImportNotification = {
     id: generateId('notif'),
-    type,
-    title: NOTIFICATION_TITLE_MAP[type] || type,
-    message: opts.message || NOTIFICATION_TITLE_MAP[type] || type,
-    operatorId: operator.id,
-    operatorName: operator.name,
-    batchId: opts.batchId,
-    batchCode: opts.batchCode,
-    draftId: opts.draftId,
-    templateId: opts.templateId,
-    templateName: opts.templateName,
-    undoRecordId: opts.undoRecordId,
-    result: opts.result,
+    type: event.type,
+    title: NOTIFICATION_TITLE_MAP[event.type] || event.type,
+    message: event.message || NOTIFICATION_TITLE_MAP[event.type] || event.type,
+    operatorId: event.operator.id,
+    operatorName: event.operator.name,
+    batchId: event.batchId,
+    batchCode: event.batchCode,
+    draftId: event.draftId,
+    templateId: event.templateId,
+    templateName: event.templateName,
+    undoRecordId: event.undoRecordId,
+    result: event.result,
     status,
     rolledBack: false,
     readBy: {},
@@ -2326,198 +2326,81 @@ export function createImportNotification(
   return notification;
 }
 
-export interface NotificationFilters {
-  type?: ImportNotificationType;
-  status?: ImportNotificationStatus;
-  batchId?: string;
-  draftId?: string;
-  templateId?: string;
-  operatorId?: string;
-  rolledBack?: boolean;
-  startTime?: number;
-  endTime?: number;
+// ============== Boundary 3: Permission Filter (shared for admin & operator views) ==============
+
+function applyPermissionFilter(notifications: ImportNotification[], operator: User): ImportNotification[] {
+  if (operator.role === 'ADMIN') return notifications;
+  return notifications.filter((n) => n.operatorId === operator.id);
 }
 
-export function listImportNotifications(
-  operator: User,
-  filters: NotificationFilters = {},
-): { notifications: (ImportNotification & { isRead: boolean })[]; total: number; unreadCount: number } {
-  const db = loadDb();
-  let notifications = [...db.importNotifications];
+function checkNotificationPermission(notification: ImportNotification, operator: User): boolean {
+  if (operator.role === 'ADMIN') return true;
+  return notification.operatorId === operator.id;
+}
 
-  if (operator.role !== 'ADMIN') {
-    notifications = notifications.filter((n) => n.operatorId === operator.id);
-  }
+// ============== Boundary 4: List Filtering (shared logic) ==============
+
+function applyListFilters(notifications: ImportNotification[], filters: NotificationListFilters): ImportNotification[] {
+  let result = [...notifications];
 
   if (filters.type) {
-    notifications = notifications.filter((n) => n.type === filters.type);
+    result = result.filter((n) => n.type === filters.type);
   }
   if (filters.status) {
-    notifications = notifications.filter((n) => n.status === filters.status);
+    result = result.filter((n) => n.status === filters.status);
   }
   if (filters.batchId) {
-    notifications = notifications.filter((n) => n.batchId === filters.batchId);
+    result = result.filter((n) => n.batchId === filters.batchId);
   }
   if (filters.draftId) {
-    notifications = notifications.filter((n) => n.draftId === filters.draftId);
+    result = result.filter((n) => n.draftId === filters.draftId);
   }
   if (filters.templateId) {
-    notifications = notifications.filter((n) => n.templateId === filters.templateId);
+    result = result.filter((n) => n.templateId === filters.templateId);
   }
   if (filters.operatorId) {
-    notifications = notifications.filter((n) => n.operatorId === filters.operatorId);
+    result = result.filter((n) => n.operatorId === filters.operatorId);
   }
   if (filters.rolledBack !== undefined) {
-    notifications = notifications.filter((n) => n.rolledBack === filters.rolledBack);
+    result = result.filter((n) => n.rolledBack === filters.rolledBack);
   }
   if (filters.startTime) {
-    notifications = notifications.filter((n) => n.createdAt >= filters.startTime!);
+    result = result.filter((n) => n.createdAt >= filters.startTime!);
   }
   if (filters.endTime) {
-    notifications = notifications.filter((n) => n.createdAt <= filters.endTime!);
+    result = result.filter((n) => n.createdAt <= filters.endTime!);
+  }
+  if (filters.keyword) {
+    const kw = filters.keyword.toLowerCase();
+    result = result.filter((n) =>
+      n.title.toLowerCase().includes(kw) ||
+      n.message.toLowerCase().includes(kw) ||
+      (n.batchCode && n.batchCode.toLowerCase().includes(kw)) ||
+      (n.templateName && n.templateName.toLowerCase().includes(kw)),
+    );
   }
 
-  notifications.sort((a, b) => b.createdAt - a.createdAt);
+  return result;
+}
 
-  const total = notifications.length;
-  const unreadCount = notifications.filter((n) => !n.readBy || !n.readBy[operator.id]).length;
+// ============== Boundary 5: Read State Management ==============
 
-  const withReadFlag = notifications.map((n) => ({
+function getNotificationReadState(notification: ImportNotification, userId: string): boolean {
+  return !!(notification.readBy && notification.readBy[userId]);
+}
+
+function countUnreadNotifications(notifications: ImportNotification[], userId: string): number {
+  return notifications.filter((n) => !getNotificationReadState(n, userId)).length;
+}
+
+function attachReadFlag(notifications: ImportNotification[], userId: string): (ImportNotification & { isRead: boolean })[] {
+  return notifications.map((n) => ({
     ...n,
-    isRead: !!(n.readBy && n.readBy[operator.id]),
+    isRead: getNotificationReadState(n, userId),
   }));
-
-  return { notifications: withReadFlag, total, unreadCount };
 }
 
-export function getImportNotification(
-  operator: User,
-  notificationId: string,
-): { success: boolean; notification?: ImportNotification & { isRead: boolean }; error?: string; notFound?: boolean } {
-  const db = loadDb();
-  const notification = db.importNotifications.find((n) => n.id === notificationId);
-  if (!notification) {
-    return { success: false, error: '通知不存在', notFound: true };
-  }
-  if (notification.operatorId !== operator.id && operator.role !== 'ADMIN') {
-    return { success: false, error: '无权查看他人通知' };
-  }
-  const isRead = !!(notification.readBy && notification.readBy[operator.id]);
-  return { success: true, notification: { ...notification, isRead } };
-}
-
-export function markNotificationAsRead(
-  operator: User,
-  notificationId: string,
-): { success: boolean; error?: string; read?: boolean; readAt?: number; notFound?: boolean } {
-  const db = loadDb();
-  const notification = db.importNotifications.find((n) => n.id === notificationId);
-  if (!notification) {
-    return { success: false, error: '通知不存在', notFound: true };
-  }
-  if (notification.operatorId !== operator.id && operator.role !== 'ADMIN') {
-    return { success: false, error: '无权操作他人通知' };
-  }
-  if (!notification.readBy) {
-    notification.readBy = {};
-  }
-  let readAt: number;
-  if (!notification.readBy[operator.id]) {
-    readAt = Date.now();
-    notification.readBy[operator.id] = { readAt };
-    notification.updatedAt = Date.now();
-    saveDb(db);
-  } else {
-    readAt = notification.readBy[operator.id].readAt;
-  }
-  return { success: true, read: true, readAt };
-}
-
-export function markAllNotificationsAsRead(
-  operator: User,
-): { success: boolean; markedCount: number } {
-  const db = loadDb();
-  let markedCount = 0;
-  const now = Date.now();
-
-  for (const notification of db.importNotifications) {
-    if (operator.role !== 'ADMIN' && notification.operatorId !== operator.id) {
-      continue;
-    }
-    if (!notification.readBy) {
-      notification.readBy = {};
-    }
-    if (!notification.readBy[operator.id]) {
-      notification.readBy[operator.id] = { readAt: now };
-      notification.updatedAt = now;
-      markedCount++;
-    }
-  }
-
-  if (markedCount > 0) {
-    saveDb(db);
-  }
-
-  return { success: true, markedCount };
-}
-
-export function getNotificationDetailWithTimeline(
-  operator: User,
-  notificationId: string,
-): {
-  success: boolean;
-  error?: string;
-  notFound?: boolean;
-  notification?: ImportNotification & { isRead: boolean };
-  relatedBatch?: Batch | null;
-  relatedDraft?: ImportDraft | null;
-  relatedTemplate?: SampleTemplate | null;
-  auditTimeline?: AuditEntry[];
-} {
-  const notifResult = getImportNotification(operator, notificationId);
-  if (!notifResult.success || !notifResult.notification) {
-    return { success: false, error: notifResult.error, notFound: notifResult.notFound };
-  }
-
-  const notification = notifResult.notification;
-  const db = loadDb();
-
-  const relatedBatch = notification.batchId
-    ? db.batches.find((b) => b.id === notification.batchId) || null
-    : null;
-
-  const relatedDraft = notification.draftId
-    ? db.importDrafts.find((d) => d.id === notification.draftId) || null
-    : null;
-
-  const relatedTemplate = notification.templateId
-    ? db.sampleTemplates.find((t) => t.id === notification.templateId) || null
-    : null;
-
-  let auditTimeline: AuditEntry[] = [];
-  const targetIds: string[] = [];
-  if (notification.batchId) targetIds.push(notification.batchId);
-  if (notification.draftId) targetIds.push(notification.draftId);
-  if (notification.undoRecordId) targetIds.push(notification.undoRecordId);
-  if (notification.templateId) targetIds.push(notification.templateId);
-
-  if (targetIds.length > 0) {
-    const allAudits = queryAudits({});
-    auditTimeline = allAudits
-      .filter((a) => targetIds.includes(a.targetId))
-      .sort((a, b) => b.timestamp - a.timestamp)
-      .slice(0, 50);
-  }
-
-  return {
-    success: true,
-    notification,
-    relatedBatch,
-    relatedDraft,
-    relatedTemplate,
-    auditTimeline,
-  };
-}
+// ============== Boundary 6: Rollback State Management ==============
 
 export function rollbackNotificationsByBatchId(
   operator: User,
@@ -2551,21 +2434,53 @@ export function rollbackNotificationsByBatchId(
   return rolledBackCount;
 }
 
-export function getNotificationStats(operator: User): {
-  total: number;
-  successCount: number;
-  failureCount: number;
-  rolledBackCount: number;
-  byType: Record<string, number>;
-} {
-  const { notifications } = listImportNotifications(operator);
+// ============== Boundary 7: Related Objects Resolution ==============
 
-  const stats = {
+function resolveRelatedObjects(notification: ImportNotification): NotificationRelatedObjects {
+  const db = loadDb();
+
+  const relatedBatch = notification.batchId
+    ? db.batches.find((b) => b.id === notification.batchId) || null
+    : null;
+
+  const relatedDraft = notification.draftId
+    ? db.importDrafts.find((d) => d.id === notification.draftId) || null
+    : null;
+
+  const relatedTemplate = notification.templateId
+    ? db.sampleTemplates.find((t) => t.id === notification.templateId) || null
+    : null;
+
+  return { relatedBatch, relatedDraft, relatedTemplate };
+}
+
+// ============== Boundary 8: Audit Timeline Aggregation ==============
+
+function buildAuditTimeline(notification: ImportNotification, limit = 50): AuditEntry[] {
+  const targetIds: string[] = [];
+  if (notification.batchId) targetIds.push(notification.batchId);
+  if (notification.draftId) targetIds.push(notification.draftId);
+  if (notification.undoRecordId) targetIds.push(notification.undoRecordId);
+  if (notification.templateId) targetIds.push(notification.templateId);
+
+  if (targetIds.length === 0) return [];
+
+  const allAudits = queryAudits({});
+  return allAudits
+    .filter((a) => targetIds.includes(a.targetId))
+    .sort((a, b) => b.timestamp - a.timestamp)
+    .slice(0, limit);
+}
+
+// ============== Boundary 9: Statistics Calculation ==============
+
+function calculateStats(notifications: ImportNotification[]): NotificationStats {
+  const stats: NotificationStats = {
     total: notifications.length,
     successCount: 0,
     failureCount: 0,
     rolledBackCount: 0,
-    byType: {} as Record<string, number>,
+    byType: {},
   };
 
   for (const n of notifications) {
@@ -2580,4 +2495,221 @@ export function getNotificationStats(operator: User): {
   }
 
   return stats;
+}
+
+// ============== Unified App Service ==============
+
+export const notificationAppService = {
+  emit: emitNotificationEvent,
+
+  list(
+    operator: User,
+    filters: NotificationListFilters = {},
+  ): { notifications: (ImportNotification & { isRead: boolean })[]; total: number; unreadCount: number } {
+    const db = loadDb();
+    let all = [...db.importNotifications];
+
+    all = applyPermissionFilter(all, operator);
+    all = applyListFilters(all, filters);
+    all.sort((a, b) => b.createdAt - a.createdAt);
+
+    const total = all.length;
+    const unreadCount = countUnreadNotifications(all, operator.id);
+    const withReadFlag = attachReadFlag(all, operator.id);
+
+    return { notifications: withReadFlag, total, unreadCount };
+  },
+
+  get(
+    operator: User,
+    notificationId: string,
+  ): { success: boolean; notification?: ImportNotification & { isRead: boolean }; error?: string; notFound?: boolean } {
+    const db = loadDb();
+    const notification = db.importNotifications.find((n) => n.id === notificationId);
+    if (!notification) {
+      return { success: false, error: '通知不存在', notFound: true };
+    }
+    if (!checkNotificationPermission(notification, operator)) {
+      return { success: false, error: '无权查看他人通知' };
+    }
+    const isRead = getNotificationReadState(notification, operator.id);
+    return { success: true, notification: { ...notification, isRead } };
+  },
+
+  getDetail(
+    operator: User,
+    notificationId: string,
+  ): {
+    success: boolean;
+    error?: string;
+    notFound?: boolean;
+    notification?: ImportNotification & { isRead: boolean };
+    relatedBatch?: Batch | null;
+    relatedDraft?: ImportDraft | null;
+    relatedTemplate?: SampleTemplate | null;
+    auditTimeline?: AuditEntry[];
+  } {
+    const basicResult = notificationAppService.get(operator, notificationId);
+    if (!basicResult.success || !basicResult.notification) {
+      return { success: false, error: basicResult.error, notFound: basicResult.notFound };
+    }
+
+    const notification = basicResult.notification;
+    const { relatedBatch, relatedDraft, relatedTemplate } = resolveRelatedObjects(notification);
+    const auditTimeline = buildAuditTimeline(notification);
+
+    return {
+      success: true,
+      notification,
+      relatedBatch,
+      relatedDraft,
+      relatedTemplate,
+      auditTimeline,
+    };
+  },
+
+  markRead(
+    operator: User,
+    notificationId: string,
+  ): { success: boolean; error?: string; read?: boolean; readAt?: number; notFound?: boolean } {
+    const db = loadDb();
+    const notification = db.importNotifications.find((n) => n.id === notificationId);
+    if (!notification) {
+      return { success: false, error: '通知不存在', notFound: true };
+    }
+    if (!checkNotificationPermission(notification, operator)) {
+      return { success: false, error: '无权操作他人通知' };
+    }
+    if (!notification.readBy) {
+      notification.readBy = {};
+    }
+    let readAt: number;
+    if (!notification.readBy[operator.id]) {
+      readAt = Date.now();
+      notification.readBy[operator.id] = { readAt };
+      notification.updatedAt = Date.now();
+      saveDb(db);
+    } else {
+      readAt = notification.readBy[operator.id].readAt;
+    }
+    return { success: true, read: true, readAt };
+  },
+
+  markAllRead(operator: User): { success: boolean; markedCount: number } {
+    const db = loadDb();
+    let markedCount = 0;
+    const now = Date.now();
+
+    for (const notification of db.importNotifications) {
+      if (!checkNotificationPermission(notification, operator)) {
+        continue;
+      }
+      if (!notification.readBy) {
+        notification.readBy = {};
+      }
+      if (!notification.readBy[operator.id]) {
+        notification.readBy[operator.id] = { readAt: now };
+        notification.updatedAt = now;
+        markedCount++;
+      }
+    }
+
+    if (markedCount > 0) {
+      saveDb(db);
+    }
+
+    return { success: true, markedCount };
+  },
+
+  getStats(operator: User): NotificationStats {
+    const db = loadDb();
+    let all = [...db.importNotifications];
+    all = applyPermissionFilter(all, operator);
+    return calculateStats(all);
+  },
+
+  rollbackByBatchId: rollbackNotificationsByBatchId,
+};
+
+// ============== Backward Compatible Exports ==============
+
+export function createImportNotification(
+  operator: User,
+  type: ImportNotificationType,
+  opts: {
+    message?: string;
+    batchId?: string;
+    batchCode?: string;
+    draftId?: string;
+    templateId?: string;
+    templateName?: string;
+    undoRecordId?: string;
+    result?: NotificationResultPayload;
+    status?: ImportNotificationStatus;
+  } = {},
+): ImportNotification {
+  return emitNotificationEvent({
+    type,
+    operator,
+    ...opts,
+  });
+}
+
+export interface NotificationFilters {
+  type?: ImportNotificationType;
+  status?: ImportNotificationStatus;
+  batchId?: string;
+  draftId?: string;
+  templateId?: string;
+  operatorId?: string;
+  rolledBack?: boolean;
+  startTime?: number;
+  endTime?: number;
+}
+
+export function listImportNotifications(
+  operator: User,
+  filters: NotificationFilters = {},
+): { notifications: (ImportNotification & { isRead: boolean })[]; total: number; unreadCount: number } {
+  return notificationAppService.list(operator, filters);
+}
+
+export function getImportNotification(
+  operator: User,
+  notificationId: string,
+): { success: boolean; notification?: ImportNotification & { isRead: boolean }; error?: string; notFound?: boolean } {
+  return notificationAppService.get(operator, notificationId);
+}
+
+export function markNotificationAsRead(
+  operator: User,
+  notificationId: string,
+): { success: boolean; error?: string; read?: boolean; readAt?: number; notFound?: boolean } {
+  return notificationAppService.markRead(operator, notificationId);
+}
+
+export function markAllNotificationsAsRead(
+  operator: User,
+): { success: boolean; markedCount: number } {
+  return notificationAppService.markAllRead(operator);
+}
+
+export function getNotificationDetailWithTimeline(
+  operator: User,
+  notificationId: string,
+): {
+  success: boolean;
+  error?: string;
+  notFound?: boolean;
+  notification?: ImportNotification & { isRead: boolean };
+  relatedBatch?: Batch | null;
+  relatedDraft?: ImportDraft | null;
+  relatedTemplate?: SampleTemplate | null;
+  auditTimeline?: AuditEntry[];
+} {
+  return notificationAppService.getDetail(operator, notificationId);
+}
+
+export function getNotificationStats(operator: User): NotificationStats {
+  return notificationAppService.getStats(operator);
 }

@@ -253,7 +253,7 @@ export interface ImportNotification {
   templateId?: string;
   templateName?: string;
   undoRecordId?: string;
-  result?: Record<string, unknown>;
+  result?: NotificationResultPayload;
   status: ImportNotificationStatus;
   rolledBack: boolean;
   rolledBackAt?: number;
@@ -262,6 +262,76 @@ export interface ImportNotification {
   readBy: Record<string, { readAt: number }>;
   createdAt: number;
   updatedAt: number;
+}
+
+export interface NotificationResultPayload {
+  importedCount?: number;
+  batchCode?: string;
+  draftName?: string;
+  version?: number;
+  rowCount?: number;
+  templateName?: string;
+  templateVersion?: number;
+  error?: string;
+  sampleCodes?: string;
+  sampleCount?: number;
+  rolledBackNotificationCount?: number;
+  draftReverted?: boolean;
+  currentVersion?: number;
+  clientVersion?: number;
+  lastEditedByName?: string;
+  status?: string;
+  exportType?: string;
+  [key: string]: unknown;
+}
+
+export interface NotificationEvent {
+  type: ImportNotificationType;
+  operator: User;
+  message?: string;
+  batchId?: string;
+  batchCode?: string;
+  draftId?: string;
+  templateId?: string;
+  templateName?: string;
+  undoRecordId?: string;
+  result?: NotificationResultPayload;
+  status?: ImportNotificationStatus;
+}
+
+export interface NotificationListFilters {
+  type?: ImportNotificationType;
+  status?: ImportNotificationStatus;
+  batchId?: string;
+  draftId?: string;
+  templateId?: string;
+  operatorId?: string;
+  rolledBack?: boolean;
+  startTime?: number;
+  endTime?: number;
+  keyword?: string;
+}
+
+export interface NotificationStats {
+  total: number;
+  successCount: number;
+  failureCount: number;
+  rolledBackCount: number;
+  byType: Record<string, number>;
+}
+
+export interface NotificationRelatedObjects {
+  relatedBatch: Batch | null;
+  relatedDraft: ImportDraft | null;
+  relatedTemplate: SampleTemplate | null;
+}
+
+export interface NotificationDetailResponse {
+  notification: ImportNotification & { isRead: boolean };
+  relatedBatch: Batch | null;
+  relatedDraft: ImportDraft | null;
+  relatedTemplate: SampleTemplate | null;
+  auditTimeline: AuditEntry[];
 }
 
 export interface ApiResponse<T = unknown> {

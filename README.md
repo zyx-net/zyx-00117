@@ -862,7 +862,11 @@ node test-restart.mjs
 # 步骤 7: 运行导入通知中心完整测试
 node test-notification-center.mjs
 
-# 步骤 8 (可选): 重启服务后运行通知持久化验证
+# 步骤 8 (可选): 运行通知中心跨模块回归测试
+# 覆盖关键字搜索一致性、越权访问、冲突与回退一致性
+node test-notification-regression.mjs
+
+# 步骤 9 (可选): 重启服务后运行通知持久化验证
 # Ctrl+C 停止服务，然后运行:
 # npm run server:dev
 # node test-notification-restart.mjs
@@ -946,6 +950,45 @@ node test-notification-center.mjs
 
 # 3. 运行跨重启验证
 node test-notification-restart.mjs
+```
+
+#### 通知中心跨模块回归测试（test-notification-regression.mjs）
+
+专注于边界场景与一致性验证，覆盖重构后的统一事件模型与权限边界：
+
+**服务端关键字搜索一致性：**
+- 关键字筛选统一由后端处理，前后端不再各自兜分支
+- 筛选范围：标题、消息、批次号、模板名称
+- 筛选后 total 计数与结果数量一致
+
+**越权访问拦截（多层验证）：**
+- 列表接口：不同用户通知完全无重叠
+- 详情接口：非本人访问 → 403 Forbidden
+- 已读标记：非本人标记 → 403 Forbidden
+- 管理员权限：可访问/标记任意通知
+- 非管理员的 operatorId 过滤参数被静默忽略
+
+**草稿冲突通知一致性：**
+- DRAFT_CONFLICT 状态恒为 FAILURE
+- 冲突通知包含 lastEditedByName / currentVersion / clientVersion
+- 冲突通知详情含审计时间线与关联草稿
+- 冲突通知默认未回退（rolledBack = false）
+
+**撤销回退通知一致性：**
+- 所有 rolledBack=true 的通知状态均为 ROLLED_BACK
+- 回退通知均包含 rolledBackAt / rolledBackBy / rolledBackByName
+- UNDO_SUCCESS 通知自身不被回退
+- UNDO_SUCCESS 包含 rolledBackNotificationCount 与 undoRecordId
+
+**统计与状态隔离：**
+- 统计总数与列表总数一致
+- byType 分布求和等于总数
+- 管理员可见通知 ≥ 普通用户可见通知
+- 标记全部已读仅影响当前用户，不影响他人
+
+```bash
+# 确保服务已启动（建议先运行 test-notification-center.mjs 生成测试数据）
+node test-notification-regression.mjs
 ```
 
 ---

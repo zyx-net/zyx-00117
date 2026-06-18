@@ -76,19 +76,10 @@ export default function NotificationCenter() {
     if (appliedType) filters.type = appliedType;
     if (appliedStatus) filters.status = appliedStatus;
     if (appliedRolledBack !== '') filters.rolledBack = appliedRolledBack === 'true';
+    if (appliedKeyword) filters.keyword = appliedKeyword;
     const r = await api.listNotifications(filters);
     if (r.success && r.data) {
-      let filtered = r.data.notifications;
-      if (appliedKeyword) {
-        const kw = appliedKeyword.toLowerCase();
-        filtered = filtered.filter((n) =>
-          n.title.toLowerCase().includes(kw) ||
-          n.message.toLowerCase().includes(kw) ||
-          (n.batchCode && n.batchCode.toLowerCase().includes(kw)) ||
-          (n.templateName && n.templateName.toLowerCase().includes(kw)),
-        );
-      }
-      setNotifications(filtered);
+      setNotifications(r.data.notifications);
       setTotal(r.data.total);
       setUnreadCount(r.data.unreadCount);
     }

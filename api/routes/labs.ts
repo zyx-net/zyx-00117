@@ -647,6 +647,7 @@ router.get('/notifications', requireAuth, (req: AuthenticatedRequest, res: Respo
       rolledBack?: boolean;
       startTime?: number;
       endTime?: number;
+      keyword?: string;
     } = {};
 
     if (req.query.type) filters.type = req.query.type as ImportNotificationType;
@@ -654,6 +655,7 @@ router.get('/notifications', requireAuth, (req: AuthenticatedRequest, res: Respo
     if (req.query.batchId) filters.batchId = req.query.batchId as string;
     if (req.query.draftId) filters.draftId = req.query.draftId as string;
     if (req.query.templateId) filters.templateId = req.query.templateId as string;
+    if (req.query.keyword) filters.keyword = req.query.keyword as string;
     if (req.query.operatorId && req.user!.role === 'ADMIN') {
       filters.operatorId = req.query.operatorId as string;
     }

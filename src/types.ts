@@ -306,6 +306,27 @@ export type ImportNotificationStatus =
   | 'FAILURE'
   | 'ROLLED_BACK';
 
+export interface NotificationResultPayload {
+  importedCount?: number;
+  batchCode?: string;
+  draftName?: string;
+  version?: number;
+  rowCount?: number;
+  templateName?: string;
+  templateVersion?: number;
+  error?: string;
+  sampleCodes?: string;
+  sampleCount?: number;
+  rolledBackNotificationCount?: number;
+  draftReverted?: boolean;
+  currentVersion?: number;
+  clientVersion?: number;
+  lastEditedByName?: string;
+  status?: string;
+  exportType?: string;
+  [key: string]: unknown;
+}
+
 export interface ImportNotification {
   id: string;
   type: ImportNotificationType;
@@ -319,15 +340,24 @@ export interface ImportNotification {
   templateId?: string;
   templateName?: string;
   undoRecordId?: string;
-  result?: Record<string, unknown>;
+  result?: NotificationResultPayload;
   status: ImportNotificationStatus;
   rolledBack: boolean;
   rolledBackAt?: number;
   rolledBackBy?: string;
   rolledBackByName?: string;
   isRead: boolean;
+  readBy?: Record<string, { readAt: number }>;
   createdAt: number;
   updatedAt: number;
+}
+
+export interface NotificationStats {
+  total: number;
+  successCount: number;
+  failureCount: number;
+  rolledBackCount: number;
+  byType: Record<string, number>;
 }
 
 export const NOTIFICATION_TYPE_LABELS: Record<ImportNotificationType, string> = {
