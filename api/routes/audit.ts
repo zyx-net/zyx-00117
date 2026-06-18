@@ -4,6 +4,7 @@ import { requireAuth, requireRole, getClientIp } from '../middleware.js';
 import { queryAudits } from '../audit.js';
 import { createAudit } from '../audit.js';
 import { listBatches, listSamples, getBatchDetail, getExportConfig } from '../services.js';
+import { createImportNotification } from '../services.js';
 import type { AuditEntry, Role, Sample, Batch } from '../types.js';
 
 const router = Router();
@@ -286,6 +287,16 @@ router.get('/export/batches', requireAuth, (req: AuthenticatedRequest, res: Resp
       ipAddress: ip,
     });
 
+    createImportNotification(user, 'EXPORT_SUCCESS', {
+      message: `批次导出完成，共 ${batches.length} 条批次记录`,
+      result: {
+        exportType: 'batches',
+        batchCount: batches.length,
+        configName,
+        filters,
+      },
+    });
+
     const filename = `labs_export_${new Date(now).toISOString().slice(0, 10)}_${now}.csv`;
     res.setHeader('Content-Type', 'text/csv; charset=utf-8');
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
@@ -458,6 +469,16 @@ router.get('/export/samples', requireAuth, (req: AuthenticatedRequest, res: Resp
         sampleCount: samples.length,
       },
       ipAddress: ip,
+    });
+
+    createImportNotification(user, 'EXPORT_SUCCESS', {
+      message: `样本导出完成，共 ${samples.length} 条样本记录`,
+      result: {
+        exportType: 'samples',
+        sampleCount: samples.length,
+        configName,
+        filters,
+      },
     });
 
     const filename = `samples_export_${new Date(now).toISOString().slice(0, 10)}_${now}.csv`;

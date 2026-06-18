@@ -21,6 +21,7 @@
 | ↩️ 撤销导入 | 撤销最近一次成功导入，仅发起人或管理员可操作；完整回滚批次、样本、温控告警、交接记录、模板引用、关联草稿和导出结果；关联草稿自动回退为可编辑状态 |
 | ⚙️ 可复用导出配置 | 保存导出配置（是否带签收历史/温控异常/失败审计），筛选条件与页面结果一致；下次按配置一键导出 |
 | 📋 操作日志 | CSV 导入、冲突拦截、模板变更、草稿恢复、冲突拦截、撤销人、导出配置增删改、实际导出人均写入审计日志 |
+| 🔔 导入通知中心 | 独立的导入/导出全流程通知系统，与温控告警、Toast 完全分离；支持模板套用、草稿保存/更新/提交/取消、导入成功/失败、导出成功/失败、撤销成功/失败、草稿冲突等 12 种通知类型；每条通知含批次、操作者、关联模板/草稿、处理结果、回退状态；撤销导入时自动回退关联通知并写入审计日志 |
 | 💾 数据持久化 | JSON 文件存储（`data/db.json`），重启服务历史数据与退回再交接时间线**完全保留** |
 | ⚠️ 原子操作 | 所有操作先校验再执行，**失败不写入半截记录** |
 
@@ -437,6 +438,188 @@ UNDO-TEST-002,blood,undo test 2,Building B,2,8,3.5,Freezer B
 
 ---
 
+### 1️⃣8️⃣ 场景十八：导入通知中心 - 权限隔离
+
+> 🔔 **核心约束**：通知与温控告警、Toast 完全独立存储，互不干扰；普通录入员仅能查看自己的通知，管理员可查看全量。
+
+1. 登录 **sampler1 / sampler123**（采样员张采样）
+2. 执行一次 CSV 批量导入（2 个样本）
+3. ✅ 验证点：
+   - 生成 `IMPORT_SUCCESS` 通知
+   - 通知包含：批次号（batchCode）、批次 ID、操作者 ID（sampler1）、操作者姓名（张采样）
+   - 通知状态 = `SUCCESS`，`rolledBack = false`
+   - 通知 `result` 中含 `importedCount = 2`
+   - 通知标题和消息为中文
+
+4. 调用通知列表 API（`GET /api/labs/notifications`）
+   - ✅ sampler1 可看到自己的通知
+
+5. **登出** sampler1，登录 **sampler2 / sampler123**（李采样）
+6. 调用通知列表 API
+   - ✅ sampler2 **看不到** sampler1 的通知（权限隔离）
+   - ✅ 仅返回 sampler2 自己的通知（如有）
+
+7. 登出 sampler2，登录 **receiver1 / receiver123**（王接收）
+   - ✅ 接收员同样只能看到自己的通知（如有），看不到其他录入员的
+
+8. 登出 receiver1，登录 **admin1 / admin123**（孙管理）
+   - ✅ 管理员可看到**所有用户**的通知
+   - ✅ 管理员通知总数 ≥ sampler1 的通知总数
+
+9. 尝试查看他人通知详情：
+   - sampler1 查看自己的通知详情 → ✅ 200 成功
+   - sampler2 查看 sampler1 的通知详情 → ✅ 403 无权查看他人通知
+   - admin 查看任意用户的通知详情 → ✅ 200 成功
+
+---
+
+### 1️⃣9️⃣ 场景十九：导入通知中心 - 全流程通知覆盖
+
+验证 12 种通知类型在各操作环节正确生成：
+
+#### 19.1 导入失败通知（IMPORT_FAILURE）
+1. 登录 sampler1，导入一个缺少 `type` 字段的坏 CSV
+2. ✅ 验证点：
+   - 导入失败
+   - 生成 `IMPORT_FAILURE` 通知
+   - 通知状态 = `FAILURE`
+   - `rolledBack = false`（失败通知不会被回退）
+
+#### 19.2 草稿保存通知（DRAFT_SAVE）
+1. 创建模板，保存一份导入草稿（不提交）
+2. ✅ 验证点：
+   - 生成 `DRAFT_SAVE` 通知
+   - 通知含 `draftId`、`templateId`、`templateName`
+
+#### 19.3 草稿更新通知（DRAFT_UPDATE）
+1. 修改已保存的草稿并保存
+2. ✅ 验证点：
+   - 生成 `DRAFT_UPDATE` 通知
+   - `result.version = 2`（版本号递增）
+
+#### 19.4 草稿冲突通知（DRAFT_CONFLICT）
+1. sampler1 创建草稿（版本 1），不刷新
+2. admin 打开同一份草稿，修改并保存（版本变为 2）
+3. sampler1 尝试保存修改
+4. ✅ 验证点：
+   - 保存返回 409 冲突
+   - 生成 `DRAFT_CONFLICT` 通知
+   - 通知状态 = `FAILURE`
+   - `result.lastEditedByName = 孙管理`（显示冲突的另一方）
+
+#### 19.5 草稿取消通知（DRAFT_CANCEL）
+1. 创建草稿后点击【取消草稿】
+2. ✅ 验证点：
+   - 生成 `DRAFT_CANCEL` 通知
+   - `result.status = CANCELLED`
+
+#### 19.6 草稿提交通知（DRAFT_SUBMIT）
+1. 创建草稿并提交导入
+2. ✅ 验证点：
+   - 生成 `DRAFT_SUBMIT` 通知
+   - 通知含 `draftId`、`batchId`、`batchCode`
+   - `result.importedCount` = 样本数
+
+#### 19.7 模板套用通知（TEMPLATE_APPLY）
+1. 使用模板从草稿提交导入
+2. ✅ 验证点：
+   - 生成 `TEMPLATE_APPLY` 通知
+   - 通知含 `templateId`、`templateName`
+
+#### 19.8 导出通知（EXPORT_SUCCESS）
+1. 在批次查询页点击【导出 CSV】
+2. ✅ 验证点：
+   - 生成 `EXPORT_SUCCESS` 通知
+   - `result.exportType = batches` 或 `samples`
+
+#### 通知统计 API
+- `GET /api/labs/notifications/stats` 返回：
+  - `total`：通知总数
+  - `successCount`：成功通知数
+  - `failureCount`：失败通知数
+  - `rolledBackCount`：已回退通知数
+  - `byType`：按通知类型的数量分布
+
+---
+
+### 2️⃣0️⃣ 场景二十：撤销导入 - 通知全链路回退
+
+> 📌 **关键语义**：撤销导入时**不删除**关联通知，而是将其标记为 `rolledBack = true`、`status = ROLLED_BACK`，保留完整审计轨迹。
+
+1. 登录 sampler1，导入一批样本（2 个）
+2. ✅ 验证点：该批次有 `IMPORT_SUCCESS` 通知，`rolledBack = false`
+
+3. 查看通知列表：筛选该批次 → ✅ 所有通知 `rolledBack = false`
+
+4. 执行【撤销最近一次导入】
+5. ✅ 验证点（通知回退）：
+   - 该批次的所有通知仍然存在（**不删除**，保留可追溯）
+   - 该批次的所有通知状态变为 `ROLLED_BACK`
+   - 该批次的所有通知 `rolledBack = true`
+   - 每条回退通知含：
+     - `rolledBackAt`：回退时间戳
+     - `rolledBackBy`：回退人 ID（sampler1）
+     - `rolledBackByName`：回退人姓名（张采样）
+
+6. ✅ 验证点（撤销成功通知）：
+   - 生成 `UNDO_SUCCESS` 通知
+   - `UNDO_SUCCESS` 通知**自身不被回退**（`rolledBack = false`）
+   - `result.rolledBackNotificationCount` = 回退的通知数量
+   - `result.sampleCount` = 删除的样本数量
+   - `result.draftReverted` = 是否回退了关联草稿
+
+7. ✅ 验证点（审计日志）：
+   - 管理员查询审计日志（`GET /api/admin/audits?action=ROLLBACK_NOTIFICATIONS`）
+   - 存在 `ROLLBACK_NOTIFICATIONS` 审计记录
+   - `targetType = BATCH`，`afterState.rolledBackCount` = 回退数量
+
+8. 尝试撤销**已流转**的样本 → ✅ 验证点：
+   - 撤销失败
+   - 生成 `UNDO_FAILURE` 通知
+   - `result.error = 样本已流转`
+   - 原始批次的通知保持不变（未被回退）
+
+---
+
+### 2️⃣1️⃣ 场景二十一：通知筛选与持久化
+
+#### 21.1 多维度筛选
+通知列表 API（`GET /api/labs/notifications`）支持以下筛选参数：
+- `type`：按通知类型筛选（如 `IMPORT_SUCCESS`、`UNDO_SUCCESS`）
+- `status`：按状态筛选（`SUCCESS` / `FAILURE` / `ROLLED_BACK` / `PENDING`）
+- `batchId`：按批次 ID 筛选
+- `draftId`：按草稿 ID 筛选
+- `templateId`：按模板 ID 筛选
+- `operatorId`：按操作者筛选（仅管理员可用）
+- `rolledBack`：按回退状态筛选（`true` / `false`）
+- `startTime` / `endTime`：按创建时间范围筛选
+
+验证：
+1. `?status=SUCCESS` → 仅返回成功通知
+2. `?status=FAILURE` → 仅返回失败通知
+3. `?rolledBack=true` → 仅返回已回退通知
+4. `?rolledBack=false` → 仅返回未回退通知
+5. 管理员 `?operatorId={sampler1Id}` → 仅返回 sampler1 的通知
+6. 普通录入员传 `operatorId` → 被忽略，仍只返回自己的通知
+
+#### 21.2 服务重启后通知不丢失
+1. 按以上场景生成若干通知（导入成功/失败、草稿保存/更新、撤销等）
+2. **重启后端服务**（`Ctrl+C` → `npm run server:dev`）
+3. 刷新页面或重新调用 API → ✅ 验证点：
+   - 所有通知完整保留，数量不变
+   - 通知的 `rolledBack` 状态、`status` 不变
+   - 回退通知的 `rolledBackAt`、`rolledBackBy`、`rolledBackByName` 不变
+   - 通知按创建时间倒序排列
+   - 通知统计数据（total/success/failure/rolledBack）与重启前一致
+   - `ROLLBACK_NOTIFICATIONS` 审计日志完整保留
+
+#### 21.3 与温控告警完全隔离
+- 通知中心使用独立存储（`db.importNotifications`），与 `TemperatureAlert` 完全分离
+- 通知类型仅为 12 种导入相关类型，绝不混入温控告警
+- 通知 API 仅在 `/labs/notifications` 路径下，与温控告警 API 无重叠
+
+---
+
 ### 🔬 自动化测试脚本
 
 #### 全模块集成测试（test-full-module.mjs）
@@ -535,6 +718,73 @@ node test-restart-draft.mjs
 
 # 步骤 6: 运行重启后基础数据验证
 node test-restart.mjs
+
+# 步骤 7: 运行导入通知中心完整测试
+node test-notification-center.mjs
+
+# 步骤 8 (可选): 重启服务后运行通知持久化验证
+# Ctrl+C 停止服务，然后运行:
+# npm run server:dev
+# node test-notification-restart.mjs
+```
+
+#### 导入通知中心测试（test-notification-center.mjs）
+
+覆盖 15 个测试场景、252 个断言，包含：
+
+**通知权限隔离：**
+- 采样员仅能查看自己的通知
+- 接收员仅能查看自己的通知
+- 管理员可查看所有用户的通知
+- 非本人查看通知详情返回 403
+- 管理员可按 operatorId 过滤（普通用户参数被忽略）
+
+**全流程通知覆盖（12 种类型）：**
+- `IMPORT_SUCCESS` / `IMPORT_FAILURE`：CSV 导入成功/失败
+- `DRAFT_SAVE` / `DRAFT_UPDATE` / `DRAFT_SUBMIT` / `DRAFT_CANCEL` / `DRAFT_CONFLICT`：草稿相关
+- `TEMPLATE_APPLY`：模板套用
+- `EXPORT_SUCCESS`：CSV 导出
+- `UNDO_SUCCESS` / `UNDO_FAILURE`：撤销成功/失败
+
+**撤销导入通知回退：**
+- 关联通知被标记为 `rolledBack = true`、`status = ROLLED_BACK`
+- 回退通知记录回退人、回退时间
+- `UNDO_SUCCESS` 通知自身不被回退
+- 生成 `ROLLBACK_NOTIFICATIONS` 审计日志
+- 回退通知计数正确
+
+**通知筛选与统计：**
+- 按 type / status / rolledBack / batchId / draftId 筛选
+- 统计 API 返回 total/successCount/failureCount/rolledBackCount/byType
+
+**数据完整性：**
+- 通知与温控告警类型完全分离，互不干扰
+
+```bash
+# 确保服务已启动
+node test-notification-center.mjs
+```
+
+#### 通知中心跨重启持久化验证（test-notification-restart.mjs）
+
+验证服务重启后所有通知数据完整保留：
+- 所有通知类型、数量不变
+- `rolledBack` 状态、`status` 不变
+- 回退通知的 `rolledBackAt` / `rolledBackBy` / `rolledBackByName` 完整
+- 通知统计数据一致
+- `ROLLBACK_NOTIFICATIONS` / `UNDO_IMPORT` 等审计日志完整
+- 草稿关联信息（draftId、templateId、templateName）完整
+- 批次关联信息（batchId、batchCode）完整
+
+```bash
+# 1. 先运行通知中心完整测试
+node test-notification-center.mjs
+
+# 2. 重启后端服务（Ctrl+C 后重新启动）
+# npm run server:dev
+
+# 3. 运行跨重启验证
+node test-notification-restart.mjs
 ```
 
 ---
@@ -576,6 +826,8 @@ zyx-00117/
 ├── test-template-draft-undo.mjs  # 模板/草稿/撤销完整功能测试脚本
 ├── test-full-module.mjs          # 模板仓库+草稿恢复+撤销导入 全链路集成测试
 ├── test-restart-draft.mjs        # 模板/草稿跨重启持久化验证脚本
+├── test-notification-center.mjs  # 导入通知中心完整功能测试（15场景/252断言）
+├── test-notification-restart.mjs # 通知中心跨重启持久化验证脚本
 └── README.md
 ```
 
@@ -595,6 +847,11 @@ zyx-00117/
 10. **完整操作审计**：模板创建/修改/停用、草稿创建/更新/删除/取消/提交/冲突、撤销导入/越权尝试/阻断/草稿回退/导出配置清理，所有操作均记录审计日志，包含操作人、前后状态、失败原因。
 11. **权限隔离**：草稿按创建人隔离（管理员除外），撤销记录按创建人隔离（管理员除外），模板修改仅创建人或管理员可操作，草稿编辑仅创建者或管理员可操作。
 12. **引用计数与停用保护**：模板维护引用计数，停用后不影响已引用批次，但禁止新导入使用，确保数据一致性。撤销时引用计数正确递减。
+13. **导入通知独立存储**：导入通知中心使用独立的 `importNotifications` 存储，与 `TemperatureAlert` 温控告警完全分离，互不干扰。通知拥有独立的 12 种类型体系，绝不混入温控或 Toast 消息。
+14. **通知权限隔离**：非管理员角色仅能查看自己操作产生的通知（`operatorId` 匹配），管理员可查看全量通知。查看通知详情时同样执行权限校验，防止越权访问。
+15. **撤销时通知原子回退**：撤销导入时，所有关联批次的通知在同一事务中被标记为 `rolledBack = true`、`status = ROLLED_BACK`，记录回退人和回退时间，不删除任何通知以保证审计可追溯。同时生成 `ROLLBACK_NOTIFICATIONS` 审计日志记录。
+16. **通知持久化保证**：通知数据存储于 `data/db.json`，与其他业务数据同等持久化级别。服务重启后通知数量、状态、回退标记、关联信息（批次/草稿/模板/操作者）完整保留。
+17. **草稿冲突通知**：多人同时编辑同一草稿触发乐观锁冲突时，生成 `DRAFT_CONFLICT` 通知，明确告知冲突的另一方编辑者，避免数据互相覆盖。
 
 ---
 

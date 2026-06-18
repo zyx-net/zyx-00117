@@ -38,8 +38,11 @@ import {
   listImportUndoRecords,
   importCsvSamplesWithTemplate,
   checkDraftConflict,
+  listImportNotifications,
+  getImportNotification,
+  getNotificationStats,
 } from '../services.js';
-import type { Role } from '../types.js';
+import type { Role, ImportNotificationType, ImportNotificationStatus } from '../types.js';
 
 const router = Router();
 
@@ -624,6 +627,62 @@ router.post('/import-undo/undo', requireAuth, (req: AuthenticatedRequest, res: R
     res.json({ success: true, data: { undoneData: result.undoneData } });
   } catch (e) {
     res.status(500).json({ success: false, error: '撤销导入失败' });
+  }
+});
+
+// ==================== Import Notification Center Routes ====================
+
+router.get('/notifications', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const filters: {
+      type?: ImportNotificationType;
+      status?: ImportNotificationStatus;
+      batchId?: string;
+      draftId?: string;
+      templateId?: string;
+      operatorId?: string;
+      rolledBack?: boolean;
+      startTime?: number;
+      endTime?: number;
+    } = {};
+
+    if (req.query.type) filters.type = req.query.type as ImportNotificationType;
+    if (req.query.status) filters.status = req.query.status as ImportNotificationStatus;
+    if (req.query.batchId) filters.batchId = req.query.batchId as string;
+    if (req.query.draftId) filters.draftId = req.query.draftId as string;
+    if (req.query.templateId) filters.templateId = req.query.templateId as string;
+    if (req.query.operatorId && req.user!.role === 'ADMIN') {
+      filters.operatorId = req.query.operatorId as string;
+    }
+    if (req.query.rolledBack !== undefined) filters.rolledBack = req.query.rolledBack === 'true';
+    if (req.query.startTime) filters.startTime = Number(req.query.startTime);
+    if (req.query.endTime) filters.endTime = Number(req.query.endTime);
+
+    const result = listImportNotifications(req.user!, filters);
+    res.json({ success: true, data: result });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '查询通知列表失败' });
+  }
+});
+
+router.get('/notifications/stats', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const stats = getNotificationStats(req.user!);
+    res.json({ success: true, data: { stats } });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '查询通知统计失败' });
+  }
+});
+
+router.get('/notifications/:id', requireAuth, (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const result = getImportNotification(req.user!, req.params.id);
+    if (!result.success) {
+      return res.status(403).json({ success: false, error: result.error });
+    }
+    res.json({ success: true, data: { notification: result.notification } });
+  } catch (e) {
+    res.status(500).json({ success: false, error: '查询通知详情失败' });
   }
 });
 

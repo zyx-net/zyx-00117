@@ -220,6 +220,49 @@ export interface CsvImportError {
   reason: string;
 }
 
+export type ImportNotificationType =
+  | 'TEMPLATE_APPLY'
+  | 'DRAFT_SAVE'
+  | 'DRAFT_UPDATE'
+  | 'DRAFT_SUBMIT'
+  | 'IMPORT_SUCCESS'
+  | 'IMPORT_FAILURE'
+  | 'EXPORT_SUCCESS'
+  | 'EXPORT_FAILURE'
+  | 'UNDO_SUCCESS'
+  | 'UNDO_FAILURE'
+  | 'DRAFT_CONFLICT'
+  | 'DRAFT_CANCEL';
+
+export type ImportNotificationStatus =
+  | 'PENDING'
+  | 'SUCCESS'
+  | 'FAILURE'
+  | 'ROLLED_BACK';
+
+export interface ImportNotification {
+  id: string;
+  type: ImportNotificationType;
+  title: string;
+  message: string;
+  operatorId: string;
+  operatorName: string;
+  batchId?: string;
+  batchCode?: string;
+  draftId?: string;
+  templateId?: string;
+  templateName?: string;
+  undoRecordId?: string;
+  result?: Record<string, unknown>;
+  status: ImportNotificationStatus;
+  rolledBack: boolean;
+  rolledBackAt?: number;
+  rolledBackBy?: string;
+  rolledBackByName?: string;
+  createdAt: number;
+  updatedAt: number;
+}
+
 export interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;

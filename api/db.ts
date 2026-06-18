@@ -10,6 +10,7 @@ import type {
   SampleTemplate,
   ImportDraft,
   ImportUndoRecord,
+  ImportNotification,
 } from './types.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -25,6 +26,7 @@ export interface Database {
   sampleTemplates: SampleTemplate[];
   importDrafts: ImportDraft[];
   importUndoRecords: ImportUndoRecord[];
+  importNotifications: ImportNotification[];
   initialized: boolean;
 }
 
@@ -88,6 +90,7 @@ function createInitialDb(): Database {
     sampleTemplates: [],
     importDrafts: [],
     importUndoRecords: [],
+    importNotifications: [],
     initialized: true,
   };
 }
@@ -109,6 +112,7 @@ export function loadDb(): Database {
     if (!db.sampleTemplates) db.sampleTemplates = [];
     if (!db.importDrafts) db.importDrafts = [];
     if (!db.importUndoRecords) db.importUndoRecords = [];
+    if (!db.importNotifications) db.importNotifications = [];
     return db;
   } catch (e) {
     console.error('Failed to load DB, creating new one:', e);

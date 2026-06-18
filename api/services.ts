@@ -14,6 +14,9 @@ import type {
   ImportDraft,
   ImportUndoRecord,
   DraftConflictInfo,
+  ImportNotification,
+  ImportNotificationType,
+  ImportNotificationStatus,
 } from './types.js';
 
 const STATUS_FLOW: Record<SampleStatus, SampleStatus[]> = {
@@ -1025,6 +1028,10 @@ export function importCsvSamples(
       failureReason: '只有采样员或管理员可以导入样本',
       ipAddress: ip,
     });
+    createImportNotification(operator, 'IMPORT_FAILURE', {
+      message: '导入失败：只有采样员或管理员可以导入样本',
+      result: { error: '只有采样员或管理员可以导入样本' },
+    });
     return { success: false, error: '只有采样员或管理员可以导入样本' };
   }
 
@@ -1175,6 +1182,11 @@ export function importCsvSamples(
       ipAddress: ip,
     });
 
+    createImportNotification(operator, 'IMPORT_FAILURE', {
+      message: `导入校验失败：${finalErrors.length} 个错误`,
+      result: { errorCount: finalErrors.length, errors: finalErrors as unknown as Record<string, unknown> },
+    });
+
     return { success: false, error: '导入校验失败，请修正后重新导入', errors: finalErrors };
   }
 
@@ -1267,6 +1279,13 @@ export function importCsvSamples(
     operator.id,
     operator.name,
   );
+
+  createImportNotification(operator, 'IMPORT_SUCCESS', {
+    message: `成功导入 ${newSamples.length} 个样本，批次号：${batchCode}`,
+    batchId,
+    batchCode,
+    result: { importedCount: newSamples.length, batchCode },
+  });
 
   return { success: true, batch, samples: newSamples, importedCount: newSamples.length };
 }
@@ -1638,6 +1657,15 @@ export function saveImportDraft(
         failureReason: `并发冲突：当前版本 ${existing.version}，客户端版本 ${input.clientVersion}，最后编辑者 ${existing.lastEditedByName}`,
         ipAddress: ip,
       });
+      createImportNotification(operator, 'DRAFT_CONFLICT', {
+        message: `草稿「${existing.name}」已被 ${existing.lastEditedByName} 修改，请刷新后重新编辑`,
+        draftId: input.id,
+        result: {
+          currentVersion: existing.version,
+          clientVersion: input.clientVersion,
+          lastEditedByName: existing.lastEditedByName,
+        },
+      });
       return { success: false, error: '草稿已被他人修改，请刷新后重新编辑', conflict };
     }
 
@@ -1679,6 +1707,18 @@ export function saveImportDraft(
       ipAddress: ip,
     });
 
+    createImportNotification(operator, 'DRAFT_UPDATE', {
+      message: `草稿「${existing.name}」已更新，版本 ${existing.version}`,
+      draftId: existing.id,
+      templateId: existing.templateId,
+      templateName: existing.templateSnapshot?.name,
+      result: {
+        draftName: existing.name,
+        version: existing.version,
+        rowCount: input.parsedRows?.length || 0,
+      },
+    });
+
     return { success: true, draft: existing };
   } else {
     let templateSnapshot: TemplateSnapshot | undefined;
@@ -1718,6 +1758,18 @@ export function saveImportDraft(
     createAudit(operator, 'CREATE_DRAFT', 'SYSTEM', draft.id, true, {
       afterState: { name: draft.name, rowCount: input.parsedRows?.length || 0 },
       ipAddress: ip,
+    });
+
+    createImportNotification(operator, 'DRAFT_SAVE', {
+      message: `草稿「${draft.name}」已保存，版本 1`,
+      draftId: draft.id,
+      templateId: draft.templateId,
+      templateName: draft.templateSnapshot?.name,
+      result: {
+        draftName: draft.name,
+        version: 1,
+        rowCount: input.parsedRows?.length || 0,
+      },
     });
 
     return { success: true, draft };
@@ -1810,6 +1862,12 @@ export function cancelImportDraft(
     ipAddress: ip,
   });
 
+  createImportNotification(operator, 'DRAFT_CANCEL', {
+    message: `草稿「${draft.name}」已取消`,
+    draftId,
+    result: { draftName: draft.name, status: 'CANCELLED' },
+  });
+
   return { success: true };
 }
 
@@ -1845,6 +1903,15 @@ export function importCsvFromDraft(
       failureReason: `提交时并发冲突：当前版本 ${draft.version}，客户端版本 ${clientVersion}`,
       ipAddress: ip,
     });
+    createImportNotification(operator, 'DRAFT_CONFLICT', {
+      message: `草稿「${draft.name}」提交时发现冲突：已被 ${draft.lastEditedByName} 修改`,
+      draftId,
+      result: {
+        currentVersion: draft.version,
+        clientVersion,
+        lastEditedByName: draft.lastEditedByName,
+      },
+    });
     return { success: false, error: '草稿已被他人修改，请刷新后重新提交', conflict };
   }
 
@@ -1870,6 +1937,20 @@ export function importCsvFromDraft(
     createAudit(operator, 'SUBMIT_DRAFT', 'SYSTEM', draftId, true, {
       afterState: { batchId: result.batch.id, importedCount: result.importedCount },
       ipAddress: ip,
+    });
+
+    createImportNotification(operator, 'DRAFT_SUBMIT', {
+      message: `草稿「${draft.name}」提交成功，导入 ${result.importedCount} 个样本，批次号：${result.batch.batchCode}`,
+      batchId: result.batch.id,
+      batchCode: result.batch.batchCode,
+      draftId,
+      templateId: draft.templateId,
+      templateName: draft.templateSnapshot?.name,
+      result: {
+        draftName: draft.name,
+        importedCount: result.importedCount,
+        batchCode: result.batch.batchCode,
+      },
     });
   }
 
@@ -1922,6 +2003,19 @@ export function importCsvSamplesWithTemplate(
           templateVersion: templateSnapshot.templateVersion,
         },
         ipAddress: ip,
+      });
+
+      createImportNotification(operator, 'TEMPLATE_APPLY', {
+        message: `已套用模板「${templateSnapshot.name}」，批次：${batch.batchCode}`,
+        batchId: batch.id,
+        batchCode: batch.batchCode,
+        templateId,
+        templateName: templateSnapshot.name,
+        result: {
+          templateName: templateSnapshot.name,
+          templateVersion: templateSnapshot.templateVersion,
+          batchCode: batch.batchCode,
+        },
       });
 
       const updatedBatch = { ...batch, templateSnapshot, templateId };
@@ -2010,6 +2104,13 @@ export function undoLastImport(
       failureReason: `用户 ${operator.name} 尝试撤销他人创建的导入记录`,
       ipAddress: ip,
     });
+    createImportNotification(operator, 'UNDO_FAILURE', {
+      message: `撤销失败：只能撤销自己创建的导入记录`,
+      batchId: record.batchId,
+      batchCode: record.batchCode,
+      undoRecordId: record.id,
+      result: { error: '只能撤销自己创建的导入记录', batchCode: record.batchCode },
+    });
     return { success: false, error: '只能撤销自己创建的导入记录' };
   }
 
@@ -2026,6 +2127,13 @@ export function undoLastImport(
     createAudit(operator, 'UNDO_BLOCKED', 'BATCH', record.batchId, false, {
       failureReason: `部分样本已流转：${nonDraftCodes}`,
       ipAddress: ip,
+    });
+    createImportNotification(operator, 'UNDO_FAILURE', {
+      message: `撤销失败：以下样本已开始流转，无法撤销：${nonDraftCodes}`,
+      batchId: record.batchId,
+      batchCode: record.batchCode,
+      undoRecordId: record.id,
+      result: { error: '样本已流转', sampleCodes: nonDraftCodes },
     });
     return { success: false, error: `以下样本已开始流转，无法撤销：${nonDraftCodes}` };
   }
@@ -2091,12 +2199,46 @@ export function undoLastImport(
     });
   }
 
+  const nowForRollback = Date.now();
+  let rolledBackNotifCount = 0;
+  for (const notification of db.importNotifications) {
+    if (notification.batchId === record.batchId && !notification.rolledBack) {
+      notification.rolledBack = true;
+      notification.rolledBackAt = nowForRollback;
+      notification.rolledBackBy = operator.id;
+      notification.rolledBackByName = operator.name;
+      notification.status = 'ROLLED_BACK';
+      notification.updatedAt = nowForRollback;
+      rolledBackNotifCount++;
+    }
+  }
+
   saveDb(db);
+
+  if (rolledBackNotifCount > 0) {
+    createAudit(operator, 'ROLLBACK_NOTIFICATIONS', 'BATCH', record.batchId, true, {
+      afterState: { rolledBackCount: rolledBackNotifCount },
+      ipAddress: ip,
+    });
+  }
 
   createAudit(operator, 'UNDO_IMPORT', 'BATCH', record.batchId, true, {
     beforeState,
     afterState: { undone: true },
     ipAddress: ip,
+  });
+
+  createImportNotification(operator, 'UNDO_SUCCESS', {
+    message: `已撤销批次 ${record.batchCode}，删除 ${record.sampleIds.length} 个样本，回退 ${rolledBackNotifCount} 条关联通知`,
+    batchId: record.batchId,
+    batchCode: record.batchCode,
+    undoRecordId: record.id,
+    result: {
+      batchCode: record.batchCode,
+      sampleCount: record.sampleIds.length,
+      rolledBackNotificationCount: rolledBackNotifCount,
+      draftReverted: !!linkedDraft,
+    },
   });
 
   return {
@@ -2116,4 +2258,205 @@ export function listImportUndoRecords(operator: User): ImportUndoRecord[] {
     records = records.filter((r) => r.createdBy === operator.id);
   }
   return records.sort((a, b) => b.createdAt - a.createdAt);
+}
+
+// ==================== Import Notification Center Services ====================
+
+const NOTIFICATION_TITLE_MAP: Record<ImportNotificationType, string> = {
+  TEMPLATE_APPLY: '模板套用成功',
+  DRAFT_SAVE: '草稿已保存',
+  DRAFT_UPDATE: '草稿已更新',
+  DRAFT_SUBMIT: '草稿提交导入',
+  IMPORT_SUCCESS: 'CSV 导入成功',
+  IMPORT_FAILURE: 'CSV 导入失败',
+  EXPORT_SUCCESS: '数据导出完成',
+  EXPORT_FAILURE: '数据导出失败',
+  UNDO_SUCCESS: '导入已撤销',
+  UNDO_FAILURE: '撤销导入失败',
+  DRAFT_CONFLICT: '草稿编辑冲突',
+  DRAFT_CANCEL: '草稿已取消',
+};
+
+export function createImportNotification(
+  operator: User,
+  type: ImportNotificationType,
+  opts: {
+    message?: string;
+    batchId?: string;
+    batchCode?: string;
+    draftId?: string;
+    templateId?: string;
+    templateName?: string;
+    undoRecordId?: string;
+    result?: Record<string, unknown>;
+    status?: ImportNotificationStatus;
+  } = {},
+): ImportNotification {
+  const db = loadDb();
+  const now = Date.now();
+
+  const status: ImportNotificationStatus = opts.status ??
+    (type.includes('FAILURE') ? 'FAILURE' :
+     type.includes('CONFLICT') ? 'FAILURE' : 'SUCCESS');
+
+  const notification: ImportNotification = {
+    id: generateId('notif'),
+    type,
+    title: NOTIFICATION_TITLE_MAP[type] || type,
+    message: opts.message || NOTIFICATION_TITLE_MAP[type] || type,
+    operatorId: operator.id,
+    operatorName: operator.name,
+    batchId: opts.batchId,
+    batchCode: opts.batchCode,
+    draftId: opts.draftId,
+    templateId: opts.templateId,
+    templateName: opts.templateName,
+    undoRecordId: opts.undoRecordId,
+    result: opts.result,
+    status,
+    rolledBack: false,
+    createdAt: now,
+    updatedAt: now,
+  };
+
+  db.importNotifications.unshift(notification);
+  saveDb(db);
+  return notification;
+}
+
+export interface NotificationFilters {
+  type?: ImportNotificationType;
+  status?: ImportNotificationStatus;
+  batchId?: string;
+  draftId?: string;
+  templateId?: string;
+  operatorId?: string;
+  rolledBack?: boolean;
+  startTime?: number;
+  endTime?: number;
+}
+
+export function listImportNotifications(
+  operator: User,
+  filters: NotificationFilters = {},
+): { notifications: ImportNotification[]; total: number; unreadCount: number } {
+  const db = loadDb();
+  let notifications = [...db.importNotifications];
+
+  if (operator.role !== 'ADMIN') {
+    notifications = notifications.filter((n) => n.operatorId === operator.id);
+  }
+
+  if (filters.type) {
+    notifications = notifications.filter((n) => n.type === filters.type);
+  }
+  if (filters.status) {
+    notifications = notifications.filter((n) => n.status === filters.status);
+  }
+  if (filters.batchId) {
+    notifications = notifications.filter((n) => n.batchId === filters.batchId);
+  }
+  if (filters.draftId) {
+    notifications = notifications.filter((n) => n.draftId === filters.draftId);
+  }
+  if (filters.templateId) {
+    notifications = notifications.filter((n) => n.templateId === filters.templateId);
+  }
+  if (filters.operatorId) {
+    notifications = notifications.filter((n) => n.operatorId === filters.operatorId);
+  }
+  if (filters.rolledBack !== undefined) {
+    notifications = notifications.filter((n) => n.rolledBack === filters.rolledBack);
+  }
+  if (filters.startTime) {
+    notifications = notifications.filter((n) => n.createdAt >= filters.startTime!);
+  }
+  if (filters.endTime) {
+    notifications = notifications.filter((n) => n.createdAt <= filters.endTime!);
+  }
+
+  notifications.sort((a, b) => b.createdAt - a.createdAt);
+
+  const total = notifications.length;
+  const unreadCount = 0;
+
+  return { notifications, total, unreadCount };
+}
+
+export function getImportNotification(
+  operator: User,
+  notificationId: string,
+): { success: boolean; notification?: ImportNotification; error?: string } {
+  const db = loadDb();
+  const notification = db.importNotifications.find((n) => n.id === notificationId);
+  if (!notification) {
+    return { success: false, error: '通知不存在' };
+  }
+  if (notification.operatorId !== operator.id && operator.role !== 'ADMIN') {
+    return { success: false, error: '无权查看他人通知' };
+  }
+  return { success: true, notification };
+}
+
+export function rollbackNotificationsByBatchId(
+  operator: User,
+  batchId: string,
+  ip?: string,
+): number {
+  const db = loadDb();
+  const now = Date.now();
+  let rolledBackCount = 0;
+
+  for (const notification of db.importNotifications) {
+    if (notification.batchId === batchId && !notification.rolledBack) {
+      notification.rolledBack = true;
+      notification.rolledBackAt = now;
+      notification.rolledBackBy = operator.id;
+      notification.rolledBackByName = operator.name;
+      notification.status = 'ROLLED_BACK';
+      notification.updatedAt = now;
+      rolledBackCount++;
+    }
+  }
+
+  if (rolledBackCount > 0) {
+    saveDb(db);
+    createAudit(operator, 'ROLLBACK_NOTIFICATIONS', 'BATCH', batchId, true, {
+      afterState: { rolledBackCount },
+      ipAddress: ip,
+    });
+  }
+
+  return rolledBackCount;
+}
+
+export function getNotificationStats(operator: User): {
+  total: number;
+  successCount: number;
+  failureCount: number;
+  rolledBackCount: number;
+  byType: Record<string, number>;
+} {
+  const { notifications } = listImportNotifications(operator);
+
+  const stats = {
+    total: notifications.length,
+    successCount: 0,
+    failureCount: 0,
+    rolledBackCount: 0,
+    byType: {} as Record<string, number>,
+  };
+
+  for (const n of notifications) {
+    if (n.rolledBack) {
+      stats.rolledBackCount++;
+    } else if (n.status === 'SUCCESS') {
+      stats.successCount++;
+    } else if (n.status === 'FAILURE') {
+      stats.failureCount++;
+    }
+    stats.byType[n.type] = (stats.byType[n.type] || 0) + 1;
+  }
+
+  return stats;
 }
